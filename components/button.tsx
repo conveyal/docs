@@ -21,15 +21,18 @@ const fgColorMap = {
 
 export default function Btn ({
   children, 
-  variantColor
+  variantColor,
+  variant
 }) {
   return (
     <span
       style={{
-        backgroundColor: bgColorMap[variantColor],
-        border: 'none',
+        backgroundColor: variant == 'outline' ? 'none' : bgColorMap[variantColor],
+        border: variant == 'outline' ? bgColorMap[variantColor] : 'none',
         borderRadius: '4px',
-        color: fgColorMap[variantColor],
+        borderStyle: 'solid',
+        borderWidth: 'thin',
+        color: variant == 'outline' ? bgColorMap[variantColor] : fgColorMap[variantColor],
         display: 'inline-block',
         fontWeight: 500,
         fontSize: '75%',

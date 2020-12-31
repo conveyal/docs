@@ -168,11 +168,11 @@ Another common modification is to remove trips. The most common use is to remove
 This modification type can be used to represent detours, extensions,and curtailments. When creating a _reroute_ modification, you first select a [GTFS feed](/glossary#GTFS--GTFS-feed), route, and [trip patterns](/glossary#trip-pattern). Once trip patterns are selected, you then select a stop at which the reroute alignment will start, or a stop at which the reroute alignment will end, or both, by clicking <Button variantColor='blue'><FaCrosshairs /> Select</Button> then clicking an existing stop on the baseline pattern.
 
 Note that every selected pattern must stop at the selected start-of-reroute stop and end-of-reroute stop. For example, consider these three patterns:
-1) A-B-C-D-E
-2) A-B---D-E
-3) A---C-D-E
+1. A-B-C-D-E
+2. A-B---D-E
+3. A---C-D-E
 
-If B was selected as the start-of-reroute, and D was selected as the end-of-reroute, patterns 1 and 2 could be included in the reroute modification, but not pattern 3.
+If stop B is selected as the start-of-reroute, and stop D is selected as the end-of-reroute, patterns 1 and 2 can be included in the reroute modification. Pattern 3 cannot be included, because it dows not stop at the selected start-of-reroute stop.
 
 <Image
   src='/img/reroute.png'
