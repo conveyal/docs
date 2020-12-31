@@ -40,12 +40,6 @@ if (process.env.ALGOLIA_API_KEY) {
   }
 }
 
-if (process.env.GOOGLE_ANALYTICS_TRACKING_ID) {
-  themeConfig.googleAnalytics = {
-    trackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID
-  }
-}
-
 module.exports = {
   title: 'Conveyal User Manual',
   tagline: 'User manual for Conveyal',
@@ -76,5 +70,12 @@ module.exports = {
         }
       }
     ]
-  ]
+  ],
+  scripts: [{
+    src: 'https://plausible.conveyal.com/js/index.js', 
+    async: true, 
+    defer: true, 
+    'data-domain': 'docs.conveyal.com'
+  }],
+
 }
