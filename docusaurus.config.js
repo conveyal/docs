@@ -11,19 +11,19 @@ const themeConfig = {
     },
     items: [
       {
-        href: 'https://analysis.conveyal.com',
-        label: 'Log in',
+        href: 'https://github.com/conveyal',
+        className: 'header-github-link',
+        'aria-label': 'GitHub Org',
         position: 'right'
       },
       {
-        href: 'https://conveyal.com/contact-us',
+        href: 'https://conveyal.com/contact',
         label: 'Contact',
         position: 'right'
       },
       {
-        href: 'https://github.com/conveyal',
-        className: 'header-github-link',
-        'aria-label': 'GitHub Org',
+        href: 'https://analysis.conveyal.com',
+        label: 'Log in',
         position: 'right'
       }
     ]
