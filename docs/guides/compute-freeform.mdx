@@ -7,10 +7,69 @@ import {
   FaCaretDown
 } from 'react-icons/fa'
 
-Conveyal is optimized to calculate accessibility indicators for every point in an analysis [grid](/analysis/methodology#spatial-resolution). 
+By default, Conveyal calculates accessibility indicators for every point in an analysis [grid](/analysis/methodology#spatial-resolution). 
 
-In certain cases, however, you may be interested in calculating accessibility indicators for certain non-grid "freeform" origins, or travel time indicators between a set of origins and destinations. There are a few prototype approaches for such calculations.
+You can override this default behavior to prepare CSV files with accessibility, travel-time, and path results for a limited number of specified origins at exact coordinates. You first need to upload a CSV file and [process it as a freeform (non-grid) pointset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points). Next, in the custom request settings JSON of the analysis panel, add the fields described below to trigger the preparation of CSV result files. Then, create a regional analysis with a freeform pointset selected as the Origin points. Once a regional analysis with freeform origins is complete, you will have options to download CSV files of the results. These features are still experimental; contact your support team for more information.
+
+## Accessibility
+Setting `recordAccessibility:true` will result in a CSV file with a row for each origin point, destination opportunity layer, travel time percentile, and cutoff. For example:
+
+```csv
+origin,destinations,percentile,cutoff,access
+1,Total Jobs,5,30,386105
+1,Total Jobs,5,60,885656
+1,Total Jobs,25,30,338122
+1,Total Jobs,25,60,867946
+1,Total Jobs,50,30,287871
+1,Total Jobs,50,60,840089
+1,Total Jobs,75,30,234824
+1,Total Jobs,75,60,809584
+1,Total Jobs,95,30,183107
+1,Total Jobs,95,60,773271
+2,Total Jobs,5,30	142600
+etc
+```
+
+## Travel time matrix
+Setting `recordTimes:true` will result in a CSV file with a row for each origin point, destination point, and travel time percentile. This setting requires freeform pointsets to be selected for both the Origin points and the Destination opportunity layer. For example:
+
+```csv
+origin,destination,percentile,time
+Cambridge,Cambridge Family Health,5,9
+Cambridge,Chelsea High School,5,44
+Cambridge,Cambridge Family Health,50,12
+Cambridge,Chelsea High School,50,56
+Cambridge,Cambridge Family Health,95,12
+Cambridge,Chelsea High School,95,-1
+South Boston,Cambridge Family Health,5,36
+South Boston,Chelsea High School,5,50
+South Boston,Cambridge Family Health,50,41
+South Boston,Chelsea High School,50,55
+South Boston,Cambridge Family Health,95,46
+South Boston,Chelsea High School,95,-1
+```
+
+Note that in travel time CSV results, a time of -1 indicates the destination is unreachable within the maximum cutoff specified when the regional analysis was created. The number of destinations is currently limited to 4 million, and the number of origin-destination pairs is limited to 16 million. If you have uploaded freeform pointsets representing linked origin-destination pairs, you can set the `oneToOne:true` in the custom analysis request to compute travel times for only linked pairs, rather than all combinations of origins and destinations (many-to-many).
+
+<!---
+Setting `recordPaths:true` will result in a CSV file with rows for each origin point and destination point...
+
+```csv
+origin,destination,routes,boardStops,alightStops,rideTimes,accessTime,egressTime,transferTime,waitTimes,totalTime,nIterations
+1,2,70|553,1452|86944,86944|88339,16.0|8.0,3.1,13.6,0,1.9|10.0,52.6,3
+1,2,70,1452,8846,30,3.1,2.6,0,1.9,37.6,57
+1,3,70|61,1452|86944,88333|7783,16.0|17.0,3.1,17,0.6,1.9|8.4,64,14
+1,3,70|61,1452|86944,86944|7783,16.0|17.0,3.1,17,9.6,1.9|8.4,72.9,46
+1,4,70|CR-Fitchburg,1452|Waltham,88333|Brandeis/Roberts,16.0|3.0,3.1,7,1.4,1.9|6.6,39,14
+1,4,70|553,1452|86944,86944|88346,16.0|14.0,3.1,2,0,1.9|7.0,44,16
+1,4,70|553,1452|86944,86944|88346,16.0|19.0,3.1,2,0,1.9|10.0,52,3
+1,4,70|CR-Fitchburg,1452|Waltham,86944|Brandeis/Roberts,16.0|3.0,3.1,7,10.4,1.9|6.6,48,27
+1,5,71|Red|76,2049|70068|141,20761|70061|8605,22.0|8.0|21.0,6.6,5.9,4.5,1.4|1.6|12.9,83.9,11
+1,5,71|Red|76,2049|70068|141,20761|70061|8605,23.0|9.0|21.0,6.6,5.9,9.5,1.4|3.6|12.9,92.9,11
+1,5,71|Red|76,2049|70068|141,20761|70061|8605,22.0|9.0|21.0,6.6,5.9,24.5,1.4|1.6|12.9,104.9,12
+1,5,71|Red|76,2049|70068|141,20761|70061|8605,22.0|9.0|24.0,6.6,5.9,13.5,1.4|2.6|1.9,86.9,26
+etc
+```
+--->
 
 To download travel time surfaces, isochrones, or accessibility results for specific sets of origins using Python scripts, see the notebook in this [repository](https://github.com/conveyal/batch-isochrones). This notebook is provided as an example only, and Conveyal provides no guarantee of ongoing API compatibility for such external scripts.
-
-Alternatively, Conveyal has experimental options for uploading CSVs of origin/destination coordinates, then computing travel times between these origins and destinations (all combinations, or for matched one-to-one pairs). This capability will be enabled for general users in an upcoming release. In the meantime, contact your support team if you are interested.
