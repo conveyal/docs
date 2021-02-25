@@ -52,15 +52,14 @@ You will be prompted for the names of the fields containing latitude and longitu
 
 ### Freeform (Non-Grid) Points
 
-When a spatial dataset is uploaded, Conveyal distributes its numeric attributes to a [shared raster grid](/analysis/methodology#spatial-resolution) by default. With a CSV file specified, you will also have the option to save points and associated attributes at their exact coordinates. You can then use these freeform (non-grid) pointsets for origin-destination travel time matrices and other analyses.
+When a spatial dataset is uploaded, Conveyal distributes its numeric attributes to a [shared raster grid](/analysis/methodology#spatial-resolution) by default. With a CSV file specified, you will also have the option to save points and associated attributes at their exact coordinates. You can then use these freeform (non-grid) spatial datasets for origin-destination travel time matrices and other analyses.
 
 <Image
   src='/img/upload-freeform.png'
-  alt='Setting fields for a freeform pointset upload'
+  alt='Setting fields for a freeform (non-grid) spatial dataset upload'
 />
 
-In addition to the standard latitude and longitude columns, CSV files to be processed as freeform pointsets require a column of unique identifiers as the "ID field." This field, along with optional count and destination latitude/longitude columns (again, case sensitive), can be specified when the "Enable freeform (non-grid points)" switch is toggled on, as shown above. If you do not specify a count column, a layer of count = 1 for each row will be added. Once a freeform pointset has been processed, you can use it in certain regional and custom analyses.
-
+In addition to the standard latitude and longitude columns, CSV files to be processed as freeform spatial dataset require a column of unique identifiers as the "ID field." This field, along with optional count and destination latitude/longitude columns (again, case sensitive), can be specified when the "Enable freeform (non-grid points)" switch is toggled on, as shown above. If you do not specify a count column, a layer of count = 1 for each row will be added. Once a freeform dataset has been processed, you can use it in certain regional and custom analyses.
 
 ### Shapefiles
 
