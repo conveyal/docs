@@ -23,7 +23,7 @@ To start an analysis, you'll need to select a [project](/glossary#project) and [
 This will initialize a compute cluster which may take a minute to start up. 
 If this is your first time performing an analysis with a given [network bundle](/glossary#network-bundle) it may take some time to build the network, however this only needs to be done once for each bundle. For more information, see the [FAQ page](/learn-more/faq#why-the-wait).
 
-Once the compute cluster is initialized you should see an isochrone displayed in blue around your point on the map. If you have selected an opportunity dataset, you will also see a [chart of accessibility](#accessibility-chart) at selected time and percentile thresholds. You may also select a comparison project and scenario, which will be shown in red.
+Once the compute cluster is initialized you should see an isochrone displayed in blue around your point on the map. If you have selected an destination opportunity layer, you will also see a [chart of accessibility](#accessibility-chart) at selected time and percentile thresholds. You may also select a comparison project and scenario, which will be shown in red.
 Many other configuration parameters are described in the [Options and Configuration](/analysis/configuration).
 
 ## Isochrone map
@@ -56,14 +56,14 @@ To change the origin of the analysis, drag the marker to a new location. Clickin
 
 ## Analysis panel
 
-The left panel has controls for the analysis and displays the access to opportunities afforded by the [scenario](/glossary#scenario). At the top of the panel, available scenarios and opportunity data layers are listed in drop-down menus. For example, you might be interested in how a given scenario provides access to jobs, access to schools, or some other variable of interest represented in an [opportunity dataset](/glossary#opportunity-dataset) you uploaded.
+The left panel has controls for the analysis and displays the access to opportunities afforded by the [scenario](/glossary#scenario). At the top of the panel, available scenarios and destination opportunity layers are listed in drop-down menus. For example, you might be interested in how a given scenario provides access to jobs, access to schools, or some other variable of interest represented in a [spatial dataset](/glossary#spatial-dataset) you uploaded.
 Additional scenarios can be selected for comparison. A [baseline](/glossary#baseline-network) scenario with no modifications (i.e. the unmodified [network bundle](/glossary#network-bundle) you uploaded) is automatically available for every project.
 
 The options available in this panel are described more fully in [Options and Configuration](/analysis/configuration).
 
 ### Chart of accessibility results
 
-If an [opportunity dataset](/glossary#opportunity-dataset) is selected, the map will include a dot-density layer representing opportunities and you will be shown a chart of the accessibility (i.e. the number of opportunities reachable) from the chosen origin.
+If a [spatial dataset](/glossary#spatial-dataset) is selected, the map will include a dot-density layer representing opportunities and you will be shown a chart of the accessibility (i.e. the number of opportunities reachable) from the chosen origin.
 
 <Image 
   src='/img/analysis-stacked-percentile.png' 
