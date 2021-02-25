@@ -52,6 +52,7 @@ South Boston,Chelsea High School,95,-1
 Note that in travel time CSV results, a time of -1 indicates the destination is unreachable within the maximum cutoff specified when the regional analysis was created. The number of destinations is currently limited to 4 million, and the number of origin-destination pairs is limited to 16 million. If you have uploaded freeform pointsets representing linked origin-destination pairs, you can set the `oneToOne:true` in the custom analysis request to compute travel times for only linked pairs, rather than all combinations of origins and destinations (many-to-many).
 
 <!---
+## Path details
 Setting `recordPaths:true` will result in a CSV file with rows for each origin point and destination point...
 
 ```csv
@@ -72,4 +73,5 @@ etc
 ```
 --->
 
+## API access
 To download travel time surfaces, isochrones, or accessibility results for specific sets of origins using Python scripts, see the notebook in this [repository](https://github.com/conveyal/batch-isochrones). This notebook is provided as an example only, and Conveyal provides no guarantee of ongoing API compatibility for such external scripts.
