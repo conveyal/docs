@@ -12,7 +12,7 @@ By default, Conveyal calculates accessibility indicators for every point in an a
 You can override this default behavior to prepare CSV files with accessibility, travel-time, and path results for a limited number of specified origins at exact coordinates. You first need to upload a CSV file and [process it as a freeform (non-grid) pointset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points). Next, in the custom request settings JSON of the analysis panel, add the fields described below to trigger the preparation of CSV result files. Then, create a regional analysis with a freeform pointset selected as the Origin points. Once a regional analysis with freeform origins is complete, you will have options to download CSV files of the results. These features are still experimental; contact your support team for more information.
 
 ## Accessibility
-Setting `recordAccessibility:true` will result in a CSV file with a row for each origin point, destination opportunity layer, travel time percentile, and cutoff. For example:
+The default `recordAccessibility:true` in the custom analysis request JSON will result in a CSV file with a row for each origin point, destination opportunity layer, travel time percentile, and cutoff. For example:
 
 ```csv
 origin,destinations,percentile,cutoff,access
@@ -31,7 +31,7 @@ etc
 ```
 
 ## Travel time matrix
-Setting `recordTimes:true` will result in a CSV file with a row for each origin point, destination point, and travel time percentile. This setting requires freeform pointsets to be selected for both the Origin points and the Destination opportunity layer. For example:
+Setting `recordTimes:true` in the custom analysis request JSON will result in a CSV file with a row for each origin point, destination point, and travel time percentile. This setting requires freeform pointsets to be selected for both the Origin points and the Destination opportunity layer. For example:
 
 ```csv
 origin,destination,percentile,time
