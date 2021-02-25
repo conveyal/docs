@@ -9,10 +9,12 @@ import {
 
 By default, Conveyal calculates accessibility indicators for every point in an analysis [grid](/analysis/methodology#spatial-resolution). 
 
-You can override this default behavior to prepare CSV files with accessibility, travel-time, and path results for a limited number of specified origins at exact coordinates. You first need to upload a CSV file and [process it as a freeform (non-grid) spatial dataset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points). Next, in the custom request settings JSON of the analysis panel, add the fields described below to trigger the preparation of CSV result files. Then, create a regional analysis with Origin points set to a freeform spatial dataset. Once a regional analysis with freeform origins is complete, you will have options to download CSV files of the results. These features are still experimental; contact your support team for more information.
+You can override this default behavior to prepare CSV files with accessibility and travel-time results for a limited number of specified origins at exact coordinates. You first need to upload a CSV file and [process it as a freeform (non-grid) spatial dataset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points). Next, in the custom request settings JSON of the analysis panel, add the fields described below to trigger the preparation of CSV result files. Then, create a [regional analysis]/analysis/regional) with Origin points set to a freeform spatial dataset. Once a regional analysis with freeform origins is complete, you will have options to download CSV files of the results. These features are still experimental; contact your support team for more information.
 
 ## Accessibility
-The default `recordAccessibility:true` in the custom analysis request JSON will result in a CSV file with a row for each origin point, destination opportunity layer, travel time percentile, and cutoff. For example:
+The default `recordAccessibility: true` field in the [custom analysis request JSON](/analysis/configuration#additional-settings) will result in a CSV file with a row for each origin point, destination opportunity layer, travel time percentile, and cutoff.
+
+### Example results
 
 ```csv
 origin,destinations,percentile,cutoff,access
@@ -31,9 +33,12 @@ etc
 ```
 
 ## Travel time matrix
-Setting `recordTimes:true` in the custom analysis request JSON will result in a CSV file with a row for each origin point, destination point, and travel time percentile. This setting requires freeform spatial datasets to be selected for both the Origin points and the Destination opportunity layer. 
 
-Example results:
+Adding `recordTimes: true` to the [custom analysis request JSON](/analysis/configuration#additional-settings) will result in a CSV file with a row for each origin point, destination point, and travel time percentile. This setting requires freeform spatial datasets to be selected for both the Origin points and the Destination opportunity layer. 
+
+In travel time CSV results, a time of -1 indicates the destination is unreachable within the maximum cutoff specified when the regional analysis was created. The number of destinations is currently limited to 4 million, and the number of origin-destination pairs is limited to 16 million. If you need travel times only for linked pairs of origin-destination coordinates, and a many-to-many analysis would exceed these limits, you can use the `oneToOne` setting described below.
+
+### Example results
 
 ```csv
 origin,destination,percentile,time
@@ -51,11 +56,31 @@ South Boston,Cambridge Family Health,95,46
 South Boston,Chelsea High School,95,-1
 ```
 
-Note that in travel time CSV results, a time of -1 indicates the destination is unreachable within the maximum cutoff specified when the regional analysis was created. The number of destinations is currently limited to 4 million, and the number of origin-destination pairs is limited to 16 million. If you have uploaded freeform spatial datasets representing linked origin-destination pairs, you can set the `oneToOne:true` in the custom analysis request to compute travel times for only linked pairs, rather than all combinations of origins and destinations (many-to-many).
+### Linked origin-destination pairs (oneToOne)
+
+When both origins and destinations are freeform, you can save CSV results for specific matched pairs of origins and destinations, rather than all pairs of origins and destinations. 
+
+This feature is enabled by adding `oneToOne: true` to the custom analysis request JSON. This approach can greatly reduce the size of output files, restricting them to only a small set of OD pairs you care about. But it may not reduce compute time (which is primarily affected by the number of origins). If origin coordinates are repeated for different destinations, `oneToOne: false` will likely be faster even if you do not need all combinations of origins and destinations.
 
 <!---
 ## Path details
-Setting `recordPaths:true` will result in a CSV file with rows for each origin point and destination point...
+
+Setting `recordPaths:true` will result in a CSV file with the following columns:
+
+* origin: Id of the origin point
+* destination: Id of the destination point
+* routes: pipe separated list of GTFS routeIds, one per transit leg
+* boardStops: pipe separated list of GTFS stopIds, one per transit leg
+* alightStops : pipe separated list of GTFS stopIds, one per transit leg
+* rideTimes: pipe separated list of in-vehicle travel times (minutes), one per transit leg.
+* accessTime: walking time from origin to boarding stop of first transit leg (minutes)
+* egressTime: walking time from alighting stop of last transit leg to destination (minutes)
+* transferTime: time spent walking between transit stops for transfers (minutes)
+* waitTimes: pipe separated list of waiting time (minutes) to board each transit leg, for the specific itinerary following this path that has the lowest waiting time
+* totalTime: total time (minutes), for the specific itinerary following this path that has the minimum total time. Because all other components of travel time are fixed for a given path, the itinerary with the lowest waiting time should also be the one with the lowest total time.
+* nIterations: number of departure minutes in the departure time window at which this path is optimal. Note the nIterations for each OD pair should sum to the number of total iterations, unless specific departure times result in total travel times that exceed the maximum cutoff.
+
+### Example results
 
 ```csv
 origin,destination,routes,boardStops,alightStops,rideTimes,accessTime,egressTime,transferTime,waitTimes,totalTime,nIterations
@@ -76,4 +101,4 @@ etc
 --->
 
 ## API access
-To download travel time surfaces, isochrones, or accessibility results for specific sets of origins using Python scripts, see the notebook in this [repository](https://github.com/conveyal/batch-isochrones). This notebook is provided as an example only, and Conveyal provides no guarantee of ongoing API compatibility for such external scripts.
+To prepare travel time surfaces, isochrones, or accessibility results for specific sets of origins using Python scripts, see the notebook in this [repository](https://github.com/conveyal/batch-isochrones). This notebook is provided as an example only, and Conveyal provides no guarantee of ongoing API compatibility for such external scripts.

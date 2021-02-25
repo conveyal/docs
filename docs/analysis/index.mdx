@@ -38,7 +38,7 @@ After the server returns results the map will show a blue [isochrone](/glossary#
 The *time cutoff* slider controls the travel time threshold between a range of one minute and two hours. The slider for *travel time percentile* controls the portion of departures within the time window that have to meet the travel time threshold. 
 Reducing the travel time should smoothly decrease the size of the isochrone. 
 The default values are 60 minutes, at the 50<sup>th</sup> percentile. This would mean that the default isochrone boundary is drawn where the median trip in the selected departure window would take exactly one hour. 
-For single point analysis, percentile values are restricted to a preset range (5,25,50,75,95), so moving this slider will result in fairly discrete changes in the isochrone. An arbitrary percentile value can be set for a [regional analysis](/analysis/regional). 
+For single point analysis, percentile values are restricted to a preset range (5,25,50,75,95), so moving this slider will result in fairly discrete changes in the isochrone. Arbitrary percentile values can be set for a [regional analysis](/analysis/regional). 
 
 <Video 
   alt='Testing different travel time cutoffs, percentiles, and origins'
@@ -47,7 +47,7 @@ For single point analysis, percentile values are restricted to a preset range (5
 
 The display of modifications on the map is controlled in editing mode (See: [Toggling display of modifications](/edit-scenario/usage#toggle-mod-display)). To change what modifications are shown, you must set the visibility there and then navigate back to the analysis page. 
 
-To change the origin of the analysis, drag the marker to a new location. Clicking on the map away from the marker will display a box and whisker plot of the distribution of travel times from the origin to that location. For example, in the image below the travel time varies between about 30 and 50 minutes depending on when one departs.
+To change the origin of the analysis, drag the marker to a new location. A smaller circular marker will follow your cursor on the map, and a legend will show a box and whisker plot of the distribution of travel times from the origin to that destination. For example, in the image below the travel time varies between about 30 and 50 minutes depending on when one departs. Click on the map to pin the destination marker, and click on the marker to unpin it. 
 
 <Image 
   src='/img/destination-travel-time-distribution.png' 
