@@ -10,24 +10,48 @@ import {
 import Button from '../../components/button'
 import Image from '../../components/image'
 
-The [single point analysis](/analysis) interface also allows creating a *regional analysis*, or *multi-point analysis* which involves repeating an accessibility calculation for every location in a regular grid (See [Spatial resolution](/analysis/methodology#spatial-grid)).
+The [single point analysis](/analysis) interface also allows creating a *regional analysis*, which involves repeating calculations (e.g. accessibility to multiple destination opportunity layers) for a specified batch of origin points.
 
 ## Starting a regional analysis
 
-To start a regional analysis, first set the appropriate parameters using the controls for a [single point analysis](/analysis), and confirm that the [isochrones](/glossary#isochrone) and accessibility plots are as expected.
+To start a regional analysis, first [fetch results for a single origin](/analysis) with the appropriate project, scenario, travel modes, time of day, and other parameters set, then confirm that [isochrones](/glossary#isochrone) are displayed as expected.
 
-You can also choose custom geographic bounds for your regional analysis. By default, the entire region is analyzed, but for efficiency it is also possible to analyze a smaller area. You can set the bounds of the analysis by dragging the pins on the map, or by selecting an existing regional analysis and using the same bounds. If you plan to compare two regional analyses, make sure they have the same bounds and routing engine version. The exact version and bounds used for previous regional analyses can be selected directly in their respective dropdown menus. 
+### Result types
 
-When you have configured all of these options, <Button variantColor='green'><FaPlus /> Regional analysis</Button> will be enabled. Note that this button is disabled unless isochrones are displayed; checking single-origin isochrone results is a verification step that helps avoid heavy computation for analyses with invalid settings.
+The type of computation performed in a regional analysis is set by specific fields in the custom request settings JSON in the analysis panel. Accessibility output is enabled by default. Options for other types, such as travel time matrices, are described [here](/guides/compute-freeform).
 
-After clicking the <Button variantColor='green'><FaPlus /> Regional analysis</Button>, you will see options to configure your regional analysis run. Give the analysis a name, select at least one opportunity dataset, ensure the list of travel time cutoffs and percentiles will cover the results you want, then click <Button variantColor='green'><FaPlus /> Create</Button>.
+### Select origins
+
+You can also choose custom geographic bounds for your regional analysis. By default, the entire region is analyzed, but for efficiency it is also possible to analyze a smaller area. You can set the bounds of the analysis by clicking "Bounds of analysis -- set custom" in the analysis panel, then dragging the pins on the map, or by selecting an existing regional analysis and using the same bounds. 
+
+If you plan to compare two regional analyses, make sure they have the same bounds and routing engine version. The exact version and bounds used for previous regional analyses can be selected directly in the respective dropdown menus.
+
+When you have configured these options, <Button variantColor='green'>Regional analysis <FaPlus /></Button> will be enabled. Note that this button is disabled unless isochrones are displayed; checking single-origin isochrone results is a verification step that helps avoid heavy computation for analyses with invalid settings.
+
+After clicking the <Button variantColor='green'>Regional analysis <FaPlus /></Button>, you will see additional configuration options.
+
+Give the analysis a name, and select which Origin points to use:
+* The default setting is using a rectangular grid (the region bounds or custom bounds set as described above). Each point from the specified grid will be used as an origin in this analysis, yielding a raster map of accessibility results. 
+* Alternatively, if you have uploaded [freeform (non-grid) spatial datasets](/prepare-inputs/upload-spatial-data#freeform-non-grid-points), you can instead use the exact coordinates of points in one of these layers as origins, yielding tabular result files.
 
 <Image 
   src='/img/regional-create.png'
   alt='Options for creating a regional analysis'
 />
 
-After creating a regional analysis, it will appear in the list of running regional analyses with a progress bar. Conveyal will automatically scale up computation to compute accessibility for every origin in the region, so it should not take more than a [few minutes](/learn-more/faq#how-long) for most walking plus transit regional analyses to complete. If you want to reduce computational time, consider setting custom geographic bounds as described above.
+### Select destinations and run analysis
+
+Select at least one Destination opportunity layer:
+* When using grid spatial datasets as destinations, you may specify several grids and they may even be of different sizes and shapes (but must all be at the same zoom level).
+* When using freeform spatial datasets as destinations in a regional analysis, you can specify only a single layer for now. Grid and freeform destinations cannot yet be mixed.
+
+Ensure the list of travel time cutoffs and percentiles will cover the results you want. For example, if you want a travel time matrix to include trips up to 120 minutes, ensure that 120 is included as a cutoff; any travel times exceeding the maximum cutoff will be clipped and recorded as -1.
+
+Finally, click <Button variantColor='green'><FaPlus /> Create</Button> to start the analysis.
+
+### Computation time
+
+After creating a regional analysis, it will appear in the list of running regional analyses with a progress bar. Conveyal will automatically scale up computation to compute accessibility for every origin in the analysis, so it should not take more than a [few minutes](/learn-more/faq#how-long) for most walking plus transit regional analyses to complete. If you want to reduce computational time, consider setting custom geographic bounds as described above.
 
 <Image 
   src='/img/regional-progress.png'
@@ -42,6 +66,7 @@ Once a regional analysis is complete, it can be viewed by selecting it from the 
 />
 
 ## Inspecting results
+
 Upon selecting a completed regional analysis, you will see a screen like the following:
 
 <Image 
@@ -49,11 +74,12 @@ Upon selecting a completed regional analysis, you will see a screen like the fol
   alt='Viewing a regional analysis'
 />
 
-The map shows the number of opportunities reachable from each location within the travel time cutoff specified when creating the regional analysis. Using the download button, you can save regional analysis results in a [GeoTIFF](https://en.wikipedia.org/wiki/GeoTIFF) raster format. These files can then be opened in a GIS to conduct additional analyses or create custom maps. Downloading results also allows you to see the raw [grid cells](/analysis/methodology#spatial-resolution) used for analysis, rather than the smoother interpolated results shown in your browser.
+When accessibility results have been computed for origins on a rectangular grid, the map will show the number of opportunities accessible from each point in the region. Any destination opportunity layers, travel time percentiles, and cutoffs specified when you created the regional analysis can be interactively selected here.
 
 ## Downloading regional results
+Using the download button, you can save displayed regional analysis results in a [GeoTIFF](https://en.wikipedia.org/wiki/GeoTIFF) raster format. These files can then be opened in a GIS to conduct additional analyses or create custom maps. In QGIS, you will likely want to [style](https://docs.qgis.org/3.16/en/docs/training_manual/rasters/changing_symbology.html#ls-changing-raster-symbology) the accessibility layer with a singleband pseudocolor scheme. If you prefer to work with the results as a regular grid of vector points, you may find the "Raster values to points" tool in the QGIS processing toolbox helpful. Downloading results also allows you to see the raw [grid cells](/analysis/methodology#spatial-resolution) used for analysis, rather than the smoother interpolated results shown in your browser.
 
-Using the download button, you can save regional analysis results in a raster format (GEOTIFF). These saved files can be opened in GIS to conduct additional analyses or create custom maps. In QGIS, you will likely want to [style](https://docs.qgis.org/2.8/en/training_manual/rasters/changing_symbology.html#basic-fa-changing-raster-layer-symbology) the accessibility layer with a singleband pseudocolor scheme. If you prefer to work with the results as a regular grid of vector points, you may find the "Raster values to points" tool in the QGIS processing toolbox helpful. Downloading results also allows you to see the raw [grid cells](/analysis/methodology#spatial-resolution) used for analysis, rather than the smoother interpolated results shown in your browser.
+For regional analyses run with freeform origins, accessibility or [travel time/path results](/guides/compute-freeform) may be available for download as CSV files; these results are not shown on the map.
 
 ## Comparing regional analyses
 
@@ -91,7 +117,7 @@ If **Union** is un-selected, each feature will be used as a separate aggregation
 
 The choice of aggregation area can have a significant impact on the final metric. If a very large area is chosen, where much of the region does not have transit service, there will be a large number of people with very low job access via transit, deflating the aggregate numbers. Conversely, if a small area is chosen, segments of the population that should be served by transit will be excluded from the aggregate metrics.
 
-To view aggregate metrics, select an uploaded aggregation area and the opportunity dataset you want to weight by. For example, if you select "Workers total," your histogram will represent how many workers experience different levels of accessibility. If instead you select "Workers with earnings $1250 per month or less," you will see how accessibility is distributed among workers with low earnings. Note that aggregation areas are uploaded on this page, but opportunity datasets are uploaded in the separate Opportunity Datasets panel.
+To view aggregate metrics, select an uploaded aggregation area and the origin spatial dataset you want to weight by. For example, if you select "Workers total," your histogram will represent how many workers experience different levels of accessibility. If instead you select "Workers with earnings $1250 per month or less," you will see how accessibility is distributed among workers with low earnings. Note that aggregation areas are uploaded on this page, but spatial datasets are uploaded in the separate Spatial Datasets panel.
 
 Once you have an aggregation area and weight selected, you will see a display similar to the one below, showing a histogram of how many of the units you weighted by experience a particular level of access.
 
@@ -100,7 +126,7 @@ Once you have an aggregation area and weight selected, you will see a display si
   alt='Aggregate accessibility in Brooklyn, New York, USA'
 />
 
-The plot is a histogram of the number jobs accessible within the full opportunity dataset (not just Brooklyn) for workers residing in Brooklyn (since this is a regional analysis of access to jobs, aggregated to Brooklyn, and weighted by workers). We can see that the distribution is bimodal. There are a large number of workers with relatively lower accessibility values (the left peak), most likely residing in outer Brooklyn further from the subway and from job centers . There are also a number of workers with a higher level of accessibility, probably those residing in downtown Brooklyn and near Manhattan. This plot is conceptually similar to academic work on accessibility by population percentile (e.g. [Grengs et al. 2010](http://journals.sagepub.com/doi/10.1177/0739456X10363278)).
+The plot is a histogram of the number jobs accessible within the full destination spatial dataset (not just Brooklyn) for workers residing in Brooklyn (since this is a regional analysis of access to jobs, aggregated to Brooklyn, and weighted by workers). We can see that the distribution is bimodal. There are a large number of workers with relatively lower accessibility values (the left peak), most likely residing in outer Brooklyn further from the subway and from job centers . There are also a number of workers with a higher level of accessibility, probably those residing in downtown Brooklyn and near Manhattan. This plot is conceptually similar to academic work on accessibility by population percentile (e.g. [Grengs et al. 2010](http://journals.sagepub.com/doi/10.1177/0739456X10363278)).
 
 Below the histogram is a readout of the metric mentioned above: how many opportunities are accessible to a certain quantile of the population; in this case, 90% of workers residing in Brooklyn have access to more than 267,000 jobs. You can adjust the percentile by dragging the slider. The area of the histogram above the cutoff is highlighted. By setting it below 100%, you are effectively recognizing that some percentage of a given region may not be feasible to serve with transit, so accessibility metrics should not be penalized for the lack of access in those areas.
 

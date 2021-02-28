@@ -4,6 +4,11 @@ title: Options and configuration
 
 import Image from '../../components/image'
 
+import {
+  FaCode,
+  FaMousePointer
+} from 'react-icons/fa'
+
 Below the accessibility charts, different parameters for the analysis can be set:
 
 <Image 
@@ -67,6 +72,14 @@ If your scenario does not include frequency-based routes there is no need to sim
 The **Routing engine** version will default to the highest available version of [Conveyal R5](https://github.com/conveyal/r5), or to the version previously used for the selected project. If you use a routing engine version with the first or second number of the version changed, there may be changes to the algorithm that affect results. Previous versions used for regional analysis in a given region will be available in this drop-down menu. You can change versions manually by typing any supported release version (e.g. "v4.8.0") in the routing engine field.
 
 In general the default setting should be fine unless you are advised otherwise by your support team. 
+
+## Additional settings
+
+Additional settings are available in the custom analysis request JSON. Use the <FaCode /> and <FaMousePointer /> buttons in the analysis panel to toggle between the standard interface and the analysis request JSON view.
+
+### Requesting path details
+
+To view the details of transit paths in your browser console, pin the blue circular destination marker on the map and add `recordPaths: true` to the custom request JSON. Running regional analyses with `recordPaths` or `recordTimes` set to `true` and custom origins selected will trigger the experimental features described [here](/guides/compute-freeform).
 
 ## Errors and warnings
 

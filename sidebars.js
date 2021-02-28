@@ -6,7 +6,7 @@ module.exports = {
     type: 'category',
     label: 'Network setup',
     collapsed: false,
-    items: ['prepare-inputs/index', 'prepare-inputs/upload-opportunity-data']
+    items: ['prepare-inputs/index', 'prepare-inputs/upload-spatial-data']
   }, {
     type: 'category',
     label: 'Network editing',
