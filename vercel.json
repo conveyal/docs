@@ -1,7 +1,7 @@
 {
-    "redirects": [
-      { "source": "/prepare-inputs/upload-opportunity-data", 
-        "destination": "/prepare-inputs/upload-spatial-data" 
+    "rewrites": [
+      { "source": "/prepare-inputs/upload-opportunity-data:match*", 
+        "destination": "/prepare-inputs/upload-spatial-data:match*" 
       }
     ],
     "cleanUrls": true
