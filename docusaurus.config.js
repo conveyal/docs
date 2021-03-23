@@ -94,6 +94,6 @@ module.exports = {
     'data-domain': 'docs.conveyal.com'
   }],
   stylesheets: [
-    'https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap'
+    'https://fonts.googleapis.com/css2?family=Inter:wght@200;400;600&display=swap'
   ]
 }
