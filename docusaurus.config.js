@@ -11,10 +11,14 @@ const themeConfig = {
     },
     items: [
       {
-        href: 'https://github.com/conveyal',
-        className: 'header-github-link',
-        'aria-label': 'GitHub Org',
-        position: 'right'
+        to: '/',
+        label: 'Docs',
+        position: 'left'
+      },
+      {
+        to: 'changelog', 
+        label: 'Changelog', 
+        position: 'left'
       },
       {
         href: 'https://conveyal.com/contact',
@@ -24,6 +28,12 @@ const themeConfig = {
       {
         href: 'https://analysis.conveyal.com',
         label: 'Log in',
+        position: 'right'
+      },
+      {
+        href: 'https://github.com/conveyal',
+        className: 'header-github-link',
+        'aria-label': 'GitHub Org',
         position: 'right'
       }
     ]
@@ -59,6 +69,12 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: 'https://github.com/conveyal/docs/edit/master'
         },
+        blog: {
+          path: './changelog',
+          routeBasePath: '/changelog',
+          blogTitle: 'Changelog',
+          blogDescription: 'Updates to Conveyal Analysis'
+        },
         theme: {
           customCss: require.resolve('./custom.css'),
         },
@@ -77,5 +93,7 @@ module.exports = {
     defer: true, 
     'data-domain': 'docs.conveyal.com'
   }],
-
+  stylesheets: [
+    'https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap'
+  ]
 }

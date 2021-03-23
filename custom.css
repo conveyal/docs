@@ -17,6 +17,10 @@
   --ifm-code-font-size: 95%;
 }
 
+body {
+  font-family: 'Inter', sans-serif;
+}
+
 /* style more in line with our classic logo */
 .navbar__title {
   font-weight: 300;
