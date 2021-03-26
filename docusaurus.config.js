@@ -73,7 +73,10 @@ module.exports = {
           path: './changelog',
           routeBasePath: '/changelog',
           blogTitle: 'Changelog',
-          blogDescription: 'Updates to Conveyal Analysis'
+          blogDescription: 'Updates to Conveyal Analysis',
+          blogSidebarTitle: 'Recent changes',
+          blogSidebarCount: 3,
+          postsPerPage: 3
         },
         theme: {
           customCss: require.resolve('./custom.css'),
