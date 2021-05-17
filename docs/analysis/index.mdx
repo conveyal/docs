@@ -5,9 +5,11 @@ title: Single point analysis
 
 import {
   FaChartArea,
-  FaDownload
+  FaDownload,
+  FaSync
 } from 'react-icons/fa'
 
+import Button from '../../components/button'
 import Image from '../../components/image'
 import Video from '../../components/video'
 
@@ -18,7 +20,7 @@ The main analysis page is for generating [isochrones](/glossary#isochrone) (trav
   src='/img/analysis-default-settings.png'
 />
 
-To start an analysis, you'll need to select a [project](/glossary#project) and [scenario](/glossary#scenario). Once these are selected you can retrieve results for the origin marker shown on the map either by moving the marker to a new location or clicking the *fetch results* button at the top of the page. 
+To start an analysis, you'll need to select a [project](/glossary#project) and [scenario](/glossary#scenario). Once these are selected you can fetch results for the origin marker shown on the map either by moving the marker to a new location or clicking <Button variantColor='blue'>Fetch results <FaSync /></Button>
 
 This will initialize a compute cluster which may take a minute to start up. 
 If this is your first time performing an analysis with a given [network bundle](/glossary#network-bundle) it may take some time to build the network, however this only needs to be done once for each bundle. For more information, see the [FAQ page](/learn-more/faq#why-the-wait).
@@ -28,17 +30,20 @@ Many other configuration parameters are described in the [Options and Configurat
 
 ## Isochrone map
 
-After the server returns results the map will show a blue [isochrone](/glossary#isochrone) for your primary scenario. This represents the area reachable from the origin marker within a given travel time cutoff, to a given degree of certainty. If a comparison scenario is selected, its isochrone will be shown in red. The overlap of the main and comparison isochrones should be visible as a combination of the two colors.
+After the server returns results the map will show a blue [isochrone](/glossary#isochrone) for your primary scenario. This represents the area reachable from the origin marker within the selected travel time cutoff, to a given degree of certainty. If a comparison scenario is selected, its isochrone will be shown in red. The overlap of the main and comparison isochrones should be visible as a combination of the two colors.
 
 <Image 
   src='/img/overlapping-isochrones.png' 
   alt='Overlapping isochrones with a comparison scenario'
 />
 
-The *time cutoff* slider controls the travel time threshold between a range of one minute and two hours. The slider for *travel time percentile* controls the portion of departures within the time window that have to meet the travel time threshold. 
-Reducing the travel time should smoothly decrease the size of the isochrone. 
-The default values are 60 minutes, at the 50<sup>th</sup> percentile. This would mean that the default isochrone boundary is drawn where the median trip in the selected departure window would take exactly one hour. 
-For single point analysis, percentile values are restricted to a preset range (5,25,50,75,95), so moving this slider will result in fairly discrete changes in the isochrone. Arbitrary percentile values can be set for a [regional analysis](/analysis/regional). 
+The *travel time cutoff* slider controls the travel time threshold between a range of one minute and two hours. The slider for *travel time percentile* controls the portion of departures within the time window that have to meet the travel time threshold. Reducing the travel time should smoothly decrease the size of the isochrone. The default values are 60 minutes, at the 50<sup>th</sup> percentile. This would mean that the default isochrone boundary is drawn where the median trip in the selected departure window would take exactly one hour. 
+
+:::note
+For results that include uncertainty and variability due to transit schedules, changing the travel time percentile slider will change the isochrones, destination travel time legend, and accessibility charts accordingly. See the [methodology](/analysis/methodology) page for more details.
+:::
+
+For single point analysis, travel time percentile is limited to five default values (5, 25, 50, 75, 95). Arbitrary percentile values can be set for a [regional analysis](/analysis/regional). 
 
 <Video 
   alt='Testing different travel time cutoffs, percentiles, and origins'
@@ -63,26 +68,26 @@ The options available in this panel are described more fully in [Options and Con
 
 ### Chart of accessibility results
 
-If a [spatial dataset](/glossary#spatial-dataset) is selected, the map will include a dot-density layer representing opportunities and you will be shown a chart of the accessibility (i.e. the number of opportunities reachable) from the chosen origin.
+If a [spatial dataset](/glossary#spatial-dataset) is selected, the map will show a dot-density layer of these opportunities, and the analysis panel will show the number of opportunities accessible from the origin selected on the map.
 
 <Image 
   src='/img/analysis-stacked-percentile.png' 
   alt='A stacked percentile plot'
 />
 
-The main display of accessibility results is the stacked percentile plot. The main plot shows the cumulative number of opportunities reachable at different travel time cutoffs. When transit schedules introduce variability, the graph will not be a single line because travel times (and consequently, accessibility) depend on when exactly a user of the transport system leaves their origin. In these cases, the graph shows the number of opportunities given 95<sup>th</sup>, 75<sup>th</sup>, 50<sup>th</sup>, 25<sup>th</sup>, and 5<sup>th</sup> percentile travel time. The bottom of the shaded area is the number of opportunities which are almost always reachable, while the top is the number of opportunities that are reachable only in the best cases (e.g. when someone leaves their house at the perfect time and has no waiting time, minimizing the overall travel time). The darkened line is the number of opportunities that are reachable at least half the time (i.e. have a median travel time of less than the travel time cutoff). For a more detailed explanation, see the [methodology](/analysis/methodology) page.
+Below the spatial dataset selector and accessibility result for the selected travel time cutoff, a stacked percentile plot shows the cumulative number of opportunities reachable at different travel time cutoffs. When transit schedules introduce variability, the graph will not be a single line because travel times (and consequently, accessibility) depend on when exactly a user of the transport system leaves their origin. In these cases, the graph shows the number of opportunities given the five default percentile travel time values. The bottom of the shaded area is the number of opportunities which are almost always reachable (at 95<sup>th</sup> percentile travel times), while the top is the number of opportunities that are reachable only in the best cases (at 5<sup>th</sup> percentile travel times, e.g. when someone leaves their house at the perfect time and has no waiting time, minimizing the overall travel time). The darkened line corresponds to the selected travel time percentile.
 
 When the cumulative plot is steep, areas with especially high opportunity densities (e.g. typical downtown areas for jobs) are reachable. Note that the Y axis is a square-root scale, so that the cumulative plot would be a straight line if both the opportunities and travel speeds radiating in all directions from an origin were uniform.
 
-The currently-selected travel time cutoff is indicated by the vertical line on the plot.
+The currently-selected travel time cutoff is indicated by the vertical dashed line on the plot.
 
-To the left of the Y axis labels is a box-and-whisker plot. This shows the same information as the cumulative plot, but only for the currently selected travel time cutoff. The lowest whisker shows the number of opportunities accessible given 95<sup>th</sup> percentile travel time, the box shows the number of opportunities accessible given 75<sup>th</sup>, 50<sup>th</sup> and 25<sup>th</sup> percentile travel time, and the top whisker shows the number of opportunities reachable given 5<sup>th</sup> percentile travel time.
+The stacked bar chart to the right of the cumulative plot shows the same information, but only for the currently selected travel time cutoff.  The line around the stacked bars corresponds to the selected travel time percentile.
 
-When a comparison scenario is selected two box plots will be displayed to the left of the axis with the comparison in red. The plots will also be simplified and only the bands between the 75<sup>th</sup> and 25<sup>th</sup> percentile travel times will be shown.
+When a comparison scenario is selected, it will be shown in red on the cumulative plot and the stacked bar chart.
 
 <Image 
   src='/img/stacked-percentile-comparison.png' 
-  alt='A stacked percentile plot comparing two scenarios. Note that the main scenario in blue has travel time variability while the comparison scenario in red (bicycle access only) has none.'
+  alt='A stacked percentile plot comparing two scenarios. Note that the main scenario in blue has travel time variability while the comparison scenario in red (bicycle only, no public transport) has none.'
 />
 
 ### Downloading
@@ -91,4 +96,4 @@ Click the download icon (<FaDownload />) next to your main or comparison scenari
 
 - **GeoJSON** saves the a multipolygon geometry of the isochrone currently shown on the map. The downloaded file can be converted to other formats using a tool like [mapshaper](http://mapshaper.org). Note that these vector isochrones are interpolations of the [underlying analysis grid](/analysis/methodology#spatial-resolution).
 - **GeoTIFF** saves the underlying travel time surface, a raster of travel times (in minutes) from the selected origin to the rest of the region. This raster has five bands corresponding to [time percentiles](/analysis/methodology#time-percentile) of 5, 25, 50, 75, and 95. For geoprocessing, we often suggest using band 3 (the median travel time) of this raw output. Cells beyond the 120 minute cutoff are assigned a value of zero. 
-- **CSV** saves a comma-separated table listing the total number of opportunities accessible at all combinations of time and percentile. It has one column for each minute between 1 to 120 and a row for each percentile (5,25,50,75,95).
+- **CSV** saves a comma-separated table listing the total number of opportunities accessible at all combinations of time and percentile. It has one column for each minute between 1 to 120 and a row for each default percentile value (5, 25, 50, 75, 95).
