@@ -11,9 +11,10 @@ const themeConfig = {
     },
     items: [
       {
-        to: '/',
+        docId: 'home',
         label: 'Docs',
-        position: 'left'
+        position: 'left',
+        type: 'doc'
       },
       {
         to: 'changelog', 
@@ -66,8 +67,7 @@ module.exports = {
       {
         docs: {
           routeBasePath: '/',
-          sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: 'https://github.com/conveyal/docs/edit/master'
+          sidebarPath: require.resolve('./sidebars.js')
         },
         blog: {
           path: './changelog',
