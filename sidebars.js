@@ -29,6 +29,9 @@ module.exports = {
       'analysis/regional'
     ]
   }, {
+    type: 'doc',
+    id: 'troubleshooting'
+  }, {
     type: 'category',
     label: 'Guides',
     collapsed: true,
