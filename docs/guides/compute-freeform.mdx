@@ -58,9 +58,9 @@ South Boston,Chelsea High School,95,-1
 
 ### Linked origin-destination pairs (oneToOne)
 
-When both origins and destinations are freeform, you can save CSV results for specific matched pairs of origins and destinations, rather than all pairs of origins and destinations. 
+When both origins and destinations are freeform, you can save CSV results for specific matched pairs of origins and destinations, rather than all combinations of origins and destinations. 
 
-This feature is enabled by adding `oneToOne: true` to the custom analysis request JSON. This approach can greatly reduce the size of output files, restricting them to only a small set of OD pairs you care about. But it may not reduce compute time (which is primarily affected by the number of origins). If origin coordinates are repeated for different destinations, `oneToOne: false` will likely be faster even if you do not need all combinations of origins and destinations.
+To enable this feature, add `oneToOne: true` to the custom analysis request JSON, and ensure that the origin points and destination layer have equal numbers of points. This approach can greatly reduce the size of output files, restricting them to only a small set of OD pairs you care about. But it may not reduce compute time (which is primarily affected by the number of origins). If origin coordinates are repeated for different destinations, `oneToOne: false` will likely be faster even if you do not need all combinations of origins and destinations.
 
 <!---
 ## Path details
