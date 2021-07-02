@@ -17,7 +17,7 @@ If you think of accessibility as the number of opportunities falling inside an i
 
 In choosing a decay function, there is a trade-off between ease of explanation and fidelity to traveler behavior. Simple cumulative opportunities accessibility indicators are very easy to explain and interpret. A definition like "number of jobs reachable in less than 30 minutes" poses little risk of confusing an audience or sidetracking a meeting into a mathematical discussion. However, these indicators are very sensitive to the exact cutoff chosen. A large office park situated 31 minutes away might contribute nothing to the accessibility value of a particular origin point. But the reachable jobs count could increase sharply at a neighboring origin point, from which the same office park happens to be 29 minutes away. This creates discontinuities in the accessibility surface and differs from how most people perceive travel. 
 
-Until now, Conveyal Analysis has dealt with this sensitivity by emphasizing interactive changes to the cutoff: in single point analyses you can readily shift the cutoff by a minute or two to ensure that an accessibility figure you're observing is not at an unstable location or time. Decay functions provide an alternate strategy for confronting this issue, as well as the important fact that some travelers will tolerate much higher travel times than others: decay functions may be interpreted as applying different step cutoffs for different proportions of the population.
+Before the introduction of decay functions, Conveyal Analysis dealt with this sensitivity by emphasizing interactive changes to the cutoff: in single point analyses you can readily shift the cutoff by a minute or two to ensure that an accessibility figure you're observing is not at an unstable location or time. Decay functions provide an alternate strategy for confronting this issue, as well as the important fact that some travelers will tolerate much higher travel times than others: decay functions may be interpreted as applying different step cutoffs for different proportions of the population.
 
 All decay functions are evaluated at one-second resolution, so the weights applied to the opportunities decrease very smoothly. Although Analysis reports travel times in minutes, they are internally measured in seconds. 
 
@@ -57,9 +57,11 @@ The following plot shows how the form of the function varies as the standard dev
 />
 
  
-### Exponential Decay 
+### Fixed Exponential Decay
 
-This function is of the form e<sup>-λt</sup> where λ is a single fixed decay constant in the range (0, 1). It is constrained to be positive to ensure weights decrease (rather than grow) with increasing travel time. The decay constant should be scaled for travel times in seconds. If your decay constant is for travel times in minutes, you will need to divide it by 60. This function can be specified in the advanced JSON view as follows:
+*Please note that the exponenital decay option visble in the Conveyal web app refers to the half-life exponential decay function described below. The fixed-decay form described in this section can only be specified manually via JSON.*
+
+This function is of the form e<sup>-λt</sup> where λ is a single fixed decay constant in the range (0, 1). The constant is constrained to be positive to ensure weights decrease (rather than grow) with increasing travel time. The decay constant should be scaled for travel times in seconds. If your decay constant is for travel times in minutes, you will need to divide it by 60. This function can be specified in the advanced JSON view as follows:
 
 ```JSON
 "decayFunction": {
@@ -68,11 +70,11 @@ This function is of the form e<sup>-λt</sup> where λ is a single fixed decay c
 }
 ```
 
-Note that unlike the other functions, this function will ignore the cutoff setting in Conveyal Analysis. This allows setting precise decay constants derived from your own models or research that do not correspond to any integer half-life. The cutoff will not affect the rate of decay or transpose the function in any way. For this reason, only one cutoff should be specified when launching a regional analysis, and that cutoff is arbitrary. Any additional cutoffs will perform extra computation but yield exactly the same results. Different percentiles will continue to affect the results - selecting different percentiles will yield different travel times to each destination, with increasing travel times giving lower weights to opportunities at those locations.
+Unlike the other functions, this function will ignore the cutoff setting in Conveyal Analysis. This allows setting precise decay constants derived from your own models or research that do not correspond to an integer half-life in minutes. The cutoff will not affect the rate of decay or transpose the function in any way. For this reason, only one cutoff should be specified when launching a regional analysis, and that cutoff is arbitrary. Any additional cutoffs will perform extra computation but yield exactly the same results. Different percentiles will continue to affect the results - selecting different percentiles will yield different travel times to each destination, with increasing travel times giving lower weights to opportunities at those locations.
 
-### Half-life Exponential Decay
+### Exponential Decay
 
-This is similar to the fixed-exponential option above, but in this case the decay parameter is inferred from the Analysis cutoff setting, which is treated as the half-life. It has no other parameters and is specified like this:
+This is similar to the fixed-exponential option above, but in this case the decay parameter is inferred from Conveyal's cutoff setting, which is treated as the half-life. It has no other parameters and is specified like this:
 
 ```JSON
 "decayFunction": {
