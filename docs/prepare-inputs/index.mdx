@@ -45,14 +45,14 @@ If there are no previously created network bundles, or if you want to use update
 
 #### Downloading
 
-Extracts from the global OSM database can be downloaded in [many different ways](https://wiki.openstreetmap.org/wiki/Downloading_data). Some popular services like those provided by [Geofabrik](http://download.geofabrik.de) or [Nextzen](https://metro-extracts.nextzen.org/) provide easy downloads for selected cities and regions. Be sure to download data covering your entire region - the predefined areas used by these sites may or may not align well with your region. Your extract should cover your entire service area or region, but not extend unnecessarily far beyond it as that may impact processing time. You'll often need to download an extract for a country or region larger than your true analysis area, then crop it to the size you need.
+Extracts from the global OSM database can be downloaded in [many different ways](https://wiki.openstreetmap.org/wiki/Downloading_data). For most regions, we recommend [Protomaps](https://protomaps.com/extracts), a service that provides up-to-date OSM extracts in the required PBF format. If you need a region that is too large for Protomaps, [Geofabrik](http://download.geofabrik.de) provides easy downloads for entire countries and other selected regions. In either case, your extract should cover your entire service area or region, but not extend unnecessarily far beyond it as that may cause computation to stall.
 
 #### Cropping
 
-Performing accessibility analysis with excessively large OSM data can lead to significant increases in computation time and complexity. We strongly recommend cropping the data if they cover an area significantly larger than your transportation network or opportunity data. Several command line tools are able to perform these cropping operations:
+Performing accessibility analysis with excessively large OSM data can lead to significant increases in computation time and complexity. We strongly recommend cropping the data if they cover an area significantly larger than your transportation network or opportunity data. If you need assistance, please contact your support team. If you are comfortable working with the Unix shell, consider these tools for cropping operations:
 
 - [Osmosis](https://wiki.openstreetmap.org/wiki/Osmosis) is a multi-platform Java tool that works on Windows, Linux, and MacOS.
-- [OSMConvert](https://wiki.openstreetmap.org/wiki/Osmconvert) is a fast tool pre-built for Windows and Linux and available on MacOS and Linux as part of the `osmctools` package.
+- [OSMConvert](https://wiki.openstreetmap.org/wiki/Osmconvert) is a fast tool pre-built for Windows and Linux and available on MacO S and Linux as part of the `osmctools` package.
 - [Osmium-Tool](https://wiki.openstreetmap.org/wiki/Osmium) is a personal favorite that is extremely fast but only straightforward to install on Linux and MacOS platforms.
 
 Below are some example crop commands for these different tools. You'll need to replace `input.osm.pbf` with the name of your downloaded PBF file and change the coordinates of the area to clip to.
