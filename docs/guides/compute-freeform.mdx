@@ -34,9 +34,11 @@ etc
 
 ## Travel time matrix
 
-Adding `recordTimes: true` to the [custom analysis request JSON](/analysis/configuration#additional-settings) will result in a CSV file with a row for each origin point, destination point, and travel time percentile. This setting requires freeform spatial datasets to be selected for both the Origin points and the Destination opportunity layer. 
+Adding `"recordTimes": true` to the [custom analysis request JSON](/analysis/configuration#additional-settings) will result in a CSV file with a row for each origin point, destination point, and travel time percentile. This setting requires freeform spatial datasets to be selected for both the Origin points and the Destination opportunity layer. 
 
 In travel time CSV results, a time of -1 indicates the destination is unreachable within the maximum cutoff specified when the regional analysis was created. The number of destinations is currently limited to 4 million, and the number of origin-destination pairs is limited to 16 million. If you need travel times only for linked pairs of origin-destination coordinates, and a many-to-many analysis would exceed these limits, you can use the `oneToOne` setting described below.
+
+Once you have prepared the desired results, you may want to remove the custom `recordTimes` flag from the custom analysis request JSON to avoid confusion in future analyses.
 
 ### Example results
 
@@ -56,11 +58,11 @@ South Boston,Cambridge Family Health,95,46
 South Boston,Chelsea High School,95,-1
 ```
 
-### Linked origin-destination pairs (oneToOne)
+### Linked origin-destination pairs (`oneToOne`)
 
 When both origins and destinations are freeform, you can save CSV results for specific matched pairs of origins and destinations, rather than all combinations of origins and destinations. 
 
-To enable this feature, add `oneToOne: true` to the custom analysis request JSON; then, in the regional analysis creation box, ensure that the origin points and destination layer are from source files with corresponding rows (and therefore have equal numbers of points). This approach can greatly reduce the size of output files, restricting them to only a small set of OD pairs you care about. But it may not reduce compute time (which is primarily affected by the number of origins). If origin coordinates are repeated for different destinations, `oneToOne: false` will likely be faster even if you do not need all combinations of origins and destinations.
+To enable this feature, add `"oneToOne": true` to the custom analysis request JSON; then, in the regional analysis creation box, ensure that the origin points and destination layer are from source files with corresponding rows (and therefore have equal numbers of points). This approach can greatly reduce the size of output files, restricting them to only a small set of OD pairs you care about. But it may not reduce compute time (which is primarily affected by the number of origins). If origin coordinates are repeated for different destinations, `"oneToOne": false` will likely be faster even if you do not need all combinations of origins and destinations.
 
 <!---
 ## Path details
