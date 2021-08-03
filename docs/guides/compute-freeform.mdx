@@ -12,25 +12,25 @@ By default, a regional analysis in Conveyal calculates accessibility indicators 
 You can override this default behavior to prepare CSV files with accessibility and travel-time results for a limited number of specified origins at exact coordinates. You first need to upload a CSV file and [process it as a freeform (non-grid) spatial dataset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points). Next, in the custom request settings JSON of the analysis panel, add the fields described below to trigger the preparation of CSV result files. Then, create a [regional analysis](/analysis/regional) with Origin points set to a freeform spatial dataset. Note that the cutoff value will limit results, so set it to 120 if you want full results for trips up to 2 hours. Once a regional analysis with freeform origins is complete, you will have options to download CSV files of the results. These features are still experimental; contact your support team for more information.
 
 ## Accessibility
-The default `recordAccessibility: true` field in the [custom analysis request JSON](/analysis/configuration#additional-settings) will result in a CSV file with a row for each origin point, destination opportunity layer, travel time percentile, and cutoff.
+The default `"recordAccessibility": true` field in the [custom analysis request JSON](/analysis/configuration#additional-settings) will result in a CSV file with a row for each origin point, destination opportunity layer, travel time percentile, and cutoff.
 
 ### Example results
 
-```csv
-origin,destinations,percentile,cutoff,access
-1,Total Jobs,5,30,386105
-1,Total Jobs,5,60,885656
-1,Total Jobs,25,30,338122
-1,Total Jobs,25,60,867946
-1,Total Jobs,50,30,287871
-1,Total Jobs,50,60,840089
-1,Total Jobs,75,30,234824
-1,Total Jobs,75,60,809584
-1,Total Jobs,95,30,183107
-1,Total Jobs,95,60,773271
-2,Total Jobs,5,30	142600
+origin|destinations|percentile|cutoff|access
+------|------------|----------|------|------
+1|Total Jobs|5|30|386105
+1|Total Jobs|5|60|885656
+1|Total Jobs|25|30|338122
+1|Total Jobs|25|60|867946
+1|Total Jobs|50|30|287871
+1|Total Jobs|50|60|840089
+1|Total Jobs|75|30|234824
+1|Total Jobs|75|60|809584
+1|Total Jobs|95|30|183107
+1|Total Jobs|95|60|773271
+2|Total Jobs|5|30|142600
 etc
-```
+
 
 ## Travel time matrix
 
@@ -42,21 +42,21 @@ Once you have prepared the desired results, you may want to remove the custom `r
 
 ### Example results
 
-```csv
-origin,destination,percentile,time
-Cambridge,Cambridge Family Health,5,9
-Cambridge,Chelsea High School,5,44
-Cambridge,Cambridge Family Health,50,12
-Cambridge,Chelsea High School,50,56
-Cambridge,Cambridge Family Health,95,12
-Cambridge,Chelsea High School,95,-1
-South Boston,Cambridge Family Health,5,36
-South Boston,Chelsea High School,5,50
-South Boston,Cambridge Family Health,50,41
-South Boston,Chelsea High School,50,55
-South Boston,Cambridge Family Health,95,46
-South Boston,Chelsea High School,95,-1
-```
+origin|destination|percentile|time
+------|-----------|----------|----
+Cambridge|Cambridge Family Health|5|9
+Cambridge|Chelsea High School|5|44
+Cambridge|Cambridge Family Health|50|12
+Cambridge|Chelsea High School|50|56
+Cambridge|Cambridge Family Health|95|12
+Cambridge|Chelsea High School|95|-1
+South Boston|Cambridge Family Health|5|36
+South Boston|Chelsea High School|5|50
+South Boston|Cambridge Family Health|50|41
+South Boston|Chelsea High School|50|55
+South Boston|Cambridge Family Health|95|46
+South Boston|Chelsea High School|95|-1
+
 
 ### Linked origin-destination pairs (`oneToOne`)
 
