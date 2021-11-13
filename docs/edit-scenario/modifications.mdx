@@ -248,3 +248,17 @@ To draw a polygon on the map, click the polygon icon and begin clicking on the m
   src='/img/draw-a-polygon.png'
   alt='Drawing a new area on the map'
 />
+
+## Modification order
+You can apply multiple modifications of different types to the same transit route or section of the street network. In a given scenario, modifications are applied in the order described below.
+
+Modify Streets modifications are applied first, followed by Add Streets modifications. So the characteristics of added street links are not affected by overlapping Modify Streets modifications (e.g. the car speed specified for an added street will not be scaled by the speed scaling factor in a Modify Streets modification that contains it.) This also allows removing streets and then replacing them within a single scenario.
+
+Transit modifications are then applied in the order:
+1. Adjust Speed
+1. Adjust Dwell Time
+1. Remove Stops
+1. Reroute
+1. Adjust Frequency
+1. Remove Trips
+1. Add Trips

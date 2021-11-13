@@ -28,10 +28,22 @@ module.exports = {
       'analysis/configuration',
       'analysis/regional'
     ]
-  }, {
+  }, 
+  {
+    type: 'category',
+    label: 'Prepare Custom Data',
+    collapsed: false,
+    items: [
+      'prepare-data/index',
+      'prepare-data/derivations'
+    ]
+  },
+  {
     type: 'doc',
     id: 'troubleshooting'
   }, {
+  }, 
+  {
     type: 'category',
     label: 'Guides',
     collapsed: true,

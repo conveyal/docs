@@ -5,24 +5,29 @@ title: Overview of network editing
 
 import {
   FaChevronLeft,
+  FaCode,
   FaCopy,
+  FaDownload,
   FaExpand,
+  FaEye,
   FaPencilAlt,
   FaPlus,
-  FaTrash
+  FaTable,
+  FaTrash,
+  FaUndo
 } from 'react-icons/fa'
 
 import Button from '../../components/button'
 import Image from '../../components/image'
 
-After selecting a [project](/glossary#project), you will arrive at the modifications page, shown below. Each project has an expandable list of numbered [scenarios](/glossary#scenario) followed by a list of [modifications](/glossary#modification) grouped by type. Each modification represents a single operation on the [baseline network](/glossary#baseline-network) (for example adding a line, or adjusting the speed of an existing line) and can be activated in multiple scenarios. Scenarios are a way of packaging isolated modifications into meaningful groups representing changes to the broader network. For example, you could create a scenario representing each of several funding scenarios with one for service cuts, one for extended service and so on.
+After selecting a [project](/glossary#project), you will arrive at the modifications page, shown below. Each modification represents a single operation on the [baseline network](/glossary#baseline-network) (for example adding a line, or adjusting the speed of an existing line) and can be activated in multiple scenarios. Scenarios are a way of packaging isolated modifications into meaningful groups representing changes to the broader network. For example, you could create a scenario representing each of several funding scenarios with one for service cuts, one for extended service and so on.
 
 <Image
   src='/img/create-scenario.png'
   alt='Initial view in editing mode for an established project'
 />
 
-To prevent data conflicts, the system does not support multiple users or browser tabs editing the same project simultaneously. If you expect multiple people in your organization to be using Conveyal Analysis at the same time, you may want to create projects for each of them. Modifications can later be imported into a project from other projects based on the same [network bundle](/glossary#network-bundle) (See [Managing Modifications](/edit-scenario/usage#managing-mods).
+If you expect multiple people in your organization to be using Conveyal at the same time, you may want to create projects for each of them. Modifications can later be imported into a project from other projects based on the same [network bundle](/glossary#network-bundle) (See [Managing Modifications](/edit-scenario/usage#managing-mods).
 
 ## Create a new modification
 
@@ -38,27 +43,37 @@ Clicking on this will open a window prompting you to enter a name for the modifi
 />
 
 Try to choose a descriptive name that will be unique to the chosen modification type. After clicking *create* you will be taken to a page with options specific to your chosen modification type.
+
 Once created, all modifications can be managed using the icons at the top left of the screen:
 
 * <FaPencilAlt /> Rename
+* <FaCode /> Edit JSON
 * <FaCopy /> Copy
 * <FaTrash /> Delete
 * <FaExpand /> Locate on map
 
-The _copy_ command creates a full copy of the current modification which can be found and edited by navigating back to the modification menu.
-Any changes you make to a modification are automatically saved every 10 seconds. Clicking the small blue back arrow <FaChevronLeft /> will also save any remaining edits and take you back to the list of all modifications.
+Once changed, modifications will show options to <Button variantColor='blue'><FaDownload /> Save changes</Button> and <FaUndo /> Revert unsaved changes. Clicking the <FaChevronLeft /> button at the top left of the modification panel will save changes and take you back to the project view.
 
 ## Create a new scenario
 
 From the modifications page, you can also create and edit [scenarios](/glossary#scenario). A scenario is used for packaging modifications into meaningful groups representing broader changes to the network.
-You may need to click the scenarios bar to expand it. Once expanded, you should see the baseline scenario and any others that you have created. Click the button to create a new scenario and give it a name e.g. "_Expanded BRT_" or "_Downtown Stop Consolidation_".
-When editing modifications, you may opt to add them to one or more scenarios. The _baseline scenario_ represents the [baseline network](/glossary#baseline-network) and cannot be edited.
+
+Click on Scenarios to switch from the Modifications list view to the Scenarios view. This view includes buttons to <Button variantColor='green'><FaPlus /> Create a scenario</Button> and <Button variantColor='blue'><FaTable /> Show table editor</Button>. The Scenario table lets you control whether modifications are active in certain scenarios.
+
+Below these buttons, you will see a list of scenarios. The first two scenarios are always the same: **No modifications**, which represents the represents the [baseline network](/glossary#baseline-network), and **All modifications**, which includes all modifications in the project. Beyond these locked scenarios, you can create custom scenarios to allow grouping modifications in different combinations. Next to each custom modification, you will see options to:
+
+* <FaPencilAlt /> Rename
+* <FaCopy /> Copy
+* <FaTrash /> Delete
+* <FaEye /> Display active modifications on map
 
 ## Activate a modification in a scenario
 
-By default, each modification is active in all scenarios that exist when the modification is created. You can change which scenarios a modification is active in by using the checkboxes corresponding to scenarios at the bottom of the modification detail panel.
+If you need activate or deactivate a modification in a custom scenario, from the Scenario view or the detailed view of a single modification click <Button variantColor='blue'><FaTable /> Show scenario table editor</Button>.
+
+You can then use the checkboxes to activate/deactivate modifications as needed.
 
 <Image
-  src='/img/scenario-chooser.png'
+  src='/img/scenario-table.png'
   alt='Choosing the scenarios in which a modification is active'
 />

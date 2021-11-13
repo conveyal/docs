@@ -6,7 +6,8 @@ title: Single point analysis
 import {
   FaChartArea,
   FaDownload,
-  FaSync
+  FaSync,
+  FaCrosshairs
 } from 'react-icons/fa'
 
 import Button from '../../components/button'
@@ -44,6 +45,8 @@ For results that include uncertainty and variability due to transit schedules, c
 :::
 
 For single point analysis, travel time percentile is limited to five default values (5, 25, 50, 75, 95). Arbitrary percentile values can be set for a [regional analysis](/analysis/regional). 
+
+You can inspect the distribution of total travel times to a specific destination by clicking the <FaCrosshairs /> icon in the legend; a small circular destination marker will then follow your cursor across the map, and the legend will update with a plot of travel time at the five default percentile values listed above. Click on the map to pin the destination marker to a specific location, which can be useful for comparing travel times from different origins or for different requests. Pinning the destination marker also enables experimental features to inspect transit path details; contact your support team to learn more. Click on a pinned destination marker to make it follow your cursor again.
 
 <Video 
   alt='Testing different travel time cutoffs, percentiles, and origins'

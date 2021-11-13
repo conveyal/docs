@@ -6,9 +6,20 @@ This is a summary of the accessibility indicators used in Conveyal Analysis. For
 
 ## Spatial resolution
 
-As a shared geographic foundation for regions, opportunity datasets, and accessibility indicators, Conveyal Analysis uses a regular grid of cells. Each cell measures approximately 300 meters by 300 meters, depending on the latitude (with larger cells at the equator and smaller cells near the poles). These grid cells are not spaced at a round number of meters. Instead they are one-unit steps in the same global projection used for map display in our web interface. This helps accelerate map display, while eliminating the complexity of switching to different local projections. Large regions may contain more than a million such cells, reflecting a much finer resolution than typical regional travel demand models. Conveyal implemented this approach to counter the effects of the "modifiable areal unit problem" and in response to systematic bias we observed when using the center points of polygons defined by roads, we have made an intentional methodological choice to perform all measurement on regular grids whose geometry is independent of roads and land parcels.
+As a shared geographic foundation for regions, spatial datasets, and accessibility indicators, Conveyal uses a regular grid of cells. Conveyal supports up to 5 million such cells, reflecting a much finer resolution than typical regional travel demand models. To counter the effects of the "modifiable areal unit problem" and in response to systematic bias we observed when using the center points of polygons defined by roads, the Conveyal team made an intentional methodological choice to default to calculations on regular grids whose geometry is independent of roads and land parcels.
 
 Opportunity datasets from uploaded point or polygon files, as well as LODES imports, are resampled into this standardized regular grid. For example, if a large traffic analysis zone in an uploaded shapefile has 10 thousand jobs, those jobs are dispersed throughout the grid cells intersecting that zone, according to the areal proportion of the intersection of each cell with the zone.
+
+### Zoom levels
+
+The grid cells are spaced at one-unit steps in Web Mercator projection, which is commonly used in web mapping. This approach helps accelerate map display, while eliminating the complexity of switching to different local projections. The resolution of each cell depends on its latitude and the selected Web Mercator Zoom level. At any given zoom level, the cell size will be largest at the equator and decrease toward the poles. 
+
+Zoom level | Cell width (equator) | Cell width (45⁰ lat.) | Width of largest supported square region (45⁰ lat.)
+---|---|---|---
+9 | 306 m (1002 ft.) | 216 m (709 ft.) | 684 km (425 mi.)
+10 | 153 m (501 ft.) | 108 m (355 ft.) | 342 km (213 mi.)
+11 | 76 m (251 ft.) | 54 m (177 ft.) | 171 km (106 mi.)
+12 | 38 m (125 ft.) | 27 m (89 ft.) | 86 km (53 mi.)
 
 ## Accounting for variability
 
