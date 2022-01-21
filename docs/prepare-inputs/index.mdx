@@ -122,10 +122,11 @@ If there is no GTFS available for your region you can, as a workaround, create a
 Ensure any GTFS you upload follows requirements of the specification. Various [validation tools](https://gtfs.org/testing/) are available. Common issues include:
 
 - Missing required files
-- Calendar dates that do not cover an intended date of analysis.
-- Using values other than 0-7 in the route_type column of routes.txt
+- Calendar dates that do not cover an intended date of analysis
 
-Conveyal's routing engine currently treats all GTFS trips represented in frequencies.txt as unscheduled frequencies (exact-times = 0). If any of your feeds has a frequencies.txt file with values of 1 in the exact-times column and you'd like to learn more, please contact your support team.
+Conveyal's routing engine:
+- Maps an extended set of transport modes, including some [derived from TPEG](https://groups.google.com/d/msg/gtfs-changes/keT5rTPS7Y0/71uMz2l6ke0J), to the original set of GTFS `route_type` values. For example, `route_type` values 706 (Post Bus Service) and 11 (Trolleybus) are mapped to Bus; 405 (Monorail) and 12 (Monorail) are mapped to Tram. For details, see [related code in R5](https://github.com/conveyal/r5/blob/83abf2744088b12e5907d1d06bd3ed7a02117406/src/main/java/com/conveyal/r5/transit/TransitLayer.java#L677-L733).
+- Treats all GTFS trips represented in frequencies.txt as unscheduled frequencies (`exact_times = 0`). If any of your feeds has a frequencies.txt file with values of 1 in the `exact_times` column and you'd like to learn more, please contact your support team.
 
 ## Finalizing network bundle creation
 
