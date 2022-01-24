@@ -6,7 +6,8 @@ import Image from '../../components/image'
 
 import {
   FaCode,
-  FaMousePointer
+  FaMousePointer,
+  FaPencilAlt
 } from 'react-icons/fa'
 
 Below the accessibility charts, different parameters for the analysis can be set:
@@ -72,6 +73,9 @@ If your scenario does not include frequency-based routes there is no need to sim
 The **Routing engine** version will default to the highest available version of [Conveyal R5](https://github.com/conveyal/r5), or to the version previously used for the selected project. If you use a routing engine version with the first or second number of the version changed, there may be changes to the algorithm that affect results. Previous versions used for regional analysis in a given region will be available in this drop-down menu. You can change versions manually by typing any supported release version (e.g. "v4.8.0") in the routing engine field.
 
 In general the default setting should be fine unless you are advised otherwise by your support team. 
+
+## Custom bounds for destinations
+For certain large or high-resolution analyses, you may want to limit the area analyzed. In single point analysis, you can limit the destinations considered by clicking "Bounds of analysis -- <Button variantColor='yellow'>Set custom <FaPencil /></Button>" in the analysis panel, then dragging the pins on the map. Isochrone and access results will not extend beyond these bounds. [For regional analyses](/analysis/regional#select-origins), the bounds define the origins considered, rather than the destinations.
 
 ## Additional settings
 
