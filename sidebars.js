@@ -51,6 +51,7 @@ module.exports = {
       'guides/aggregate-regional-results',
       'guides/account-for-congestion',
       'guides/engage-stakeholders',
+      'guides/process-raster-results',
       'guides/compute-freeform'
     ]
   }, {
