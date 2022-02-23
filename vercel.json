@@ -1,8 +1,13 @@
 {
-    "rewrites": [
-      { "source": "/prepare-inputs/upload-opportunity-data:match*", 
-        "destination": "/prepare-inputs/upload-spatial-data:match*" 
-      }
-    ],
-    "cleanUrls": true
+  "rewrites": [{ 
+    "source": "/prepare-inputs/upload-opportunity-data:match*", 
+    "destination": "/prepare-inputs/upload-spatial-data:match*" 
+  }, {
+    "source": "/js/external/script.js",
+    "destination": "https://plausible.io/js/plausible.outbound-links.js"
+  }, {
+    "source": "/api/external/event", 
+    "destination": "https://plausible.io/api/event"
+  }],
+  "cleanUrls": true
 }
