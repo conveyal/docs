@@ -9,11 +9,17 @@ Conveyal provides multiple ways to [compute summary indicators](/analysis/region
 * Number of jobs reachable in a 45 minute commute by the median household in a specific neighborhood, and
 * Increase in these numbers (relative to a baseline scenario) resulting from a proposed transport network.
 
-You may also want compute a single composite index, or a complex indicator combining different logical conditions or spatial layers. The Conveyal team is considering ways to support additional holistic indicators directly in the interface; contact yoru support team if you have specific requests or ideas. In the meantime, you can compute a wider range of indicators by downloading results and running custom calculations in offline GIS software (we recommend QGIS). By default, travel time results, regional access results, and uploaded spatial datasets are all available for download as grid (raster) files with consistent resolutions. This guide provides a few examples of ways to use these raster files.
+You may also want to compute a single composite index, or a complex indicator combining different logical conditions or spatial layers. 
+
+This guide provides a few examples of calculating such indicators from raster (grid) files downloaded from Conveyal. By default, travel time results, regional access results, and uploaded spatial datasets are all available for download as raster files with consistent resolutions.
+
+:::note
+The Conveyal team is considering ways to support additional holistic indicators directly in the interface; contact your support team if you have specific requests or ideas. In the meantime, you can compute a wider range of indicators by downloading results and running custom calculations in offline GIS software (we recommend QGIS), as the examples below show. 
+:::
 
 ## Percent difference between two scenarios
 
-The Conveyal interface shows the absolute difference between two scenarios:
+The regional results interface in Conveyal can display the absolute difference between two scenarios:
 <Image
   src='/img/custom-indicators/regional-comparison.png'
   alt='Map showing increase in access from proposed infrastructure in Los Angeles'
