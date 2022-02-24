@@ -92,9 +92,10 @@ module.exports = {
     ]
   ],
   scripts: [{
-    src: 'https://plausible.conveyal.com/js/index.js', 
+    src: '/js/external/script.js', 
     async: true, 
     defer: true, 
+    'data-api': '/api/external/event',
     'data-domain': 'docs.conveyal.com'
   }]
 }
