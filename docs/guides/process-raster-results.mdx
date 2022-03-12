@@ -19,17 +19,18 @@ The Conveyal team is considering ways to support additional holistic indicators 
 
 ## Percent difference between two scenarios
 
-The regional results interface in Conveyal can display the absolute difference between two scenarios:
+The regional analysis interface in Conveyal can display the absolute difference between two sets of results (e.g. a proposed scenario minus a baseline scenario):
 <Image
   src='/img/custom-indicators/regional-comparison.png'
   alt='Map showing increase in access from proposed infrastructure in Los Angeles'
 />
 
-If you instead want a map of the percent difference, to highlight places where the change in access is large relative to the baseline, follow these steps:
+If you instead want a map of the percent difference between two sets of results (e.g. to highlight places with large changes relative to access levels in the baseline scenario), follow these steps:
 
-1. Download GeoTIFF results for each completed regional analysis from the respective results pages.
-1. Open both downloaded GeoTIFF files as raster layers in GIS software, and rename them for convenience (e.g. `scenarioId` and `baselineId`).
-1. Use the GIS raster calculator, with an expression to calculate the percent difference: `("scenarioId@1" - "baselineId@1") / "baselineId@1"`. The `@1` indicates the first band of each raster.
+1. Navigate to the first set of results, download the GeoTIFF file, and rename it to something that will be convenient and recognizable when opened in GIS.
+1. Switch to the set of results you want to see in relative terms and also download it and assign a name.
+1. Open both downloaded GeoTIFF files as raster layers in GIS software, and rename them for convenience (e.g. `scenario1` and `baseline`).
+1. Use the GIS raster calculator, with an expression to calculate the percent difference: `("scenario1@1" - "baseline@1") / "baseline@1"`. The `@1` indicates the first band of each raster.
 <Image
   src='/img/custom-indicators/raster-calculator.png'
   alt='Using the QGIS Raster Calculator with an expression for the percent difference'
@@ -44,18 +45,16 @@ In this example, a new bridge increases access to jobs within a 30-minute bike r
 
 ## Households benefitting from a proposed scenario
 
-If you want to calculate the total number of households (or residents etc.) who benefit from a given scenario, we recommend running analyses with a [logistic decay function](/learn-more/decay-functions#logistic-cdf), then following the steps below.
+If you want to calculate the total number of households (or residents etc.) who benefit from a given scenario, we recommend running analyses with a [logistic decay function](/learn-more/decay-functions#logistic-cdf), then following the steps below. The logistic decay function smooths results and allows the access indicator to account for all potential destination locations in a region, rather than just those destinations in narrow band around a chosen cutoff value. With this and other gravity-style decay functions, closer destinations are considered more valuable, so reducing travel time to any destination yields a benefit. For more details, see the example in the [decay function guide](/learn-more/decay-functions) 
 
-For background, the default [decay function](/learn-more/decay-functions) in Conveyal is a step function, representing a hard limit at the selected travel time cutoff. Consider a new link that reduces travel time from a given origin to many destinations by 5 minutes. From this origin, destinations that were previously 25 minutes away (and are now 20 minutes away), or 45 minutes away (and now 40) would not be included when calculating the impact of the new link. The only benefits with a step function and a 30 minute cutoff would arise from opportunities that were previously reachable in over 30 minutes, and are now reachable in under 30 minutes. To avoid limiting results in this way, Conveyal supports gravity-style access indicators with different decay functions. With these functions, closer destinations are considered more valuable, so reducing travel time to any destination yields a benefit.
-
-1. Repeat the first two steps above.
+1. Repeat the first three steps above.
 1. Download the household layer as a GeoTIFF (.tif) file from the spatial datasets page.
 <Image
   src='/img/custom-indicators/households.png'
   alt='Spatial dataset download'
 />
 1. Open the households layer in GIS software, and rename it for convenience (e.g. `households`). Note that by default, this will have the same grid resolution as the regional analysis results
-1. Use the GIS raster calculator, with expression `(("scenarioId@1" - "baselineId@1") > 0) * "households@1")`. This calculation uses a logical condition (`> 0`), resulting in a boolean layer with 1 where the condition is met and 0 otherwise. Multiplying this layer by the households layer yields a result where the cell value for cells with increased access is the number of households, and the cell value for cells without increased access is 0.
+1. Use the GIS raster calculator, with expression `(("scenario1@1" - "baseline@1") > 0) * "households@1")`. This calculation uses a logical condition (`> 0`), resulting in a boolean layer with 1 where the condition is met and 0 otherwise. Multiplying this layer by the households layer yields a result where the cell value for cells with increased access is the number of households, and the cell value for cells without increased access is 0.
 <Image
   src='/img/custom-indicators/raster-calculator-binary.png'
   alt='Using the QGIS Raster Calculator with a logical expression'
