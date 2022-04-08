@@ -5,6 +5,12 @@ title: Data sources
 
 Conveyal provides multiple options for uploading and using your own data. 
 
-The Data Sources panel allows uploading files, validating them, and processing them for use in different parts of Conveyal. For now, the main use of this panel is uploading shapefiles and converting them to [aggregation areas](/prepare-data/derivations/#aggregation-areas).
+The Data Sources panel allows uploading files, validating them, and processing them for use in different parts of Conveyal:
+* Polygonal shapefiles with zone names: covert to [aggregation areas](/prepare-data/derivations/#aggregation-areas)
+* Polygonal geojson files with waiting times or speed factors: use in [pickup delay](/edit-scenario/modifications#pickup-delay) or [road congestion](/edit-scenario/modifications#road-congestion) modifications
+* Linear shapefiles with bicycle level of traffic stress (LTS) attributes: use with [Custom LTS](/edit-scenario/modifications#custom-lts) modifications
+* Raster geotiff files representing elevation or sun exposure layers: use with [Raster cost](/edit-scenario/modifications#raster-cost) modifications
+
+Once a data source has been uploaded, selecting it from the drop-down menu will display a limited preview (up to 1000 features or the bounding box) on the map.
 
 Custom origins and destination opportunity layers can be managed in the [spatial datasets panel](/prepare-inputs/upload-spatial-data), which supports CSV and shapefile uploads. Custom street and transit network data can be managed in the [network bundle panel](./prepare-inputs#creating-a-network-bundle). These options will eventually be consolidated on the Data Sources panel.
