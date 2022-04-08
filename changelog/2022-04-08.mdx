@@ -1,7 +1,21 @@
 ---
 title: April, 2022
 ---
-We have a few upgrades (including one big one!) and bugfixes to announce this month:
-- View your detailed, processed street and transit networks on the map. Finally!
-- View data source previews on the map.
-- Fix a bug that would auto-zoom reroute modifications on each edit. Now it only auto-zooms when you change routes or patterns.
+
+import Image from '../components/image'
+
+We are pleased to announce the latest Conveyal release. New features in this release let you:
+- View your network's street and transit layer details on a new map. Many users have requested this feature, and we are excited to finally release it!
+<Image alt='Network viewer' src='/img/changelog/20220408/network-viewer.png' />
+- Preview [Data Sources](/prepare-data) on the map, and upload new data source types
+- Use Data Sources in [custom street modifications](/edit-scenario/modifications#custom) for road congestion, slope-adjusted biking times, ridehail service, custom cycling level of traffic stress, and more (experimental)
+- Edit reroute modifications more easily, with less distracting auto-zoom behavior
+
+Using a network bundle for the first time with the newly released routing engine (v6.7) may take a few moments, as a fresh network is built. 
+
+Additional improvements include:
+<!-- truncate -->
+- Handling transfers to uncommon route patterns (such as "loop" ⭕ and "lollipop" 🍭 routes) more realistically ([details](https://github.com/conveyal/r5/pull/763))
+- Fixing a bug that applied walking time limits to non-walk (e.g. bike) requests
+- Correcting the order in which stops are added to backwards reroute modifications -- if you created reroute modifications where service extended backward from a stop on an existing pattern between September 2020 and February 2022, your support team can help you correct them
+- Reducing computation time when egress modes are changed and transit is toggled on and off
