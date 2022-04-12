@@ -194,10 +194,6 @@ A few examples should help to illustrate how this modification works. Consider a
 - To extend this pattern backward, to originate at a stop Y, select A as the "end of reroute/extension," activate route editing, and click on stop Y to add a segment from Y -> A. Speeds and dwell times can be set on this new segment. Baseline speeds and dwell times between A and D are not affected.
 - To detour this pattern so that it serves a stop Z between B and C, select B as the "start of reroute/extension", select C as the "end of reroute/extension", activate route editing, click on the new segment to add a stop, and drag the added stop to Z. Speeds and dwell times can be set on this new segment. Baseline speeds and dwell times between A and B, and between C and D, are not affected.
 
-### Custom
-
-The custom modification type allows us to try out new development features that are not yet generally supported. _You should not use this modification type without consulting with your support team; an improper configuration may produce errors during analysis._
-
 ## Street network modifications
 
 :::note
@@ -248,6 +244,22 @@ To draw a polygon on the map, click the polygon icon and begin clicking on the m
   src='/img/draw-a-polygon.png'
   alt='Drawing a new area on the map'
 />
+
+### Custom
+
+Custom modification types allow experimenting with certain features that are not yet widely supported. Contact your support team before trying these types; an improper configuration may produce errors during analysis.
+
+#### Pickup delay 
+This modification type allows modeling on-street modes that serve defined zones with specified service levels, such as shared scooters or ridehail services. It requires an uploaded geojson polygon [data source](/prepare-data) with `id` and `wait` (in minutes) attributes for each feature. For example, within a polygon with `id: "Downtown"` and `wait: 10`, the routing engine would allow people starting journeys in the "Downtown" polygon to wait 10 minutes then proceed by car. Custom JSON settings allow setting different modes, default wait times, designated transit stops for pickup/dropoff, etc. For more details, see the [R5 source code](https://github.com/conveyal/r5/blob/v6.6/src/main/java/com/conveyal/r5/analyst/scenario/PickupDelay.java) or contact your support team.
+
+#### Road congestion 
+This modification type lets you set a scale factor for car speed within features of a geojson polygon [data source](/prepare-data). It requires an uploaded geojson polygon data source with `scale` and `priority` attributes for each feature. For example, within a polygon with `name: "Downtown"`, `scale: 0.60`, and `priority: 1`, default car speeds in the "Downtown" polygon would be multiplied by 0.60. Custom JSON settings allow overriding the default attribute names, setting a default scaling value to be applied outside of the supplied polygons, etc. For more details, see the [R5 source code](https://github.com/conveyal/r5/blob/v6.6/src/main/java/com/conveyal/r5/analyst/scenario/RoadCongestion.java) or contact your support team.
+
+#### Custom LTS
+For custom cycling Level of Traffic Stress, upload and select a linear shapefile [data source](/prepare-data) with an `lts` attribute for each feature. For now, this modification type cannot be applied with bike + transit analyses.
+
+#### Raster cost
+Conveyal provides certain cost functions that translate exposure to a raster surface along a network edge to modified traversal time for that edge. For example, loading a geotiff elevation raster [data source](/prepare-data) and setting `costFunction: "TOBLER"` in the custom JSON will apply Tobler's hiking function to walking travel times.
 
 ## Modification order
 You can apply multiple modifications of different types to the same transit route or section of the street network. In a given scenario, modifications are applied in the order described below.
