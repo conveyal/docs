@@ -68,6 +68,7 @@ module.exports = {
       {
         docs: {
           routeBasePath: '/',
+          sidebarCollapsed: false,
           sidebarPath: require.resolve('./sidebars.js')
         },
         blog: {
@@ -76,7 +77,7 @@ module.exports = {
           blogTitle: 'Changelog',
           blogDescription: 'Updates to Conveyal Analysis',
           blogSidebarTitle: 'Latest changes',
-          blogSidebarCount: 1,
+          blogSidebarCount: 3,
           postsPerPage: 3,
           showReadingTime: false
         },
