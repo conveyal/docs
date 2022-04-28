@@ -57,6 +57,7 @@ module.exports = {
   tagline: 'User manual for Conveyal',
   url: 'https://docs.conveyal.com',
   baseUrl: '/',
+  trailingSlash: false,
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'conveyal', 
@@ -86,8 +87,7 @@ module.exports = {
         },
         sitemap: { // for crawlers
           changefreq: 'weekly',
-          priority: 0.5,
-          trailingSlash: false
+          priority: 0.5
         }
       }
     ]
