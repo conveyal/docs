@@ -5,7 +5,9 @@ module.exports = {
   }, {
     'Getting Started': [
       'prepare-inputs/index',
-      'prepare-inputs/upload-spatial-data', {
+      'prepare-inputs/upload-spatial-data',
+      'prepare-data/index',
+      'prepare-data/derivations', {
       type: 'category',
       label: 'Network editing',
       collapsed: false,
@@ -45,7 +47,8 @@ module.exports = {
       'learn-more/faq',
       'learn-more/decay-functions',
       'learn-more/generalized-cost',
-      'learn-more/developers'
+      'learn-more/developers',
+      'troubleshooting'
     ]
   }]
 }
