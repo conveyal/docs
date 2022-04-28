@@ -7,60 +7,62 @@ import {
   FaCaretDown
 } from 'react-icons/fa'
 
-By default, Conveyal calculates accessibility indicators for every point in an analysis [grid](/analysis/methodology#spatial-resolution). 
+By default, a regional analysis in Conveyal calculates accessibility indicators for every point in a [grid](/analysis/methodology#spatial-resolution). 
 
-You can override this default behavior to prepare CSV files with accessibility and travel-time results for a limited number of specified origins at exact coordinates. You first need to upload a CSV file and [process it as a freeform (non-grid) spatial dataset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points). Next, in the custom request settings JSON of the analysis panel, add the fields described below to trigger the preparation of CSV result files. Then, create a [regional analysis](/analysis/regional) with Origin points set to a freeform spatial dataset. Once a regional analysis with freeform origins is complete, you will have options to download CSV files of the results. These features are still experimental; contact your support team for more information.
+You can override this default behavior to prepare CSV files with accessibility and travel-time results for a limited number of specified origins at exact coordinates. You first need to upload a CSV file and [process it as a freeform (non-grid) spatial dataset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points). Next, in the custom request settings JSON of the analysis panel, add the fields described below to trigger the preparation of CSV result files. Then, create a [regional analysis](/analysis/regional) with Origin points set to a freeform spatial dataset. Note that the cutoff value will limit results, so set it to 120 if you want full results for trips up to 2 hours. Once a regional analysis with freeform origins is complete, you will have options to download CSV files of the results. These features are still experimental; contact your support team for more information.
 
 ## Accessibility
-The default `recordAccessibility: true` field in the [custom analysis request JSON](/analysis/configuration#additional-settings) will result in a CSV file with a row for each origin point, destination opportunity layer, travel time percentile, and cutoff.
+The default `"recordAccessibility": true` field in the [custom analysis request JSON](/analysis/configuration#additional-settings) will result in a CSV file with a row for each origin point, destination opportunity layer, travel time percentile, and cutoff.
 
 ### Example results
 
-```csv
-origin,destinations,percentile,cutoff,access
-1,Total Jobs,5,30,386105
-1,Total Jobs,5,60,885656
-1,Total Jobs,25,30,338122
-1,Total Jobs,25,60,867946
-1,Total Jobs,50,30,287871
-1,Total Jobs,50,60,840089
-1,Total Jobs,75,30,234824
-1,Total Jobs,75,60,809584
-1,Total Jobs,95,30,183107
-1,Total Jobs,95,60,773271
-2,Total Jobs,5,30	142600
+origin|destinations|percentile|cutoff|access
+------|------------|----------|------|------
+1|Total Jobs|5|30|386105
+1|Total Jobs|5|60|885656
+1|Total Jobs|25|30|338122
+1|Total Jobs|25|60|867946
+1|Total Jobs|50|30|287871
+1|Total Jobs|50|60|840089
+1|Total Jobs|75|30|234824
+1|Total Jobs|75|60|809584
+1|Total Jobs|95|30|183107
+1|Total Jobs|95|60|773271
+2|Total Jobs|5|30|142600
 etc
-```
+
 
 ## Travel time matrix
 
-Adding `recordTimes: true` to the [custom analysis request JSON](/analysis/configuration#additional-settings) will result in a CSV file with a row for each origin point, destination point, and travel time percentile. This setting requires freeform spatial datasets to be selected for both the Origin points and the Destination opportunity layer. 
+Adding `"recordTimes": true` to the [custom analysis request JSON](/analysis/configuration#additional-settings) will result in a CSV file with a row for each origin point, destination point, and travel time percentile. This setting requires freeform spatial datasets to be selected for both the Origin points and the Destination opportunity layer. 
 
 In travel time CSV results, a time of -1 indicates the destination is unreachable within the maximum cutoff specified when the regional analysis was created. The number of destinations is currently limited to 4 million, and the number of origin-destination pairs is limited to 16 million. If you need travel times only for linked pairs of origin-destination coordinates, and a many-to-many analysis would exceed these limits, you can use the `oneToOne` setting described below.
 
+Once you have prepared the desired results, you may want to remove the custom `recordTimes` flag from the custom analysis request JSON to avoid confusion in future analyses.
+
 ### Example results
 
-```csv
-origin,destination,percentile,time
-Cambridge,Cambridge Family Health,5,9
-Cambridge,Chelsea High School,5,44
-Cambridge,Cambridge Family Health,50,12
-Cambridge,Chelsea High School,50,56
-Cambridge,Cambridge Family Health,95,12
-Cambridge,Chelsea High School,95,-1
-South Boston,Cambridge Family Health,5,36
-South Boston,Chelsea High School,5,50
-South Boston,Cambridge Family Health,50,41
-South Boston,Chelsea High School,50,55
-South Boston,Cambridge Family Health,95,46
-South Boston,Chelsea High School,95,-1
-```
+origin|destination|percentile|time
+------|-----------|----------|----
+Cambridge|Cambridge Family Health|5|9
+Cambridge|Chelsea High School|5|44
+Cambridge|Cambridge Family Health|50|12
+Cambridge|Chelsea High School|50|56
+Cambridge|Cambridge Family Health|95|12
+Cambridge|Chelsea High School|95|-1
+South Boston|Cambridge Family Health|5|36
+South Boston|Chelsea High School|5|50
+South Boston|Cambridge Family Health|50|41
+South Boston|Chelsea High School|50|55
+South Boston|Cambridge Family Health|95|46
+South Boston|Chelsea High School|95|-1
 
-### Linked origin-destination pairs (oneToOne)
 
-When both origins and destinations are freeform, you can save CSV results for specific matched pairs of origins and destinations, rather than all pairs of origins and destinations. 
+### Linked origin-destination pairs (`oneToOne`)
 
-This feature is enabled by adding `oneToOne: true` to the custom analysis request JSON. This approach can greatly reduce the size of output files, restricting them to only a small set of OD pairs you care about. But it may not reduce compute time (which is primarily affected by the number of origins). If origin coordinates are repeated for different destinations, `oneToOne: false` will likely be faster even if you do not need all combinations of origins and destinations.
+When both origins and destinations are freeform, you can save CSV results for specific matched pairs of origins and destinations, rather than all combinations of origins and destinations. 
+
+To enable this feature, add `"oneToOne": true` to the custom analysis request JSON; then, in the regional analysis creation box, ensure that the origin points and destination layer are from source files with corresponding rows (and therefore have equal numbers of points). This approach can greatly reduce the size of output files, restricting them to only a small set of OD pairs you care about. But it may not reduce compute time (which is primarily affected by the number of origins). If origin coordinates are repeated for different destinations, `"oneToOne": false` will likely be faster even if you do not need all combinations of origins and destinations.
 
 <!---
 ## Path details

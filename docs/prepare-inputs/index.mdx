@@ -45,11 +45,11 @@ If there are no previously created network bundles, or if you want to use update
 
 #### Downloading
 
-Extracts from the global OSM database can be downloaded in [many different ways](https://wiki.openstreetmap.org/wiki/Downloading_data). Some popular services like those provided by [Geofabrik](http://download.geofabrik.de) or [Nextzen](https://metro-extracts.nextzen.org/) provide easy downloads for selected cities and regions. Be sure to download data covering your entire region - the predefined areas used by these sites may or may not align well with your region. Your extract should cover your entire service area or region, but not extend unnecessarily far beyond it as that may impact processing time. You'll often need to download an extract for a country or region larger than your true analysis area, then crop it to the size you need.
+Extracts from the global OSM database can be downloaded in [many different ways](https://wiki.openstreetmap.org/wiki/Downloading_data). For most regions, we recommend [Protomaps](https://protomaps.com/extracts), a service that provides up-to-date OSM extracts in the required PBF format. If you need a region that is too large for Protomaps, [Geofabrik](http://download.geofabrik.de) provides easy downloads for entire countries and other selected regions. In either case, your extract should cover your entire service area or region, but not extend unnecessarily far beyond it as that may cause computation to stall.
 
 #### Cropping
 
-Performing accessibility analysis with excessively large OSM data can lead to significant increases in computation time and complexity. We strongly recommend cropping the data if they cover an area significantly larger than your transportation network or opportunity data. Several command line tools are able to perform these cropping operations:
+Performing accessibility analysis with excessively large OSM data can lead to significant increases in computation time and complexity. We strongly recommend cropping the data if they cover an area significantly larger than your transportation network or opportunity data. If you need assistance, please contact your support team. If you are comfortable working with the Unix shell, consider these tools for cropping operations:
 
 - [Osmosis](https://wiki.openstreetmap.org/wiki/Osmosis) is a multi-platform Java tool that works on Windows, Linux, and MacOS.
 - [OSMConvert](https://wiki.openstreetmap.org/wiki/Osmconvert) is a fast tool pre-built for Windows and Linux and available on MacOS and Linux as part of the `osmctools` package.
@@ -88,7 +88,7 @@ Note that files larger than 500MB may be rejected on upload. Please contact your
 
 #### Filtering
 
-OpenStreetMap contains a lot of data besides the streets, paths, and platforms we need for accessibility analysis. As of this writing more than half of the ways in OSM are buildings, and slightly less than a quarter are roads or paths. Filtering out unneeded data will reduce your file size and speed the upload and processing by Analysis. As in the previous section, sample commands are provided below that will remove any unneccessary tags and should dramatically reduce the output file size.
+OpenStreetMap contains a lot of data besides the streets, paths, and platforms we need for accessibility analysis. As of this writing more than half of the ways in OSM are buildings, and slightly less than a quarter are roads or paths. Filtering out unneeded data will reduce your file size and speed the upload and processing by Analysis. As in the previous section, sample commands are provided below that will remove any unnecessary tags and should dramatically reduce the output file size.
 
 **Osmosis:**
 
@@ -122,10 +122,11 @@ If there is no GTFS available for your region you can, as a workaround, create a
 Ensure any GTFS you upload follows requirements of the specification. Various [validation tools](https://gtfs.org/testing/) are available. Common issues include:
 
 - Missing required files
-- Calendar dates that do not cover an intended date of analysis.
-- Using values other than 0-7 in the route_type column of routes.txt
+- Calendar dates that do not cover an intended date of analysis
 
-Conveyal's routing engine currently treats all GTFS trips represented in frequencies.txt as unscheduled frequencies (exact-times = 0). If any of your feeds has a frequencies.txt file with values of 1 in the exact-times column and you'd like to learn more, please contact your support team.
+Conveyal's routing engine:
+- Maps an extended set of transport modes, including some [derived from TPEG](https://groups.google.com/d/msg/gtfs-changes/keT5rTPS7Y0/71uMz2l6ke0J), to the original set of GTFS `route_type` values. For example, `route_type` values 706 (Post Bus Service) and 11 (Trolleybus) are mapped to Bus; 405 (Monorail) and 12 (Monorail) are mapped to Tram. For details, see [related code in R5](https://github.com/conveyal/r5/blob/83abf2744088b12e5907d1d06bd3ed7a02117406/src/main/java/com/conveyal/r5/transit/TransitLayer.java#L677-L733).
+- Treats all GTFS trips represented in frequencies.txt as unscheduled frequencies (`exact_times = 0`). If any of your feeds has a frequencies.txt file with values of 1 in the `exact_times` column and you'd like to learn more, please contact your support team.
 
 ## Finalizing network bundle creation
 

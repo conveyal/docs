@@ -4,6 +4,7 @@ title: Regional analysis
 
 import {
   FaPlus,
+  FaPencilAlt,
   FaCaretDown
 } from 'react-icons/fa'
 
@@ -22,9 +23,9 @@ The type of computation performed in a regional analysis is set by specific fiel
 
 ### Select origins
 
-You can also choose custom geographic bounds for your regional analysis. By default, the entire region is analyzed, but for efficiency it is also possible to analyze a smaller area. You can set the bounds of the analysis by clicking "Bounds of analysis -- set custom" in the analysis panel, then dragging the pins on the map, or by selecting an existing regional analysis and using the same bounds. 
+You can also choose custom geographic bounds for your regional analysis origins. By default, access for the entire region is analyzed, but it is also possible to analyze a smaller area. You can set the bounds of the analysis by clicking "Bounds of analysis -- <Button variantColor='yellow'>Set custom <FaPencilAlt /></Button>" in the analysis panel, then dragging the pins on the map, or by selecting an existing regional analysis and using the same bounds. Note that in regional analyses, all destinations in the region, even those outside custom bounds, will be included in access calculations.
 
-If you plan to compare two regional analyses, make sure they have the same bounds and routing engine version. The exact version and bounds used for previous regional analyses can be selected directly in the respective dropdown menus.
+If you plan to compare two regional analyses, make sure they have the same origin bounds and routing engine version. The exact version and bounds used for previous regional analyses can be selected directly in the respective dropdown menus.
 
 When you have configured these options, <Button variantColor='green'>Regional analysis <FaPlus /></Button> will be enabled. Note that this button is disabled unless isochrones are displayed; checking single-origin isochrone results is a verification step that helps avoid heavy computation for analyses with invalid settings.
 
@@ -43,7 +44,7 @@ Give the analysis a name, and select which Origin points to use:
 
 Select at least one Destination opportunity layer:
 * When using grid spatial datasets as destinations, you may specify several grids and they may even be of different sizes and shapes (but must all be at the same zoom level).
-* When using freeform spatial datasets as destinations in a regional analysis, you can specify only a single layer for now. Grid and freeform destinations cannot yet be mixed.
+* When using freeform spatial datasets as destinations in a regional analysis, you can specify only a single layer for now. The maximum number of freeform destination points is 4 million (and the maximum number of freeform origin-destination pairs is 16 million). Grid and freeform destinations cannot yet be mixed.
 
 Ensure the list of travel time cutoffs and percentiles will cover the results you want. For example, if you want a travel time matrix to include trips up to 120 minutes, ensure that 120 is included as a cutoff; any travel times exceeding the maximum cutoff will be clipped and recorded as -1.
 
@@ -77,13 +78,15 @@ Upon selecting a completed regional analysis, you will see a screen like the fol
 When accessibility results have been computed for origins on a rectangular grid, the map will show the number of opportunities accessible from each point in the region. Any destination opportunity layers, travel time percentiles, and cutoffs specified when you created the regional analysis can be interactively selected here.
 
 ## Downloading regional results
-Using the download button, you can save displayed regional analysis results in a [GeoTIFF](https://en.wikipedia.org/wiki/GeoTIFF) raster format. These files can then be opened in a GIS to conduct additional analyses or create custom maps. In QGIS, you will likely want to [style](https://docs.qgis.org/3.16/en/docs/training_manual/rasters/changing_symbology.html#ls-changing-raster-symbology) the accessibility layer with a singleband pseudocolor scheme. If you prefer to work with the results as a regular grid of vector points, you may find the "Raster values to points" tool in the QGIS processing toolbox helpful. Downloading results also allows you to see the raw [grid cells](/analysis/methodology#spatial-resolution) used for analysis, rather than the smoother interpolated results shown in your browser.
+For more advanced display and processing of regional accessibility results, you can download the results and open them in GIS software. This allows you to to create maps with custom color bins or your own basemap layer, or even [compute custom indicators](/guides/process-raster-results). The download button for a selected regional analysis allows you to save results in the [GeoTIFF](https://en.wikipedia.org/wiki/GeoTIFF) raster format, which is supported by most common geospatial software. Working with the downloaded raster data also allows you to see the raw [grid cells](/analysis/methodology#spatial-resolution) used for analysis, rather than the smoother interpolated results shown in your browser.
+
+If you are using QGIS to process downloaded raster layers, you will likely want to [style](https://docs.qgis.org/3.22/en/docs/training_manual/rasters/changing_symbology.html#ls-changing-raster-symbology) the them with a "singleband pseudocolor" scheme. If you prefer to work with the results as a regular grid of vector points, you may find the "Raster values to points" tool in the QGIS processing toolbox helpful.
 
 For regional analyses run with freeform origins, accessibility or [travel time/path results](/guides/compute-freeform) may be available for download as CSV files; these results are not shown on the map.
 
 ## Comparing regional analyses
 
-You can also compare two regional analyses from different projects in the same region. The map will show the differences in accessibility between the two analyses, with blue areas showing increased accessibility, and red areas showing decreased accessibility, relative to the comparison analysis. Again, you can download raw results for the two analyses being compared for further styling and analysis in GIS.
+You can also compare two analyses to highlight changes in access across a region. After you select a **Compare to** region, the map will show the difference in accessibility between the two analyses, with blue areas showing increased accessibility, and red areas showing decreased accessibility. Direct download of the comparison  will be available in a future Conveyal release. For now, you can download the analyses being compared separately, then perform raster subtraction, further analysis, and styling offline (e.g. with the [QGIS Raster Calculator](https://docs.qgis.org/3.22/en/docs/user_manual/working_with_raster/raster_analysis.html#raster-calculator))
 
 <Image
   src='/img/regional-comparison.png'
@@ -92,32 +95,18 @@ You can also compare two regional analyses from different projects in the same r
 
 ## Measuring aggregate accessibility
 
-These regional analyses present a wealth of information, and maps of regional accessibility are frequently the best way to communicate the accessibility impacts of a transit plan. However, in some cases there is a need to summarize accessibility in a single aggregate metric. Conveyal Analysis allows aggregating the results of a regional analysis to _aggregation areas_ (e.g. neighborhood, city council district, transit agency service area, or region). For a selected aggregation area, Conveyal Analysis can report the distribution of accessibility in that area, weighted by a value (e.g. population or households) at each grid cell origin.
+To summarize accessibility in a single metric or indicator, you can use Conveyal to aggregate the results of a regional analysis. This feature allows you to calculate a summary statistic for an entire _aggregation area_ (e.g. city, planning organization boundary, neighborhood, city council district, transport authority service area, etc.). For a selected aggregation area, you can report the distribution of accessibility in that area, weighted by a value (e.g. population or households) at each grid cell origin.
 
 ### Uploading aggregation areas
 
-In order to accomplish this aggregation, you first need to choose a region and code it as a polygon Shapefile (unprojected WGS84, CRS 4326). The choice of region can have a significant impact on the final metric. If a very large region is chosen, where much of the region does not have transit service, there will be a large number of people with very low job access via transit, deflating the aggregate numbers. Conversely, if a small region is chosen, segments of the population that should be served by transit will be excluded from the aggregate metrics. Conveyal Analysis will not accept aggregation areas larger than 2 square degrees.
-
-To create aggregation areas when viewing completed regional analysis, click <Button variantColor='gray'>Upload new aggregation area <FaCaretDown /></Button>
-
-You will then see options to upload and process a shapefile:
-
-<Image
-  src='/img/upload-aggregation-area.png'
-  alt='Aggregation area upload options'
-/>
-
-Shapefiles used as aggregation areas must fit within a bounding box smaller than 250,000 sq. km, must not have any feature with area exceeding 2 square degrees, and should preferably use unprojected WGS84 coordinates. Be sure to select all components of the Shapefile (i.e. .shp, .dbf, .shx, .prj, etc.) when uploading. It may take some time to upload the files and process them, depending on their size and complexity.
-
-If **Union** is selected, the union of the uploaded shapefile's features will be used as a single combined aggregation area.
-
-If **Union** is un-selected, each feature will be used as a separate aggregation area, named with the value of the "attribute" specified in the upload options. For example, if you want to report a project's change in accessibility for each city council district, and you have a shapefile of with each district's name in a column "CD_Id," you would un-select "union" and type "CD_Id" as the attribute.
+In order to accomplish this aggregation, you first need to convert a spatial Data Source with polygon features to an aggregation area. Once aggregation areas are processed, they are available for selection in the details panel for a completed regional analysis. Also make sure that spatial datasets appropriate for the origin weights are available.
 
 ### Viewing aggregate metrics
 
-The choice of aggregation area can have a significant impact on the final metric. If a very large area is chosen, where much of the region does not have transit service, there will be a large number of people with very low job access via transit, deflating the aggregate numbers. Conversely, if a small area is chosen, segments of the population that should be served by transit will be excluded from the aggregate metrics.
+To view aggregate metrics for a regional analysis, select an available aggregation area and the origin spatial dataset you want to weight by. For example, if you select "Total households," your histogram will represent how many households experience different levels of accessibility. If instead you select "Workers with earnings $1250 per month or less," you will see how accessibility is distributed among workers with low earnings. 
 
-To view aggregate metrics, select an uploaded aggregation area and the origin spatial dataset you want to weight by. For example, if you select "Workers total," your histogram will represent how many workers experience different levels of accessibility. If instead you select "Workers with earnings $1250 per month or less," you will see how accessibility is distributed among workers with low earnings. Note that aggregation areas are uploaded on this page, but spatial datasets are uploaded in the separate Spatial Datasets panel.
+
+The choice of aggregation area can have a significant impact on the final metric. If a very large area is chosen, where much of the region does not have transit service, there will be a large number of people with very low job access via transit, deflating the aggregate numbers. Conversely, if a small area is chosen, segments of the population that should be served by transit will be excluded from the aggregate metrics.
 
 Once you have an aggregation area and weight selected, you will see a display similar to the one below, showing a histogram of how many of the units you weighted by experience a particular level of access.
 
@@ -141,4 +130,4 @@ In the example below, the baseline scenario is shown in blue and an alternative 
 
 In the baseline, the 10th percentile household (marked by the leftmost vertical line) has access to fewer than 50 thousand jobs, while in the alternative scenario, the 10th percentile household (the second vertical line) has access to more than 141 thousand jobs. The large increase at the lower end of the distribution suggests the alternative scenario could help advance more equitable access to jobs.
 
-Finally, Conveyal Analysis displays weighted mean accessibility, which represents the average accessibility experienced by all residents (or whatever unit you have weighted by) in the aggregation area. However, since it uses the mean, it is strongly affected by outliers, and may not be representative of the full range of accessibility experienced. In the Brooklyn example above, it falls between the two peaks, and does not reflect that many people have accessibility below that. Since aggregate accessibility frequently has a long right tail, with many residents with low to medium accessibility and few with very high accessibility, the mean is often higher than the accessibility experienced by a majority of the population. For these reasons, we do not recommend the use of this metric.
+Finally, Conveyal displays weighted mean accessibility, which represents the average accessibility experienced by residents (or whatever unit you have weighted by) in the aggregation area. Aggregate accessibility is often bimodal or skewed with a long right tail. In such cases, a substantial majority of the population may experience accessibility values well below the mean, so we generally recommend reporting different percentiles of aggregate accessibility rather than the mean.

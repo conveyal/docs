@@ -46,6 +46,7 @@ const themeConfig = {
 
 if (process.env.ALGOLIA_API_KEY) {
   themeConfig.algolia = {
+    appId: process.env.ALGOLIA_APP_ID,
     apiKey: process.env.ALGOLIA_API_KEY,
     indexName: process.env.ALGOLIA_INDEX_NAME
   }
@@ -91,9 +92,10 @@ module.exports = {
     ]
   ],
   scripts: [{
-    src: 'https://plausible.conveyal.com/js/index.js', 
+    src: '/js/external/script.js', 
     async: true, 
     defer: true, 
+    'data-api': '/api/external/event',
     'data-domain': 'docs.conveyal.com'
   }]
 }
