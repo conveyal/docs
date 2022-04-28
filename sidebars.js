@@ -4,10 +4,16 @@ module.exports = {
     id: 'home'
   }, {
     'Getting Started': [
-      'prepare-inputs/index',
-      'prepare-inputs/upload-spatial-data',
-      'prepare-data/index',
-      'prepare-data/derivations', {
+      'prepare-inputs/index', {
+      type: 'category',
+      label: 'Prepare data',
+      collapsed: false,
+      items: [
+        'prepare-inputs/upload-spatial-data',
+        'prepare-data/index',
+        'prepare-data/derivations'
+      ]
+    }, {
       type: 'category',
       label: 'Network editing',
       collapsed: false,
