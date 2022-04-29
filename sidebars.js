@@ -6,8 +6,8 @@ module.exports = {
     type: 'category',
     label: 'Getting Started',
     link: {
-      type: 'generated-index',
-      title: 'Getting started with Conveyal'
+      type: 'doc',
+      id: 'getting-started/index'
     },
     items: [{
       type: 'category',
