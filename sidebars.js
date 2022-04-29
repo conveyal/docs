@@ -3,12 +3,22 @@ module.exports = {
     type: 'doc',
     id: 'home'
   }, {
-    'Getting Started': [
-      'prepare-inputs/index', {
+    type: 'category',
+    label: 'Getting Started',
+    link: {
+      type: 'generated-index',
+      title: 'Getting started with Conveyal'
+    },
+    items: [{
       type: 'category',
       label: 'Prepare data',
+      link: {
+        type: 'generated-index',
+        title: 'Preparing data'
+      },
       collapsed: false,
       items: [
+        'prepare-inputs/index',
         'prepare-inputs/upload-spatial-data',
         'prepare-data/index',
         'prepare-data/derivations'
@@ -16,6 +26,10 @@ module.exports = {
     }, {
       type: 'category',
       label: 'Network editing',
+      link: {
+        type: 'generated-index',
+        title: 'Network editing'
+      },
       collapsed: false,
       items: [
         'edit-scenario/index',
@@ -28,27 +42,52 @@ module.exports = {
     }, {
       type: 'category',
       label: 'Analyze Accessibility',
+      link: {
+        type: 'generated-index',
+        title: 'Analyze Accessibility'
+      },
       collapsed: false,
       items: [
         'analysis/index',
         'analysis/configuration',
         'analysis/regional'
       ]
-    }],
-    'How-to guides': [
+    }]
+  }, {
+    type: 'category',
+    label: 'How-to guides',
+    link: {
+      type: 'generated-index',
+      title: 'How-to guides'
+    },
+    items: [
       'guides/aggregate-regional-results',
       'guides/account-for-congestion',
       'guides/engage-stakeholders',
       'guides/process-raster-results',
       'guides/compute-freeform'
-    ],
-    'Background information': [
+    ]
+  }, {
+    type: 'category',
+    label: 'Background information',
+    link: {
+      type: 'generated-index',
+      title: 'Background information'
+    },
+    items: [
       'analysis/methodology',
       'learn-more/traffic-stress',
       'learn-more/openstreetmap',
       'learn-more/park-and-ride'
-    ],
-    'Technical reference': [
+    ]
+  }, {
+    type: 'category',
+    label: 'Technical reference',
+    link: {
+      type: 'generated-index',
+      title: 'Technical reference'
+    },
+    items: [
       'glossary',
       'learn-more/faq',
       'learn-more/decay-functions',
