@@ -23,10 +23,8 @@ Then, provide a name and select all components: .shp, .dbf, .shx, and .prj files
 
 To convert an uploaded shapefile to an aggregation area, click <Button variantColor='green'><FaPlus /> Derive new aggregation area(s)</Button>. 
 
-Then in the pop-up form, the Zoom level can be left at the default value or set to the zoom level of the regional analysis with which you want to use the aggregation area. Then, if you leave **Dissolve all features to single area** toggled on, all features of the selected polygon data source will be merged to a single aggregation area. If you toggle this setting off, each feature of the data source will be a separate aggregation area, and you will need to select an attribute to name them. For example, if you want to report a project's change in accessibility for each city council district, and you have a shapefile of with each district's name in a column "CD_Id," you would toggle this setting off and select "CD_Id" as the attribute.
+In the pop-up "Create aggregation area(s)" form, the Zoom can be left at the default value or set to the [zoom level](/analysis/methodology#spatial-resolution) of the regional analysis with which you want to use the aggregation area. If you leave **Dissolve all features to single area** toggled on, all features of the selected polygon data source will be merged to a single aggregation area. If you switch this setting off, each feature of the data source will be a separate aggregation area, and you will need to select an attribute to name them. For example, if you want to report a project's change in accessibility for each city council district, and you have a shapefile of with each district's name in a column "CD_Id," you would toggle this setting off and select "CD_Id" as the attribute.
 
 <Image alt='Aggregation area creation form' src='/img/derive-aggregation-area.png' />
 
 Once you have successfully created an aggregation area, you can select it when viewing the results of a [regional analysis](/analysis/regional#measuring-aggregate-accessibility).
-
-

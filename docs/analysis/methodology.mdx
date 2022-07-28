@@ -14,12 +14,20 @@ Opportunity datasets from uploaded point or polygon files, as well as LODES impo
 
 The grid cells are spaced at one-unit steps in Web Mercator projection, which is commonly used in web mapping. This approach helps accelerate map display, while eliminating the complexity of switching to different local projections. The resolution of each cell depends on its latitude and the selected Web Mercator Zoom level. At any given zoom level, the cell size will be largest at the equator and decrease toward the poles. 
 
+:::note
+Use higher zoom levels with caution. They yield higher-resolution results but require substantially more computation.
+
+For now, zoom levels above z9 should not be used for low density layers due to spatial bias introduced by Conveyal's method for handling fractional count data. An upcoming release will address this issue; feel free to contact your support team in the meantime with any questions.
+:::
+
 Zoom level | Cell width (equator) | Cell width (45⁰ lat.) | Width of largest supported square region (45⁰ lat.)
 ---|---|---|---
-9 | 306 m (1002 ft.) | 216 m (709 ft.) | 684 km (425 mi.)
-10 | 153 m (501 ft.) | 108 m (355 ft.) | 342 km (213 mi.)
-11 | 76 m (251 ft.) | 54 m (177 ft.) | 171 km (106 mi.)
-12 | 38 m (125 ft.) | 27 m (89 ft.) | 86 km (53 mi.)
+z9 | 306 m (1002 ft.) | 216 m (709 ft.) | 684 km (425 mi.)
+z10 | 153 m (501 ft.) | 108 m (355 ft.) | 342 km (213 mi.)
+z11 | 76 m (251 ft.) | 54 m (177 ft.) | 171 km (106 mi.)
+<!---
+z12 | 38 m (125 ft.) | 27 m (89 ft.) | 86 km (53 mi.)
+--->
 
 ## Accounting for variability
 
