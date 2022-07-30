@@ -17,7 +17,7 @@ The grid cells are spaced at one-unit steps in Web Mercator projection, which is
 :::note
 Use higher zoom levels with caution. They yield higher-resolution results but require substantially more computation.
 
-For now, zoom levels above z9 should not be used for low density layers due to spatial bias introduced by Conveyal's method for handling fractional count data. An upcoming release will address this issue; feel free to contact your support team in the meantime with any questions.
+Conveyal's methods are not designed for polygons averaging less than one opportunity per grid cell. Processing low density layers at high zoom levels may yield unexpected results; contact your support team for more information.
 :::
 
 Zoom level | Cell width (equator) | Cell width (45⁰ lat.) | Width of largest supported square region (45⁰ lat.)
