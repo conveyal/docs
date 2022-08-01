@@ -64,14 +64,17 @@ To change the origin of the analysis, drag the marker to a new location. A small
 
 ## Analysis panel
 
-The left panel has controls for the analysis and displays the access to opportunities afforded by the [scenario](/glossary#scenario). At the top of the panel, available scenarios and destination opportunity layers are listed in drop-down menus. For example, you might be interested in how a given scenario provides access to jobs, access to schools, or some other variable of interest represented in a [spatial dataset](/glossary#spatial-dataset) you uploaded.
-Additional scenarios can be selected for comparison. A [baseline](/glossary#baseline-network) scenario with no modifications (i.e. the unmodified [network bundle](/glossary#network-bundle) you uploaded) is automatically available for every project.
+The left panel has controls for the analysis and displays the access to opportunities afforded by the [scenario](/glossary#scenario). At the top of the panel, available [spatial datasets](/glossary#spatial-dataset) are listed in the drop-down menu for selection as a destination layer. For example, you might be interested in how a given scenario provides access to jobs, schools, or some other opportunity of interest.
 
-The options available in this panel are described more fully in [Options and Configuration](/analysis/configuration).
+The grid cell zoom level allows you to select the [spatial resolution](/analysis/methodology#spatial-resolution) used for analysis. The resolution applies to the destination grid in single-point analysis, and only spatial datasets with the same zoom level can be selected as destination opportunities. In regional analyses, the resolution applies to the origin grid, and destination grids can be a different zoom level. Higher zoom levels imply substantially more computation and may require you to reduce the boundaries of your analysis.
+
+Below the travel time slider, sub-panels allow selection of projects, scenarios, and different analysis settings. A [baseline](/glossary#baseline-network) scenario with no modifications (i.e. the unmodified [network bundle](/glossary#network-bundle) you uploaded) is automatically available for every project.
+
+The options available in these sub-panels are described more fully in [Options and Configuration](/analysis/configuration).
 
 ### Chart of accessibility results
 
-If a [spatial dataset](/glossary#spatial-dataset) is selected, the map will show a dot-density layer of these opportunities, and the analysis panel will show the number of opportunities accessible from the origin selected on the map.
+If a [spatial dataset](/glossary#spatial-dataset) is selected as a destination opportunity layer, the map will show a dot-density layer of these opportunities, and the analysis panel will show the number of opportunities accessible from the origin selected on the map.
 
 <Image 
   src='/img/analysis-stacked-percentile.png' 
