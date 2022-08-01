@@ -27,9 +27,9 @@ A spatial dataset representing origins or destinations of interest can be upload
 
 To start an upload, click: <Button variantColor='green'><FaPlus /> Upload a new spatial dataset</Button>
 
-Enter a name for the spatial dataset source, then select the appropriate file(s). Once this is done, click the upload button to start the upload. Datasets will be saved with the source name you entered and the attribute/column names of the uploaded files.
+Enter a name for the spatial dataset source, then select the appropriate file(s). Click the upload button to start the upload. Datasets will be saved with the source name you entered and the attribute/column names of the uploaded files.
 
-After processing is complete you can select a dataset from the dropdown menu to show a dot-density map of your spatial data layer converted to the [grid](/analysis/methodology#spatial-resolution) used in Conveyal Analysis.
+Uploaded files are converted to Conveyal's custom grid format. The default [spatial resolution](/analysis/methodology#spatial-resolution) of the grid cells is set to zoom level z9. Higher grid cell resolutions are available, but they should be used [with caution](/analysis/methodology#zoom-levels). Selecting zoom levels that yield an average of fewer than one opportunity per grid cell may lead to unexpected results. After processing is complete you can select a dataset from the dropdown menu to show the dot-density map derived from it at the selected resolution.
 
 ### CSV
 
@@ -92,8 +92,9 @@ Details of the layer, such as the total number of opportunities and upload date 
 
 ## LODES dataset import
 
-For projects in the United States, employment data from from the _Longitudinal Employer-Household Dynamics_ ([LEHD](https://lehd.ces.census.gov/)) Program can be imported with a one-click import function: <Button variantColor='cyan'><FaUsers /> Fetch LODES (2015)</Button>
+For projects in the United States, employment data from from the _Longitudinal Employer-Household Dynamics_ ([LEHD](https://lehd.ces.census.gov/)) Program can be imported with a one-click import function: <Button variantColor='cyan'><FaUsers /> Fetch LODES (2018)</Button>
 
-The [LODES](https://lehd.ces.census.gov/data/#lodes) (_LEHD Origin-Destination Employment Statistics_) dataset provides block-level data on the home and work locations of employed people living in the US. These job and worker counts are made available both as totals and as counts disaggregated by industry, earnings, education level, etc.
+The default [spatial resolution](/analysis/methodology#spatial-resolution) for LODES imports is set to grid cell zoom level z9. Higher zoom levels are available, but they should be used [with caution](/analysis/methodology#zoom-levels).
 
-Conveyal will update the LODES one-click import function after the Census Bureau addresses certain data limitations for more recent years. The current releases for 2016 and 2017 exclude federal employees, and the 2017 release is missing data for Alaska and South Dakota. For more information, see the [LODES technical documentation](https://lehd.ces.census.gov/data/lodes/LODES7/LODESTechDoc7.4.pdf).
+The [LODES](https://lehd.ces.census.gov/data/#lodes) (_LEHD Origin-Destination Employment Statistics_) dataset provides block-level data on the home and work locations of employed people living in the US. These job and worker counts are made available both as totals and as counts disaggregated by industry, earnings, education level, etc. The LEHD program generally releases data with a 2-3 year lag.
+
