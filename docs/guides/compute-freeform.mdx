@@ -1,7 +1,7 @@
 ---
 title: Compute access and travel times for custom points
 ---
-
+import Image from '../../components/image'
 import {
   FaPlus,
   FaCaretDown
@@ -9,9 +9,14 @@ import {
 
 By default, a regional analysis in Conveyal calculates accessibility indicators for every point in a [grid](/analysis/methodology#spatial-resolution). 
 
-You can override this default behavior to prepare CSV files with accessibility and travel-time results for a limited number of specified origins at exact coordinates. You first need to upload a CSV file and [process it as a freeform (non-grid) spatial dataset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points). Then, create a [regional analysis](/analysis/regional) with Origin points set to a freeform spatial dataset. Note that the cutoff value will limit results, so set it to 120 if you want full results for trips up to 2 hours. Once a regional analysis with freeform origins is complete, you will have options to download CSV files of the results. These features are still experimental; contact your support team for more information.
+You can override this default behavior to prepare CSV files with accessibility and travel-time results for a limited number of specified origins at exact coordinates. You first need to upload a CSV file and [process it as a freeform (non-grid) spatial dataset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points). Then, create a [regional analysis](/analysis/regional) with Origin points set to a freeform spatial dataset. The maximum cutoff value will clip results, so set it to 120 minutes if you want full results for trips up to 2 hours. Once a regional analysis with freeform origins is complete, you will have options to download CSV files of the results. These features are still experimental; contact your support team for more information.
 
 The following sections describe checkbox options available under "Record results" when creating a regional analysis with Origin points set to a freeform (non-grid) spatial dataset.
+
+<Image
+  src='/img/freeform-config.png'
+  alt='Configuring travel time and path analyses'
+/>
 
 ## Accessibility
 The "Accessibility" checkbox (activated by default) results in a CSV file with a row for each origin point, destination opportunity layer, travel time percentile, and cutoff.
