@@ -1,7 +1,7 @@
 ---
 title: Compute access and travel times for custom points
 ---
-
+import Image from '../../components/image'
 import {
   FaPlus,
   FaCaretDown
@@ -9,10 +9,17 @@ import {
 
 By default, a regional analysis in Conveyal calculates accessibility indicators for every point in a [grid](/analysis/methodology#spatial-resolution). 
 
-You can override this default behavior to prepare CSV files with accessibility and travel-time results for a limited number of specified origins at exact coordinates. You first need to upload a CSV file and [process it as a freeform (non-grid) spatial dataset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points). Next, in the custom request settings JSON of the analysis panel, add the fields described below to trigger the preparation of CSV result files. Then, create a [regional analysis](/analysis/regional) with Origin points set to a freeform spatial dataset. Note that the cutoff value will limit results, so set it to 120 if you want full results for trips up to 2 hours. Once a regional analysis with freeform origins is complete, you will have options to download CSV files of the results. These features are still experimental; contact your support team for more information.
+You can override this default behavior to prepare CSV files with accessibility and travel-time results for a limited number of specified origins at exact coordinates. You first need to upload a CSV file and [process it as a freeform (non-grid) spatial dataset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points). Then, create a [regional analysis](/analysis/regional) with Origin points set to a freeform spatial dataset. The maximum cutoff value will clip results, so set it to 120 minutes if you want full results for trips up to 2 hours. Once a regional analysis with freeform origins is complete, you will have options to download CSV files of the results. These features are still experimental; contact your support team for more information.
+
+The following sections describe checkbox options available under "Record results" when creating a regional analysis with Origin points set to a freeform (non-grid) spatial dataset.
+
+<Image
+  src='/img/freeform-config.png'
+  alt='Configuring travel time and path analyses'
+/>
 
 ## Accessibility
-The default `"recordAccessibility": true` field in the [custom analysis request JSON](/analysis/configuration#additional-settings) will result in a CSV file with a row for each origin point, destination opportunity layer, travel time percentile, and cutoff.
+The "Accessibility" checkbox (activated by default) results in a CSV file with a row for each origin point, destination opportunity layer, travel time percentile, and cutoff.
 
 ### Example results
 
@@ -34,11 +41,9 @@ etc
 
 ## Travel time matrix
 
-Adding `"recordTimes": true` to the [custom analysis request JSON](/analysis/configuration#additional-settings) will result in a CSV file with a row for each origin point, destination point, and travel time percentile. This setting requires freeform spatial datasets to be selected for both the Origin points and the Destination opportunity layer. 
+Activating "Times" (after selecting freeform (non-grid) spatial datasets for origins and destinations) produces a CSV file with a row for each origin point, destination point, and travel time percentile.
 
-In travel time CSV results, a time of -1 indicates the destination is unreachable within the maximum cutoff specified when the regional analysis was created. The number of destinations is currently limited to 4 million, and the number of origin-destination pairs is limited to 16 million. If you need travel times only for linked pairs of origin-destination coordinates, and a many-to-many analysis would exceed these limits, you can use the `oneToOne` setting described below.
-
-Once you have prepared the desired results, you may want to remove the custom `recordTimes` flag from the custom analysis request JSON to avoid confusion in future analyses.
+In travel time CSV results, a time of -1 indicates the destination is unreachable within the maximum cutoff specified when the regional analysis was created. The number of destinations is currently limited to 4 million, and the number of origin-destination pairs is limited to 16 million. If you need travel times only for linked pairs of origin-destination coordinates, and a many-to-many analysis would exceed these limits, you can use the "Linked origin-destination pairs" setting described below.
 
 ### Example results
 
@@ -57,17 +62,9 @@ South Boston|Chelsea High School|50|55
 South Boston|Cambridge Family Health|95|46
 South Boston|Chelsea High School|95|-1
 
-
-### Linked origin-destination pairs (`oneToOne`)
-
-When both origins and destinations are freeform, you can save CSV results for specific matched pairs of origins and destinations, rather than all combinations of origins and destinations. 
-
-To enable this feature, add `"oneToOne": true` to the custom analysis request JSON; then, in the regional analysis creation box, ensure that the origin points and destination layer are from source files with corresponding rows (and therefore have equal numbers of points). This approach can greatly reduce the size of output files, restricting them to only a small set of OD pairs you care about. But it may not reduce compute time (which is primarily affected by the number of origins). If origin coordinates are repeated for different destinations, `"oneToOne": false` will likely be faster even if you do not need all combinations of origins and destinations.
-
-<!---
 ## Path details
 
-Setting `recordPaths:true` will result in a CSV file with the following columns:
+Activating "Paths" (after selecting freeform (non-grid) spatial datasets for origins and destinations) produces a CSV file with the following columns:
 
 * origin: Id of the origin point
 * destination: Id of the destination point
@@ -100,7 +97,11 @@ origin,destination,routes,boardStops,alightStops,rideTimes,accessTime,egressTime
 1,5,71|Red|76,2049|70068|141,20761|70061|8605,22.0|9.0|24.0,6.6,5.9,13.5,1.4|2.6|1.9,86.9,26
 etc
 ```
---->
+## Linked origin-destination pairs
+
+You can save CSV time or path results for specific matched pairs of origins and destinations, rather than all combinations of origins and destinations. 
+
+To enable this feature, activate "Linked origin-destination pairs" in the regional analysis creation box. Ensure that the origin points and destination layer are from source files with corresponding rows (and therefore have equal numbers of points). This approach can greatly reduce the size of output files, restricting them to only a small set of OD pairs you care about. But it may not reduce compute time (which is primarily affected by the number of origins). If origin coordinates are repeated for different destinations, leaving this option unchecked will likely be faster even if you do not need all combinations of origins and destinations.
 
 ## API access
 To prepare travel time surfaces, isochrones, or accessibility results for specific sets of origins using Python scripts, see the notebook in this [repository](https://github.com/conveyal/batch-isochrones). This notebook is provided as an example only, and Conveyal provides no guarantee of ongoing API compatibility for such external scripts.
