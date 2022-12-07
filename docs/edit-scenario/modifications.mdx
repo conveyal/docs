@@ -267,7 +267,7 @@ This modification type lets you set a scale factor for car speed within features
 For custom cycling Level of Traffic Stress, upload and select a linear shapefile [data source](/prepare-data) with an `lts` attribute for each feature. For now, this modification type cannot be applied with bike + transit analyses.
 
 #### Raster cost
-Conveyal provides certain cost functions that translate exposure to a raster surface along a network edge to modified traversal time for that edge. For example, loading a geotiff elevation raster [data source](/prepare-data) and setting `costFunction: "TOBLER"` in the custom JSON will apply Tobler's hiking function to walking travel times.
+Conveyal provides certain cost functions that translate exposure to a raster surface along a network edge to modified traversal time for that edge. For example, to account for slope in walking times using [Tobler's hiking function](https://en.wikipedia.org/wiki/Tobler%27s_hiking_function): download an elevation raster layer (e.g. from the [National Elevation Dataset](https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Elevation/13/TIFF/current/)), load it as a [data source](/prepare-data), create a custom streets modification referencing the data source, and set `"costFunction": "TOBLER"` in the custom modification JSON. An alternative function, `"costFunction": "MINETTI"` is based on [Minetti et al. (2002)](https://journals.physiology.org/doi/full/10.1152/japplphysiol.01177.2001).
 
 ## Modification order
 You can apply multiple modifications of different types to the same transit route or section of the street network. In a given scenario, modifications are applied in the order described below.
