@@ -99,22 +99,22 @@ To summarize accessibility in a single metric or indicator, you can use Conveyal
 
 ### Uploading aggregation areas
 
-In order to accomplish this aggregation, you first need to convert a spatial Data Source with polygon features to an aggregation area. Once aggregation areas are processed, they are available for selection in the details panel for a completed regional analysis. Also make sure that spatial datasets appropriate for the origin weights are available at the same zoom level of the analysis. For example, for a z10 regional analysis of access to jobs, you might want to use a z10 spatial dataset of workers by home location.
+In order to accomplish this aggregation, you first need to convert a spatial Data Source with polygon features to an aggregation area with a zoom level matching your regional analysis. Once aggregation areas are processed, they are available for selection in the details panel for a completed regional analysis.
 
 ### Viewing aggregate metrics
 
-To view aggregate metrics for a regional analysis, select an available aggregation area and the origin spatial dataset you want to weight by. For example, if you select "Total households," your histogram will represent how many households experience different levels of accessibility. If instead you select "Workers with earnings $1250 per month or less," you will see how accessibility is distributed among workers with low earnings. 
+To view aggregate metrics for a regional analysis, select an available aggregation area and the origin spatial dataset you want to weight by, both of which must have the same zoom level as the regional analysis. For example, for a z10 regional analysis of access to jobs, you might choose a z10 spatial dataset of workers by home location for the origin weights.
 
 The choice of aggregation area can have a significant impact on the final metric. If a very large area is chosen, where much of the region does not have transit service, there will be a large number of people with very low job access via transit, deflating the aggregate numbers. Conversely, if a small area is chosen, segments of the population that should be served by transit will be excluded from the aggregate metrics.
 
-Once you have an aggregation area and weight selected, you will see a display similar to the one below, showing a histogram of how many of the units you weighted by experience a particular level of access.
+Once you have an aggregation area and origin weight selected, you will see a display similar to the one below, showing how accessibility is distributed across your chosen origin population. For example, if you select "Total households," your histogram will represent how many households experience different levels of accessibility. If instead you select "Workers with earnings $1250 per month or less," you will see how accessibility is distributed among workers with low earnings. 
 
 <Image
   src='/img/aggregate-accessibility.png'
   alt='Aggregate accessibility in Brooklyn, New York, USA'
 />
 
-The plot is a histogram of the number jobs accessible within the full destination spatial dataset (not just Brooklyn) for workers residing in Brooklyn (since this is a regional analysis of access to jobs, aggregated to Brooklyn, and weighted by workers). We can see that the distribution is bimodal. There are a large number of workers with relatively lower accessibility values (the left peak), most likely residing in outer Brooklyn further from the subway and from job centers . There are also a number of workers with a higher level of accessibility, probably those residing in downtown Brooklyn and near Manhattan. This plot is conceptually similar to academic work on accessibility by population percentile (e.g. [Grengs et al. 2010](http://journals.sagepub.com/doi/10.1177/0739456X10363278)).
+The plot is a histogram of the number jobs accessible within the full destination spatial dataset (not just Brooklyn) for workers residing in Brooklyn (since this is a regional analysis of access to jobs, aggregated to Brooklyn, and weighted by workers). We can see that the distribution is bimodal. There are a large number of workers with relatively lower accessibility values (the left peak), most likely residing in outer Brooklyn further from the subway and from job centers. There are also a number of workers with a higher level of accessibility, probably those residing in downtown Brooklyn and near Manhattan. This plot is conceptually similar to academic work on accessibility by population percentile (e.g. [Grengs et al. 2010](http://journals.sagepub.com/doi/10.1177/0739456X10363278)).
 
 Below the histogram is a readout of the metric mentioned above: how many opportunities are accessible to a certain quantile of the population; in this case, 90% of workers residing in Brooklyn have access to more than 267,000 jobs. You can adjust the percentile by dragging the slider. The area of the histogram above the cutoff is highlighted. By setting it below 100%, you are effectively recognizing that some percentage of a given region may not be feasible to serve with transit, so accessibility metrics should not be penalized for the lack of access in those areas.
 
