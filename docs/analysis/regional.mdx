@@ -99,12 +99,11 @@ To summarize accessibility in a single metric or indicator, you can use Conveyal
 
 ### Uploading aggregation areas
 
-In order to accomplish this aggregation, you first need to convert a spatial Data Source with polygon features to an aggregation area. Once aggregation areas are processed, they are available for selection in the details panel for a completed regional analysis. Also make sure that spatial datasets appropriate for the origin weights are available.
+In order to accomplish this aggregation, you first need to convert a spatial Data Source with polygon features to an aggregation area. Once aggregation areas are processed, they are available for selection in the details panel for a completed regional analysis. Also make sure that spatial datasets appropriate for the origin weights are available at the same zoom level of the analysis. For example, for a z10 regional analysis of access to jobs, you might want to use a z10 spatial dataset of workers by home location.
 
 ### Viewing aggregate metrics
 
 To view aggregate metrics for a regional analysis, select an available aggregation area and the origin spatial dataset you want to weight by. For example, if you select "Total households," your histogram will represent how many households experience different levels of accessibility. If instead you select "Workers with earnings $1250 per month or less," you will see how accessibility is distributed among workers with low earnings. 
-
 
 The choice of aggregation area can have a significant impact on the final metric. If a very large area is chosen, where much of the region does not have transit service, there will be a large number of people with very low job access via transit, deflating the aggregate numbers. Conversely, if a small area is chosen, segments of the population that should be served by transit will be excluded from the aggregate metrics.
 
