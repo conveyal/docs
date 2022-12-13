@@ -10,7 +10,7 @@ import {
 By default, a regional analysis in Conveyal calculates accessibility indicators for every point in a [grid](/analysis/methodology#spatial-resolution). 
 
 You can instead request CSV files with accessibility, travel-time, or path detail results for specified origins and destinations at exact coordinates:
-1. Upload a CSV file and [process it as a freeform (non-grid) spatial dataset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points). Each analysis is currently limited to 4 million destinations, and 16 million total origin-destination pairs.
+1. Upload a CSV file and [process it as a freeform (non-grid) spatial dataset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points). Time and path detail analyses are currently limited to 4 million destinations, and 16 million total origin-destination pairs. If a many-to-many analysis would exceed these limits and you need travel times only for linked pairs of origin-destination coordinates, you can use the "Linked origin-destination pairs" setting described below.
 1. Create a [regional analysis](/analysis/regional) with Origin points set to a freeform spatial dataset. 
 1. Activate your desired analysis types in the "Record results" section, as described in the sections below.
 1. The maximum cutoff value will clip results, so set it to 120 minutes if you want full results for trips up to 2 hours.
@@ -47,7 +47,7 @@ etc
 
 Activating "Times" (after selecting freeform (non-grid) spatial datasets for origins and destinations) produces a CSV file with a row for each origin point, destination point, and travel time percentile.
 
-In travel time CSV results, a time of -1 indicates the destination is unreachable within the maximum cutoff specified when the regional analysis was created. The number of destinations is currently limited to 4 million, and the number of origin-destination pairs is limited to 16 million. If you need travel times only for linked pairs of origin-destination coordinates, and a many-to-many analysis would exceed these limits, you can use the "Linked origin-destination pairs" setting described below.
+In travel time CSV results, a time of -1 indicates the destination is unreachable within the maximum cutoff specified when the regional analysis was created.
 
 ### Example results
 
