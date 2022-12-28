@@ -1,0 +1,21 @@
+---
+title: December, 2022
+---
+
+import Image from '../components/image'
+
+We're thrilled to announce these updates, especially a new **itinerary viewer** for diving into Conveyal's multi-modal routing results! To view detailed transit itineraries, use the recommended routing engine (at least v6.8), pin a destination on the map, fetch results, and click the "View routes to destination" button.
+
+<Image
+  src='/img/fetch-itinerary-details.gif'
+  alt='Display a summary of routes to the destination'
+/>
+
+In the itinerary viewer, the left table shows a minute-by-minute summary of optimal itineraries from your selected origin to destination. Details for each itinerary are on the right, including access/egress time/mode, a range of total door-to-door durations (reflecting different waiting times encountered), the number of times the itinerary was used, and information about each transit leg of the journey (boarding/alighting stops, route, and in-vehicle time).
+
+### Additional improvements and bug fixes available with the v6.8 release:
+- Improved informational and warning messages returned while running an analysis
+- Revised on-street routing to prevent passing certain OSM barrier nodes (such as emergency exits)
+- Enabled experimental "generalized cost" routing on additional networks
+- Fixed a bug that could set an incorrect bicycle LTS in certain modifications
+- Improved file upload
