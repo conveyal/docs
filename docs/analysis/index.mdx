@@ -46,11 +46,18 @@ For results that include uncertainty and variability due to transit schedules, c
 
 For single point analysis, travel time percentile is limited to five default values (5, 25, 50, 75, 95). Arbitrary percentile values can be set for a [regional analysis](/analysis/regional). 
 
-You can inspect the distribution of total travel times to a specific destination by clicking the <FaCrosshairs /> icon in the legend; a small circular destination marker will then follow your cursor across the map, and the legend will update with a plot of travel time at the five default percentile values listed above. Click on the map to pin the destination marker to a specific location, which can be useful for comparing travel times from different origins or for different requests. Pinning the destination marker also enables experimental features to inspect transit path details; contact your support team to learn more. Click on a pinned destination marker to make it follow your cursor again.
+You can inspect the distribution of total travel times to a specific destination by clicking the <FaCrosshairs /> icon in the legend; a small circular destination marker will then follow your cursor across the map, and the legend will update with a plot of travel time at the five default percentile values listed above. Click on the map to pin the destination marker to a specific location, which can be useful for comparing travel times from different origins or for different requests. Click on a pinned destination marker to make it follow your cursor again.
 
 <Video 
   alt='Testing different travel time cutoffs, percentiles, and origins'
   src='/travel-time-slider.m4v' 
+/>
+
+Pinning the destination marker also enables the transit itinerary viewer. To view itinerary details, use a recent routing engine version (at least v6.8), pin a destination on the map, click "Fetch Results," then click "View routes to destination" in the origin legend after results are fetched. In the itinerary viewer, the left table shows a minute-by-minute summary of optimal itineraries from your selected origin to destination. Details for each itinerary are on the right, including access/egress time/modes, a range of total door-to-door durations (reflecting different waiting times encountered), how many iterations the itinerary was used for, and information about each transit leg of the journey (boarding/alighting stops, route, and in-vehicle time).
+
+<Image 
+  src='/img/route-summaries.png'
+  alt='Viewing itinerary details'
 />
 
 The display of modifications on the map is controlled in editing mode (See: [Toggling display of modifications](/edit-scenario/usage#toggle-mod-display)). To change what modifications are shown, you must set the visibility there and then navigate back to the analysis page. 

@@ -4,16 +4,18 @@ title: December, 2022
 
 import Image from '../components/image'
 
-We're thrilled to announce a much-requested feature! When you select a destination *before* running a single point analysis, you'll now see a "View routes to destination" button. Click it to view a summary of the routes used to travel between your origin and destination. 
+We're thrilled to announce these updates, especially a new *itinerary viewer* for diving into Conveyal's multi-modal routing results! To view detailed transit itineraries, use the recommended routing engine (at least v6.8), pin a destination on the map, fetch results, and click the "View routes to destination" button.
 
 <Image
-  src='/img/route-summaries.png'
+  src='/img/fetch-itinerary-details.gif'
   alt='Display a summary of routes to the destination'
 />
 
-The tables on the left show the itinerary used for each iteration and the total time taken from that iteration. The tables on the right list the itineraries used to get from the origin to the destination. These itineraries include the access and egress time and modes, total duration range of the trip, how many iterations the itinerary was used for, and information about each leg of the journey. Each leg includes the boarding stop, routes taken, alight stop, and duration. Notably, any route added by a modification will be shown in this summary.
+In the itinerary viewer, the left table shows a minute-by-minute summary of optimal itineraries from your selected origin to destination. Details for each itinerary are on the right, including access/egress time/modes, a range of total door-to-door durations (reflecting different waiting times encountered), how many iterations the itinerary was used for, and information about each transit leg of the journey (boarding/alighting stops, route, and in-vehicle time).
 
-## Additional improvements and bug fixes
-- Improved and increased the errors, warnings, and notices returned while running an analysis.
-- Fixed a bug that allowed routing through OSM barrier nodes.
-- Fixed a bug that could cause an incorrect bicycle LTS to be set.
+## Additional improvements and bug fixes available with the v6.8 release:
+- Improved informational and warning messages returned while running an analysis
+- Revised on-street routing to prevent passing certain OSM barrier nodes (such as emergency exits)
+- Enabled experimental "generalized cost" routing on additional networks
+- Fixed a bug that could set an incorrect bicycle LTS in certain modifications
+- Improved file upload
