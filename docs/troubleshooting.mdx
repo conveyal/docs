@@ -6,7 +6,7 @@ import Image from '../components/image'
 
 The following guides may help if you are having trouble using Conveyal. If you are still having problems, please email us at [support@conveyal.com](mailto:support@conveyal.com).
 
-## Logging In
+## Logging in
 
 When using Conveyal, always navigate to [https://analysis.conveyal.com](https://analysis.conveyal.com) in your browser's address window. 
 
@@ -39,3 +39,25 @@ Before contacting support, we recommend trying to log into Conveyal using privat
 If you are having unexplained problems using our application, please check our [Status Page](https://analysis.conveyal.com/status) to verify that the issue is not stemming from connectivity or log in issues. The page should show two green `OK`s, without any error status bar:
 
 <Image src='/img/status-page.png' alt='Status Page' />
+
+## Problems with uploaded files
+
+When uploading spatial data layers or transportation network data, Conveyal will scan for conditions that make 
+the data suspect, invalid, or ambiguous. Some of these conditions are classified as errors and will make the data set
+invalid and unusable, while others are treated as informational warnings and the data set will remain usable. 
+This section explains how to interpret and resolve specific errors and warnings users have experienced on their
+uploaded files.
+
+### Missing geometry
+
+When uploading a shapefile, you may see an error like `Null (missing) geometry on feature: grid.461`. It is possible
+for programs to produce shapefiles containing one or more "features" (database rows with attributes such as job counts 
+or census block IDs) that are not associated with a point, line, or polygon (a "geometry"). 
+This implies something went wrong in creating or exporting the shapefile. You will need to 
+examine and repair it in GIS software such as QGIS. Once the shapefile has been added to a QGIS project as a layer, you 
+can open the attribute table of that layer, click the tool button to "select features using an expression", enter the
+expression `$geometry is NULL` and click "select features". The selected features will not appear on the map (as they
+have no associated geometry) but back in the attribute table you can choose "show selected features" to narrow the list
+down to the offending features. Based on their other attributes you can determine whether something went wrong in the 
+export process. If these features are spurious you can toggle editing and delete them, creating a shapefile without
+this problem that can be uploaded to Conveyal. 
