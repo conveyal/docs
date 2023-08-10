@@ -9,9 +9,13 @@ import {
 
 By default, a regional analysis in Conveyal calculates accessibility indicators for every point in a [grid](/analysis/methodology#spatial-resolution). 
 
-You can override this default behavior to prepare CSV files with accessibility and travel-time results for a limited number of specified origins at exact coordinates. You first need to upload a CSV file and [process it as a freeform (non-grid) spatial dataset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points). Then, create a [regional analysis](/analysis/regional) with Origin points set to a freeform spatial dataset. The maximum cutoff value will clip results, so set it to 120 minutes if you want full results for trips up to 2 hours. Once a regional analysis with freeform origins is complete, you will have options to download CSV files of the results. These features are still experimental; contact your support team for more information.
+You can instead request CSV files with accessibility, travel-time, or path detail results for specified origins and destinations at exact coordinates:
+1. Upload a CSV file and [process it as a freeform (non-grid) spatial dataset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points). Time and path detail analyses are currently limited to 4 million destinations, and 16 million total origin-destination pairs. If a many-to-many analysis would exceed these limits and you need travel times only for linked pairs of origin-destination coordinates, you can use the "Linked origin-destination pairs" setting described below.
+1. Create a [regional analysis](/analysis/regional) with Origin points set to a freeform spatial dataset. 
+1. Activate your desired analysis types in the "Record results" section, as described in the sections below.
+1. The maximum cutoff value will clip results, so set it to 120 minutes if you want full results for trips up to 2 hours.
 
-The following sections describe checkbox options available under "Record results" when creating a regional analysis with Origin points set to a freeform (non-grid) spatial dataset.
+Once a regional analysis with freeform origins is complete, you will have options to download CSV files of the results. These features are still experimental; contact your support team for more information.
 
 <Image
   src='/img/freeform-config.png'
@@ -19,7 +23,7 @@ The following sections describe checkbox options available under "Record results
 />
 
 ## Accessibility
-The "Accessibility" checkbox (activated by default) results in a CSV file with a row for each origin point, destination opportunity layer, travel time percentile, and cutoff.
+The "Accessibility" checkbox (activated by default when configuring a regional analysis with freeform origins) results in a CSV file with a row for each origin point, destination opportunity layer, travel time percentile, and cutoff.
 
 ### Example results
 
@@ -43,7 +47,7 @@ etc
 
 Activating "Times" (after selecting freeform (non-grid) spatial datasets for origins and destinations) produces a CSV file with a row for each origin point, destination point, and travel time percentile.
 
-In travel time CSV results, a time of -1 indicates the destination is unreachable within the maximum cutoff specified when the regional analysis was created. The number of destinations is currently limited to 4 million, and the number of origin-destination pairs is limited to 16 million. If you need travel times only for linked pairs of origin-destination coordinates, and a many-to-many analysis would exceed these limits, you can use the "Linked origin-destination pairs" setting described below.
+In travel time CSV results, a time of -1 indicates the destination is unreachable within the maximum cutoff specified when the regional analysis was created.
 
 ### Example results
 

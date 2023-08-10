@@ -155,7 +155,7 @@ This modification does not take into account the possibility of increased freque
 
 ### Remove trips
 
-Another common modification is to remove trips. The most common use is to remove entire routes, but it is also possible to remove only specific [trip patterns](/glossary#trip-pattern) on a particular route. In order to remove trips, create a new _remove trips_ modification, and select a GTFS feed, route, and optionally the trip pattern of the trips to be removed. All trips on this route/pattern combination will be removed and the route will be shown in red on the map. Note that the "active in variants" selector always specifies whether the modification is active. In this case it implies that the trips will be removed from the selected variants.
+Another common modification is to remove trips. The most common use is to remove entire routes, but it is also possible to remove only specific [trip patterns](/glossary#trip-pattern) on a particular route. In order to remove trips, create a new _remove trips_ modification, and select a GTFS feed, route, and optionally the trip pattern of the trips to be removed. All trips on this route/pattern combination will be removed and the route will be shown in red on the map. You can select multiple routes to remove, but only one will be shown on the map.
 
 <Image
   src='/img/remove-trips.png'
@@ -267,7 +267,7 @@ This modification type lets you set a scale factor for car speed within features
 For custom cycling Level of Traffic Stress, upload and select a linear shapefile [data source](/prepare-data) with an `lts` attribute for each feature. For now, this modification type cannot be applied with bike + transit analyses.
 
 #### Raster cost
-Conveyal provides certain cost functions that translate exposure to a raster surface along a network edge to modified traversal time for that edge. For example, loading a geotiff elevation raster [data source](/prepare-data) and setting `costFunction: "TOBLER"` in the custom JSON will apply Tobler's hiking function to walking travel times.
+Conveyal provides certain cost functions that translate exposure to a raster surface along a network edge to modified traversal time for that edge. For example, to account for slope in walking times using [Tobler's hiking function](https://en.wikipedia.org/wiki/Tobler%27s_hiking_function): download an elevation raster layer (e.g. from the [National Elevation Dataset](https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Elevation/13/TIFF/current/)), load it as a [data source](/prepare-data), create a custom streets modification referencing the data source, and set `"costFunction": "TOBLER"` in the custom modification JSON. An alternative function, `"costFunction": "MINETTI"` is based on [Minetti et al. (2002)](https://journals.physiology.org/doi/full/10.1152/japplphysiol.01177.2001).
 
 ## Modification order
 You can apply multiple modifications of different types to the same transit route or section of the street network. In a given scenario, modifications are applied in the order described below.
