@@ -1,3 +1,6 @@
+// @ts-check
+
+/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 const themeConfig = {
   image: 'img/android-chrome-512x512.png', // meta image for social media
   colorMode: {
@@ -51,7 +54,8 @@ if (process.env.ALGOLIA_API_KEY) {
   }
 }
 
-module.exports = {
+/** @type {import('@docusaurus/types').Config} */
+const config = {
   title: 'Conveyal User Manual',
   tagline: 'User manual for Conveyal',
   url: 'https://docs.conveyal.com',
@@ -61,6 +65,7 @@ module.exports = {
   organizationName: 'conveyal', 
   projectName: 'docs', 
   themeConfig,
+  trailingSlash: false,
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -85,8 +90,7 @@ module.exports = {
         },
         sitemap: { // for crawlers
           changefreq: 'weekly',
-          priority: 0.5,
-          trailingSlash: false
+          priority: 0.5
         }
       }
     ]
@@ -99,3 +103,5 @@ module.exports = {
     'data-domain': 'docs.conveyal.com'
   }]
 }
+
+module.exports = config
