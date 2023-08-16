@@ -71,6 +71,7 @@ const config = {
       '@docusaurus/preset-classic',
       {
         docs: {
+          breadcrumbs: false,
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: 'https://github.com/conveyal/docs/edit/master'
