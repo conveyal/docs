@@ -7,7 +7,9 @@ import {FaPlus} from 'react-icons/fa'
 import Button from '../../components/button'
 import Image from '../../components/image'
 
-[Add trip pattern](/edit-scenario/modifications#add-trip-pattern) and [convert to frequency](/edit-scenario/modifications#convert-to-frequency) modifications require simple timetables. By default, a newly added timetable or frequency entry will specify trips running every 10 minutes from 7 AM to 10 PM, every day of the week.
+[Add trip pattern](/edit-scenario/modifications#add-trip-pattern) and [convert to frequency](/edit-scenario/modifications#convert-to-frequency) modifications require simple timetables. By default, a newly added timetable or frequency entry will specify trips running every 10 minutes from 5 AM to 10 PM, every day of the week.
+
+Check that timetables are sufficient to cover your planned analysis time windows. For example, if you expect certain levels of service at a stop X minutes from the start of a route, ensure that the timetable starts running at least X minutes before the start of your analysis window.
 
 <Image
   src='/img/new-timetable.png'
