@@ -52,6 +52,11 @@ body {
 }
 
 .ZoomableImage {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.ZoomableImage > .Thumbnail {
   box-shadow: 0 0 15px rgba(24, 96, 141, 0.2);
   margin: 15px 0 0;
   object-fit: contain;
@@ -60,7 +65,13 @@ body {
   cursor: zoom-in;
 }
 
+.ZoomableImage > .AltText {
+  font-style: italic;
+  font-size: 75%;
+}
+
 .ImageOverlayBackdrop {
+  display: none;
   cursor: zoom-out;
   position: fixed;
   top: 0;
@@ -72,6 +83,7 @@ body {
 }
 
 .ImageOverlay {
+  display: none;
   box-shadow: 0 0 15px rgba(24, 96, 141, 0.2);
   cursor: zoom-out;
   position: fixed;
@@ -82,6 +94,19 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.ZoomableImage:focus-within {
+  border: 1px solid red;
+}
+
+.ZoomableImage:focus-within > .ImageOverlayBackdrop {
+  display: block;
+}
+
+.ZoomableImage:focus-within > .ImageOverlay {
+  display: block;
+}
+
 
 /* Github link taken from https://github.com/facebook/docusaurus/blob/master/website/src/css/custom.css */
 .header-github-link:hover {
