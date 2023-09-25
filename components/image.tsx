@@ -1,37 +1,17 @@
-import useBaseUrl from '@docusaurus/useBaseUrl' 
-import React, {useState} from 'react'
+import React from 'react'
 
 export default function Image ({alt, src}) {
-  const [isActive, setIsActive] = useState(false)
-
   return (
-    <div style={{marginBottom: '20px', textAlign: 'center'}}>
+    <div className='ZoomableImage'>
       <img 
+        className='Thumbnail'
         alt={alt} 
-        className='ZoomableImage'
-        onClick={() => setIsActive(true)}
-        src={useBaseUrl(src)}
+        src={src}
+        tabIndex={0}
       />
-      {isActive && (
-        <>
-          <div 
-            className='ImageOverlayBackdrop' 
-            onClick={() => setIsActive(false)}
-          />
-          <img
-            alt={alt}
-            className='ImageOverlay'
-            onClick={() => setIsActive(false)}
-            src={useBaseUrl(src)}
-          />
-        </>
-      )}
-      <div 
-        style={{
-          fontStyle: 'italic',
-          fontSize: '75%'
-        }}
-      >{alt}</div>
+      <div className='ImageOverlayBackdrop' />
+      <img alt={alt} className='ImageOverlay' src={src} />
+      <div className='AltText'>{alt}</div>
     </div>
   )
 }
