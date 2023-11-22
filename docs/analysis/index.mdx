@@ -46,32 +46,40 @@ For results that include uncertainty and variability due to transit schedules, c
 
 For single point analysis, travel time percentile is limited to five default values (5, 25, 50, 75, 95). Arbitrary percentile values can be set for a [regional analysis](/analysis/regional). 
 
-You can inspect the distribution of total travel times to a specific destination by clicking the <FaCrosshairs /> icon in the legend; a small circular destination marker will then follow your cursor across the map, and the legend will update with a plot of travel time at the five default percentile values listed above. Click on the map to pin the destination marker to a specific location, which can be useful for comparing travel times from different origins or for different requests. Click on a pinned destination marker to make it follow your cursor again.
+To change the origin of the analysis, drag the marker to a new location.
 
 <Video 
   alt='Testing different travel time cutoffs, percentiles, and origins'
   src='/travel-time-slider.m4v' 
 />
 
-Pinning the destination marker also enables the transit itinerary viewer. To view itinerary details, use a recent routing engine version (at least v6.8), pin a destination on the map, click "Fetch Results," then click "View routes to destination" in the origin legend after results are fetched. In the itinerary viewer, the left table shows a minute-by-minute summary of optimal itineraries from your selected origin to destination. Details for each itinerary are on the right, including access/egress time/modes, a range of total door-to-door durations (reflecting different waiting times encountered), how many iterations the itinerary was used for, and information about each transit leg of the journey (boarding/alighting stops, route, and in-vehicle time).
-
-<Image 
-  src='/img/route-summaries.png'
-  alt='Viewing itinerary details'
-/>
-
 The display of modifications on the map is controlled in editing mode (See: [Toggling display of modifications](/edit-scenario/usage#toggle-mod-display)). To change what modifications are shown, you must set the visibility there and then navigate back to the analysis page. 
 
-To change the origin of the analysis, drag the marker to a new location. A smaller circular marker will follow your cursor on the map, and a legend will show a box and whisker plot of the distribution of travel times from the origin to that destination. For example, in the image below the travel time varies between about 30 and 50 minutes depending on when one departs. Click on the map to pin the destination marker, and click on the marker to unpin it. 
+### Travel time and itinerary details
+
+Conveyal provides unique ways to check the variability of transit trips and detailed itineraries.
+
+To visualize the distribution of total travel times to a specific destination, click the <FaCrosshairs /> icon in the destination legend (lower left). A small circular destination marker will then follow your cursor across the map, and the legend will update with a plot of travel time at the five default percentile values listed above. For example, in the image below the travel time varies between about 30 and 50 minutes depending on when one departs (and the random schedules simulated if frequency-based routes are present). Click on the map to pin the destination marker to a specific location, which can be useful for comparing travel times from different origins or for different requests. Click on a pinned destination marker to make it follow your cursor again.
 
 <Image 
   src='/img/destination-travel-time-distribution.png' 
   alt='The travel time distribution from an origin to a destination'
 />
 
+To view itinerary details, pin the destination marker as described above and click "Fetch Results." Once results are returned, click "View routes to destination," which appears in the origin legend (upper left). 
+
+In the itinerary viewer, the left table shows a minute-by-minute summary of optimal itineraries from your selected origin to destination. Details for each itinerary are on the right, including access/egress time/modes, a range of total door-to-door durations (reflecting different waiting times encountered), how many iterations the itinerary was used for, and information about each transit leg of the journey (boarding/alighting stops, route, and in-vehicle time). This feature is not available for routing engine versions prior to v6.8.
+
+<Image 
+  src='/img/route-summaries.png'
+  alt='Viewing itinerary details'
+/>
+
 ## Analysis panel
 
-The left panel has controls for the analysis and displays the access to opportunities afforded by the [scenario](/glossary#scenario). At the top of the panel, available [spatial datasets](/glossary#spatial-dataset) are listed in the drop-down menu for selection as a destination layer. For example, you might be interested in how a given scenario provides access to jobs, schools, or some other opportunity of interest.
+The left panel has controls for the analysis and displays the access to opportunities afforded by the selected [scenarios](/glossary#scenario). If network modifications are included in a scenario, certain details (such as the number of transit trips or street network edges affected) may be listed at the top of this panel.
+
+Available [spatial datasets](/glossary#spatial-dataset) are listed in the drop-down menu for selection as a destination layer. For example, you might be interested in how a given scenario provides access to jobs, schools, or some other opportunity of interest. 
 
 The grid cell zoom level allows you to select the [spatial resolution](/analysis/methodology#spatial-resolution) used for analysis. The resolution applies to the destination grid in single-point analysis, and only spatial datasets with the same zoom level can be selected as destination opportunities. In regional analyses, the resolution applies to the origin grid, and destination grids can be a different zoom level. Higher zoom levels imply substantially more computation and may require you to reduce the boundaries of your analysis.
 

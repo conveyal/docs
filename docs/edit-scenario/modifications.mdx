@@ -36,7 +36,7 @@ New route alignments are defined by by an ordered set of stops and control point
   alt='Map symbols for stops and control points'
 />
 
-By default when you begin editing a new route, you can click once on the map to place the first stop, then again to place the second stop, and so on. If you click on an existing stop (indicated by a small gray circle), the icon for the new stop will be black and the new transit service will stop at that existing stop. If you click in a place where there is not an existing stop, a new stop (in blue) will be created.
+By default when you begin editing a new route, you can click once on the map to place the first stop, then again to place the second stop, and so on. If you click on an existing stop (indicated by a small gray circle), the icon for the new stop will be black and the new transit service will stop at that existing stop. If you click in a place where there is not an existing stop, a new stop (in blue) will be created. In general, we recommend adding stops near walkable streets; stops that are far from walkable streets may be automatically linked to the nearest walkable street in an unintuitive way.
 
 Once created, any stop or control point can be moved by dragging it to a new location. Clicking on a stop gives you the option to delete it, or convert it to a _control point_ through which the route will pass without stopping. Similarly, control points can be converted back to stops or deleted by clicking on them.
 
@@ -125,7 +125,7 @@ Start by selecting a [GTFS feed](/glossary#GTFS--GTFS-feed) and then the route f
 You can choose to remove all existing trips on the route (the default) and start from scratch with new timetables. Or you may choose to retain trips outside the time windows in which you specify frequencies which is useful when you are changing the frequency for only part of the day (e.g. increased weekend frequency) and want to retain the existing scheduled service at other times. This is controlled using the checkbox labeled "_Retain existing scheduled trips at times without new frequencies specified_".
 
 You then create any number of frequency entries using simple [timetables](timetable).
-Within each timetable, you will need to select a trip pattern from your route, then a particular trip from that trip pattern to be used as a template. Travel times for the new timetable will be based on this template trip so it is important to choose one that is representative. For example, you may want to select one of the slower trips when specifying frequencies during congested peak-hour service.
+Within each timetable, you will need to select a single trip pattern from your route, then a particular trip from that trip pattern to be used as a template. Travel times for the new timetable will be based on this template trip so it is important to choose one that is representative. For example, you may want to select one of the slower trips when specifying frequencies during congested peak-hour service.
 
 <Image
   src='/img/select-trip.png'
@@ -239,6 +239,8 @@ As an example, you might use this to identify a neighborhood or corridor where t
 Similar to the Add Streets modification, properties are set at the level of the modification, and multiple areas can be specified. Thus, seperate modifications are needed to specify different types of areas.
 
 To draw a polygon on the map, click the polygon icon and begin clicking on the map. Clicking the first point again will close the polygon and nodes can be added, moved, and deleted once the shape is drawn by clicking on the edit option. Overlapping polygons are not yet supported.
+
+When analyzing a scenario with this modification type, the analysis panel will display how many network edges were affected (out of a number of "candidate" edges within the rectangular bounding box of the modification).
 
 <Image
   src='/img/draw-a-polygon.png'

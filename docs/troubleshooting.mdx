@@ -48,9 +48,11 @@ invalid and unusable, while others are treated as informational warnings and the
 This section explains how to interpret and resolve specific errors and warnings users have experienced on their
 uploaded files.
 
-### Missing geometry
+### Unable to create opportunity dataset
 
-When uploading a shapefile, you may see an error like `Null (missing) geometry on feature: grid.461`. It is possible
+When uploading a spatial dataset, you may see an error like `Unable to create opportunity dataset. [Java class]...` with a technical description of the error type. Here are suggested steps for addressing different error types:
+
+* `Null (missing) geometry on feature`: It is possible
 for programs to produce shapefiles containing one or more "features" (database rows with attributes such as job counts 
 or census block IDs) that are not associated with a point, line, or polygon (a "geometry"). 
 This implies something went wrong in creating or exporting the shapefile. You will need to 
@@ -61,3 +63,7 @@ have no associated geometry) but back in the attribute table you can choose "sho
 down to the offending features. Based on their other attributes you can determine whether something went wrong in the 
 export process. If these features are spurious you can toggle editing and delete them, creating a shapefile without
 this problem that can be uploaded to Conveyal. 
+
+* `Feature geometry is too small`: Check your dataset for small sliver features, such as where your layers have been cropped to other boundaries. Conveyal does not allow features with area less than 1 x 10^(-12) square degrees (as divide-by-zero problems could be approached). If you remove the features that have an area smaller than that limit, your upload/conversion operation should succeed.
+
+* `TopologyException: found non-noded intersection between...`: Your file likely has geometry errors. You may be able to resolve such errors with a validity check in GIS, or by creating a 0-width buffer around the features.

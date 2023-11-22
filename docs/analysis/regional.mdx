@@ -15,25 +15,29 @@ The [single point analysis](/analysis) interface also allows creating a *regiona
 
 ## Starting a regional analysis
 
-To start a regional analysis, first [fetch results for a single origin](/analysis) with the appropriate project, scenario, travel modes, time of day, and other parameters set, then confirm that [isochrones](/glossary#isochrone) are displayed as expected.
+To start a regional analysis, first [fetch results for a single origin](/analysis) with the appropriate project, scenario, travel modes, time of day, and other parameters set.
+
+Once results for a single origin are displayed, the <Button variantColor='green'>Regional analysis <FaPlus /></Button> will be enabled. This button is disabled until isochrones are computed and displayed. This is a verification step, avoiding regional analyses that might stall or become unresponsive due to certain invalid combinations of settings.
 
 ### Result types
 
-The type of computation performed in a regional analysis is set by specific fields in the custom request settings JSON in the analysis panel. Accessibility output is enabled by default. Options for other types, such as travel time matrices, are described [here](/guides/compute-freeform).
+Different result types are available in regional analysis, including cumulative-opportunity access to opportunities, origin-destination travel times, origin-destination path details, and dual access. Available result types depend on the selected origin type (freeform vs. grid), and they can be activated below the origin selector or with specific fields in the custom request settings JSON in the analysis panel. Accessibility output is enabled by default. Options for other types, such as travel time matrices, are described [here](/guides/compute-freeform).
 
 ### Select origins
 
-You can also choose custom geographic bounds for your regional analysis origins. By default, access for the entire region is analyzed, but it is also possible to analyze a smaller area. You can set the bounds of the analysis by clicking "Bounds of analysis -- <Button variantColor='yellow'>Set custom <FaPencilAlt /></Button>" in the analysis panel, then dragging the pins on the map, or by selecting an existing regional analysis and using the same bounds. Note that in regional analyses, all destinations in the region, even those outside custom bounds, will be included in access calculations.
-
-If you plan to compare two regional analyses, make sure they have the same origin bounds and routing engine version. The exact version and bounds used for previous regional analyses can be selected directly in the respective dropdown menus.
-
-When you have configured these options, <Button variantColor='green'>Regional analysis <FaPlus /></Button> will be enabled. Note that this button is disabled unless isochrones are displayed; checking single-origin isochrone results is a verification step that helps avoid heavy computation for analyses with invalid settings.
-
 After clicking the <Button variantColor='green'>Regional analysis <FaPlus /></Button>, you will see additional configuration options.
 
-Give the analysis a name, and select which Origin points to use:
-* The default setting is using a rectangular grid (the region bounds or custom bounds set as described above). Each point from the specified grid will be used as an origin in this analysis, yielding a raster map of accessibility results. 
-* Alternatively, if you have uploaded [freeform (non-grid) spatial datasets](/prepare-inputs/upload-spatial-data#freeform-non-grid-points), you can instead use the exact coordinates of points in one of these layers as origins, yielding tabular result files.
+Give the analysis a name, and select which Origin points to use. 
+
+If you select a rectangular grid as the origin pointset, results will be raster maps showing the number of destinations reachable from each point in that grid.
+
+:::note
+By default, access for the entire region is analyzed, but it is also possible to analyze a smaller area. You can set smaller bounds of the analysis by clicking "Bounds of analysis -- <Button variantColor='yellow'>Set custom <FaPencilAlt /></Button>" in the analysis panel, then dragging the pins on the map. Or you can select a previous regional analysis and reuse its bounds. 
+
+In regional analyses, all destinations in the region, even those outside custom bounds, will be included in access calculations.
+:::
+
+If you select a freeform (non-grid) origin pointset, results can be downloadable CSV files with [access, travel time, and path results](/guides/compute-freeform). These options require a previously created [freeform (non-grid) spatial dataset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points).
 
 <Image 
   src='/img/regional-create.png'
@@ -43,7 +47,7 @@ Give the analysis a name, and select which Origin points to use:
 ### Select destinations and run analysis
 
 Select at least one Destination opportunity layer:
-* When using grid spatial datasets as destinations, you may specify several grids and they may even be of different sizes and shapes (but must all be at the same zoom level).
+* When using grid spatial datasets as destinations, you may specify several grids. They may be of different sizes and shapes (but must all be at the same zoom level).
 * When using freeform spatial datasets as destinations in a regional analysis, you can specify only a single layer for now. The maximum number of freeform destination points is 4 million (and the maximum number of freeform origin-destination pairs is 16 million). Grid and freeform destinations cannot yet be mixed.
 
 Ensure the list of travel time cutoffs and percentiles will cover the results you want. For example, if you want a travel time matrix to include trips up to 120 minutes, ensure that 120 is included as a cutoff; any travel times exceeding the maximum cutoff will be clipped and recorded as -1.
@@ -52,7 +56,7 @@ Finally, click <Button variantColor='green'><FaPlus /> Create</Button> to start 
 
 ### Computation time
 
-After creating a regional analysis, it will appear in the list of running regional analyses with a progress bar. Conveyal will automatically scale up computation to compute accessibility for every origin in the analysis, so it should not take more than a [few minutes](/learn-more/faq#how-long) for most walking plus transit regional analyses to complete. If you want to reduce computational time, consider setting custom geographic bounds as described above.
+After creating a regional analysis, it will appear in the list of running regional analyses with a progress bar. Conveyal will automatically scale up computation, so it should not take more than a [few minutes](/learn-more/faq#how-long) for most walking plus transit regional analyses to complete. If you want to reduce computational time, consider setting custom geographic bounds as described above.
 
 <Image 
   src='/img/regional-progress.png'
@@ -86,7 +90,7 @@ For regional analyses run with freeform origins, accessibility or [travel time/p
 
 ## Comparing regional analyses
 
-You can also compare two analyses to highlight changes in access across a region. After you select a **Compare to** region, the map will show the difference in accessibility between the two analyses, with blue areas showing increased accessibility, and red areas showing decreased accessibility. Direct download of the comparison  will be available in a future Conveyal release. For now, you can download the analyses being compared separately, then perform raster subtraction, further analysis, and styling offline (e.g. with the [QGIS Raster Calculator](https://docs.qgis.org/3.22/en/docs/user_manual/working_with_raster/raster_analysis.html#raster-calculator))
+You can also compare two analyses to highlight changes in access across a region. Analyses must share the same bounds and zoom level to be compared. After you select a **Compare to** region, the map will show the difference in accessibility between the two analyses, with blue areas showing increased accessibility, and red areas showing decreased accessibility. Direct download of the comparison  will be available in a future Conveyal release. For now, you can download the analyses being compared separately, then perform raster subtraction, further analysis, and styling offline (e.g. with the [QGIS Raster Calculator](https://docs.qgis.org/3.22/en/docs/user_manual/working_with_raster/raster_analysis.html#raster-calculator))
 
 <Image
   src='/img/regional-comparison.png'

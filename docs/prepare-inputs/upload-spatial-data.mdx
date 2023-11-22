@@ -13,7 +13,7 @@ import {
 import Button from '../../components/button'
 import Image from '../../components/image'
 
-To measure access to destination opportunities (e.g. jobs, people, schools), you will need to ensure at least one **spatial dataset** (previously, opportunity dataset) has been added to your project. To add or manage spatial datasets, click the grid icon on the sidebar for <FaTh /> Spatial Datasets.
+To measure access to destination opportunities (e.g. jobs, people, schools), you will need to ensure at least one **spatial dataset** has been added to your project. To add or manage spatial datasets, click the grid icon on the sidebar for <FaTh /> Spatial Datasets.
 
 Spatial datasets can be added either by uploading a CSV or shapefile representing the geographic distribution of opportunities, or by using the LODES data import tool (US only).
 
@@ -29,9 +29,18 @@ To start an upload, click: <Button variantColor='green'><FaPlus /> Upload a new 
 
 Enter a name for the spatial dataset source, then select the appropriate file(s) and desired zoom level. 
 
-The zoom level sets the [spatial resolution](/analysis/methodology#spatial-resolution) for converting the dataset source to Conveyal's custom grid format. The default is zoom level z9. Higher grid cell resolutions are available, but they should be used [with caution](/analysis/methodology#zoom-levels), especially for large or low density data sources. The number of resulting grid cells is limited to 5 million; for given geographic extents, each increment in zoom level increases the number of resulting grid cells by a factor of 4. And selecting zoom levels that yield an average of fewer than one opportunity per grid cell may lead to unexpected results. 
+The zoom level specifies the [spatial resolution](/analysis/methodology#spatial-resolution) used when converting a dataset source to Conveyal's custom grid format. The default is zoom level z9. Higher resolutions are available, but they should be used [with caution](/analysis/methodology#zoom-levels), especially for large or low density data sources. Selecting high zoom levels may lead to unexpected results (if grids average fewer than one opportunity per grid cell) or excessive computation. 
 
-Click the upload button to start the upload. Datasets will be saved with the source name you entered and the attribute/column names of the uploaded files. After processing is complete you can select a dataset from the dropdown menu to show the dot-density map derived from it at the selected resolution.
+Click the upload button to start the upload. Datasets will be saved with the source name you entered and the attribute/column names of the uploaded files.
+
+Saved datasets can be displayed as a dot-density map. These maps represent relative density, so the dots are not fixed quantities of opportunities in exact locations.
+
+### Troubleshooting
+Certain limits on spatial uploads help ensure reasonable computation:
+- The maximum number of grid cells is 5 million. If you encounter this limit, consider cropping the dataset to the region of interest or using a lower zoom level (see the table of approximate geodetic distances and size limits for different zoom levels [here](/analysis/methodology#zoom-levels)).
+- The maximum size of any single feature in the dataset source is 2 square degrees (roughly 20k sq. km. at the latitude of Melbourne or 25k sq. km. at the equator).
+
+If you encounter other errors, additional troubleshooting suggestions are [here](/troubleshooting#problems-with-uploaded-files).
 
 ### CSV
 
