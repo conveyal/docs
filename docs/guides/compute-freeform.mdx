@@ -18,7 +18,7 @@ You can instead request CSV files with accessibility, travel-time, or path detai
 Once a regional analysis with freeform origins is complete, you will have options to download CSV files of the results. These features are still experimental; contact your support team for more information.
 
 <Image
-  src='/img/freeform-config.png'
+  src='/img/regional-create.png'
   alt='Configuring travel time and path analyses'
 />
 
@@ -42,6 +42,32 @@ origin|destinations|percentile|cutoff|access
 2|Total Jobs|5|30|142600
 etc
 
+## Dual Accessibility
+The time needed to reach a threshold number of destinations (such as a health center or three grocery stores), also known as ("dual" accessibility)[https://doi.org/10.1111/gean.12220], can be calculated with an experimental feature in Conveyal.
+
+This feature is not yet available through the regional analysis creation interface. To activate it, add the following to your (custom analysis request JSON)[analysis/configuration#additional-settings].
+
+```JSON
+"includeTemporalDensity": true,
+"dualAccessibilityThreshold": n
+```
+where n is the desired threshold number of opportunities.
+
+The resulting CSV file will have the following columns:
+* origin: Id of the origin point
+* destinations: Id of the destination pointset
+* percentile: travel time percentile
+* Dn: the number of minutes required to reach a threshold of n opportunities. A value of -1 indicates the specified threshold is not reached within the maximum cutoff specified when the regional analysis was created.
+* m [0...119]: the number of opportunities reached in a given minute of travel time (not cumulative). For example values in the column 10 will be the number of opportunities reached between 10 and 11 minutes.
+
+### Example results
+
+The example below shows dual accessibility analysis results for access to health centers, where the `dualAccessibilityThreshold` has been set to 2. From a specific origin, given 5th percentile travel times, it takes 2 minutes to reach a total of 2 health centers. Given 25th percentile travel times, it takes 3 minutes to reach a total of 2 health centers.
+
+origin|destinations|percentile|D2|0|1|2|3|...|118|119
+------|------------|----------|--|-|-|-|-|---|---|---
+1|Health Centers|5|2|0|1|1|0|...|4|0
+1|Health Centers|25|3|0|0|1|1|...|0|4
 
 ## Travel time matrix
 
