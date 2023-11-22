@@ -57,14 +57,14 @@ The resulting CSV file will have the following columns:
 * origin: Id of the origin point
 * destinations: Id of the destination pointset
 * percentile: travel time percentile
-* Dn: the number of minutes required to reach a threshold of n opportunities. A value of -1 indicates the specified threshold is not reached within the maximum cutoff specified when the regional analysis was created.
+* D: the number of minutes required to reach a threshold of n opportunities. A value of -1 indicates the specified threshold is not reached within the maximum cutoff specified when the regional analysis was created.
 * m [0...119]: the number of opportunities reached in a given minute of travel time (not cumulative). For example values in the column 10 will be the number of opportunities reached between 10 and 11 minutes.
 
 ### Example results
 
 The example below shows dual accessibility analysis results for access to health centers, where the `dualAccessibilityThreshold` has been set to 2. From a specific origin, given 5th percentile travel times, it takes 2 minutes to reach a total of 2 health centers. Given 25th percentile travel times, it takes 3 minutes to reach a total of 2 health centers.
 
-origin|destinations|percentile|D2|0|1|2|3|...|118|119
+origin|destinations|percentile|D|0|1|2|3|...|118|119
 ------|------------|----------|--|-|-|-|-|---|---|---
 1|Health Centers|5|2|0|1|1|0|...|4|0
 1|Health Centers|25|3|0|0|1|1|...|0|4
