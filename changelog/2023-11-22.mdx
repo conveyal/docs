@@ -1,5 +1,5 @@
 ---
-title: 2023 Major Release
+title: November, 2023
 ---
 
 import Image from '../components/image'
@@ -9,10 +9,10 @@ import Image from '../components/image'
   alt='Smoother regional analysis view'
 />
 
-We have been hard at work on Conveyal's major release for 2023. This release includes **v7.0** of the R5 routing engine and...
+We are pleased to roll out new analysis capabilities and smoother visualizations. This major release includes **v7.0** of the R5 routing engine and...
 
-- Enhances spatial dataset and regional analysis maps, allowing smooth scaling, toggling layers on and off, rotating/tilting, and other features (thanks to vector maps and GPU acceleration).
-- Adds time-to-nearest nth facility (["dual" accessibility](https://doi.org/10.1111/gean.12220)) metrics as an experimental feature ([#884](https://github.com/conveyal/r5/pull/884)). See details [here](guides/compute-freeform#dual-accessibility).
+- Enhances spatial dataset and regional analysis maps. The new maps include smooth scaling, rotation, querying access/density values at specific points, toggling layers on and off, and other features (thanks to vector maps and GPU acceleration).
+- Adds time-to-nearest nth facility (["dual" accessibility](https://doi.org/10.1111/gean.12220)) metrics as an experimental feature for CSV results ([#884](https://github.com/conveyal/r5/pull/884)). See details [here](guides/compute-freeform#dual-accessibility). We expect to support map results in an upcoming release; let us know what you think in the meantime!
 - Provides more regular and detailed updates on regional analysis progress, helping keep cloud workers active when analyses are queued up ([#874](https://github.com/conveyal/r5/pull/874)).
 - Shifts travel time sampling points to better correspond with destination densities ([#894](https://github.com/conveyal/r5/pull/894)). This change will alter results relative to past versions of the R5 routing engine. With related user interface changes, older versions of R5 will now result in slightly offset isochrones.
 - Ensures that results are readily comparable within the web interface when regional analysis bounds are reused in a subsequent analysis ([#897](https://github.com/conveyal/r5/pull/897), [#898](https://github.com/conveyal/r5/pull/898))
