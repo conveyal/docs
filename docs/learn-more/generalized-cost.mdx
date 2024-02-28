@@ -51,16 +51,16 @@ These tags give the Annual Average Daily Traffic (AADT) on the way and through t
 
 Tags describing intersection features (control types, crosswalks, cross_aadt) refer to the intersection at the end of the street segment (not the beginning) in each direction (forward/backward). These tags describe intersections:
 
-- `control_type` is one of {none, stop, signal}
-- `bike_infra` is one of {no, path, blvd}
-- `xwalk` is one of {none, signal, unsig}
+- `control_type` is one of [none, stop, signal]
+- `bike_infra` is one of [no, path, blvd]
+- `xwalk` is one of [none, signal, unsig]
 
 #### Road Type Tags
 
 These tags describe the type of road so we can recognize busy or dangerous roads. The forward/backward suffixes do not apply here.
 
-- `unpaved_alley` is one of {true/yes; other}
-- `highway` is any value, with "high traffic" defined as those having a value in {tertiary, tertiary_link, secondary, secondary_link, primary, primary_link, trunk, trunk_link, motorway, motorway_link}
+- `unpaved_alley` is true (set to true for ways with `surface=unpaved` or `highway=alley` tags)
+- `highway` is any value, with "high traffic" defined as those having a value in [tertiary, tertiary_link, secondary, secondary_link, primary, primary_link, trunk, trunk_link, motorway, motorway_link]
 
 #### Other Tags
 
