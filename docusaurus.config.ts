@@ -1,7 +1,7 @@
-// @ts-check
+import type {Config} from '@docusaurus/types'
+import type * as Preset from '@docusaurus/preset-classic'
 
-/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-const themeConfig = {
+const themeConfig: Preset.ThemeConfig = {
   image: 'img/android-chrome-512x512.png', // meta image for social media
   colorMode: {
     respectPrefersColorScheme: true
@@ -44,7 +44,7 @@ const themeConfig = {
   footer: {
     copyright: `Copyright © ${new Date().getFullYear()} Conveyal, LLC`
   }
-}
+} satisfies Preset.ThemeConfig
 
 if (process.env.ALGOLIA_API_KEY) {
   themeConfig.algolia = {
@@ -54,8 +54,7 @@ if (process.env.ALGOLIA_API_KEY) {
   }
 }
 
-/** @type {import('@docusaurus/types').Config} */
-const config = {
+const config: Config = {
   title: 'Conveyal User Manual',
   tagline: 'User manual for Conveyal',
   url: 'https://docs.conveyal.com',
@@ -105,4 +104,4 @@ const config = {
   }]
 }
 
-module.exports = config
+export default config
