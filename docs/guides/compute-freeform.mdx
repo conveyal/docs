@@ -90,9 +90,10 @@ Activating "Paths" (after selecting freeform (non-grid) spatial datasets for ori
 
 * origin: Id of the origin point
 * destination: Id of the destination point
-* routes: pipe separated list of GTFS routeIds, one per transit leg
-* boardStops: pipe separated list of GTFS stopIds, one per transit leg
-* alightStops : pipe separated list of GTFS stopIds, one per transit leg
+* routes: pipe separated list of GTFS route Ids (or names, depending on [CSV options](#csv-options)), one per transit leg
+* boardStops: pipe separated list of GTFS stop Ids (or names, depending on [CSV options](#csv-options)), one per transit leg
+* alightStops : pipe separated list of GTFS stop Ids (or names, depending on [CSV options](#csv-options)), one per transit leg
+* feedIds: pipe separated list of internal Conveyal feedId values (populated only if the request includes a value for [`csvOptions.feedRepresentation`](#csv-options))
 * rideTimes: pipe separated list of in-vehicle travel times (minutes), one per transit leg.
 * accessTime: walking time from origin to boarding stop of first transit leg (minutes)
 * egressTime: walking time from alighting stop of last transit leg to destination (minutes)
@@ -100,23 +101,38 @@ Activating "Paths" (after selecting freeform (non-grid) spatial datasets for ori
 * waitTimes: pipe separated list of waiting time (minutes) to board each transit leg, for the specific itinerary following this path that has the lowest waiting time
 * totalTime: total time (minutes), for the specific itinerary following this path that has the minimum total time. Because all other components of travel time are fixed for a given path, the itinerary with the lowest waiting time should also be the one with the lowest total time.
 * nIterations: number of departure minutes in the departure time window at which this path is optimal. Note the nIterations for each OD pair should sum to the number of total iterations, unless specific departure times result in total travel times that exceed the maximum cutoff.
+* group: column reserved for special analysis types
+
+
+### CSV options
+By default, GTFS id values will be used to represent stops and routes in the recorded results. For some feeds, you might prefer to record names instead (e.g. if route_id values are random and route names would be easier for downstream analysts to use). In routing engine v7.2 and above, you can specify these preferences by adding `csvResultOptions` to the [JSON of your analysis request](analysis/configuration#additional-settings). This object can include keys `routeRepresentation`, `stopRepresentation`, and `feedRepresentation`. Allowable values for these keys are `ID_ONLY` (to record only GTFS ids, the default), `NAME_ONLY` (to record only GTFS route/stop names), and `NAME_AND_ID` (to record both). For example, adding the JSON below will record GTFS-derived names for routes, ids and names for boarding and alighting stops, and Conveyal-generated ids for feeds:
+
+```JSON
+"csvResultOptions": {
+  "routeRepresentation": "NAME_ONLY",
+  "stopRepresentation": "NAME_AND_ID",
+  "feedRepresentation": "ID_ONLY"
+}
+```
+
+FeedId values are reported for the boarding stop of each transit leg. In all baseline scenarios and most other cases, the alighting stop and route used will be from the same GTFS feed. Note that with reroute modifications, a route may use stops from different feeds.
 
 ### Example results
 
 ```csv
-origin,destination,routes,boardStops,alightStops,rideTimes,accessTime,egressTime,transferTime,waitTimes,totalTime,nIterations
-1,2,70|553,1452|86944,86944|88339,16.0|8.0,3.1,13.6,0,1.9|10.0,52.6,3
-1,2,70,1452,8846,30,3.1,2.6,0,1.9,37.6,57
-1,3,70|61,1452|86944,88333|7783,16.0|17.0,3.1,17,0.6,1.9|8.4,64,14
-1,3,70|61,1452|86944,86944|7783,16.0|17.0,3.1,17,9.6,1.9|8.4,72.9,46
-1,4,70|CR-Fitchburg,1452|Waltham,88333|Brandeis/Roberts,16.0|3.0,3.1,7,1.4,1.9|6.6,39,14
-1,4,70|553,1452|86944,86944|88346,16.0|14.0,3.1,2,0,1.9|7.0,44,16
-1,4,70|553,1452|86944,86944|88346,16.0|19.0,3.1,2,0,1.9|10.0,52,3
-1,4,70|CR-Fitchburg,1452|Waltham,86944|Brandeis/Roberts,16.0|3.0,3.1,7,10.4,1.9|6.6,48,27
-1,5,71|Red|76,2049|70068|141,20761|70061|8605,22.0|8.0|21.0,6.6,5.9,4.5,1.4|1.6|12.9,83.9,11
-1,5,71|Red|76,2049|70068|141,20761|70061|8605,23.0|9.0|21.0,6.6,5.9,9.5,1.4|3.6|12.9,92.9,11
-1,5,71|Red|76,2049|70068|141,20761|70061|8605,22.0|9.0|21.0,6.6,5.9,24.5,1.4|1.6|12.9,104.9,12
-1,5,71|Red|76,2049|70068|141,20761|70061|8605,22.0|9.0|24.0,6.6,5.9,13.5,1.4|2.6|1.9,86.9,26
+origin,destination,routes,boardStops,alightStops,feedIds,rideTimes,accessTime,egressTime,transferTime,waitTimes,totalTime,nIterations,group
+1,2,70|553,1452|86944,86944|88339,,16.0|8.0,3.1,13.6,0,1.9|10.0,52.6,3
+1,2,70,1452,8846,,30,3.1,2.6,0,1.9,37.6,57
+1,3,70|61,1452|86944,88333|7783,,16.0|17.0,3.1,17,0.6,1.9|8.4,64,14
+1,3,70|61,1452|86944,86944|7783,,16.0|17.0,3.1,17,9.6,1.9|8.4,72.9,46
+1,4,70|CR-Fitchburg,1452|Waltham,88333|Brandeis/Roberts,,16.0|3.0,3.1,7,1.4,1.9|6.6,39,14
+1,4,70|553,1452|86944,86944|88346,,16.0|14.0,3.1,2,0,1.9|7.0,44,16
+1,4,70|553,1452|86944,86944|88346,,16.0|19.0,3.1,2,0,1.9|10.0,52,3
+1,4,70|CR-Fitchburg,1452|Waltham,86944|Brandeis/Roberts,,16.0|3.0,3.1,7,10.4,1.9|6.6,48,27
+1,5,71|Red|76,2049|70068|141,20761|70061|8605,,22.0|8.0|21.0,6.6,5.9,4.5,1.4|1.6|12.9,83.9,11
+1,5,71|Red|76,2049|70068|141,20761|70061|8605,,23.0|9.0|21.0,6.6,5.9,9.5,1.4|3.6|12.9,92.9,11
+1,5,71|Red|76,2049|70068|141,20761|70061|8605,,22.0|9.0|21.0,6.6,5.9,24.5,1.4|1.6|12.9,104.9,12
+1,5,71|Red|76,2049|70068|141,20761|70061|8605,,22.0|9.0|24.0,6.6,5.9,13.5,1.4|2.6|1.9,86.9,26
 etc
 ```
 ## Linked origin-destination pairs
