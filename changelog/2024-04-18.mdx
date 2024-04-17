@@ -3,5 +3,5 @@ title: April, 2024
 ---
 
 The latest Conveyal routing engine is **v7.2**. This version:
-- Makes bike and car access calculations much faster
-- Provides new options for CSV path results. With these options, you can specify results in CSV files should use ID or name values for GTFS routes and stops. You can also activate a new `feedIds` column, <!-- truncate --> which can be useful if you are working with bundles containing multiple GTFS feeds. The feedId values correspond to the internal Conveyal id for the feed containing the boarding stop of each transit leg. More information on these options is available [here](/guides/compute-freeform#csv-options).
+- Makes bike and car access calculations much faster by skipping some unneeded computation
+- Provides new options for CSV path results. With these options, you can specify whether results in CSV files should use ID or name values for GTFS routes and stops. You can also activate a new `feedIds` column to help parse results for bundles that contain multiple GTFS feeds. <!-- truncate -->The feedId values correspond to a Conveyal-generated id for the feed containing the boarding stop of each transit leg. More information on these options is available [here](/guides/compute-freeform#csv-options).
