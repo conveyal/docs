@@ -81,6 +81,11 @@ For certain large or high-resolution analyses, you may want to limit the area an
 
 Additional settings are available in the custom analysis request JSON. Use the <FaCode /> and <FaMousePointer /> buttons in the analysis panel to toggle between the standard interface and the analysis request JSON view.
 
+### Custom flags
+
+In the analysis request JSON view, you can trigger custom or experimental features by adding the `flags` property. Valid entries in the corresponding array include:
+- `CROP_DESTINATIONS`: Sets the destination extents to the user-specified custom bounds (rather than the combined extents of the destination opportunity datasets). Using this flag may reduce accessibility results but can be appropriate when using small travel time cutoffs and small custom bounds in large regions.
+
 ## Errors and warnings
 
 Occasionally analysis will fail because there is a problem with one of your modifications. When this occurs, error messages will be displayed detailing the issues as shown below. Simply return to the modification editor and correct the errors in the relevant modifications. 
