@@ -46,11 +46,11 @@ etc
 The time needed to reach a threshold number of destinations (such as a health center or three grocery stores), also known as ["dual" accessibility](https://doi.org/10.1111/gean.12220), can be calculated with an experimental feature in Conveyal. This type of metric is included in the [TransitCenter Equity Dashboard](https://dashboard.transitcenter.org), which tracks the time needed to reach the nearest hospital and the time needed to reach the third-nearest grocery store.
 
 Activating "Dual access" (after selecting freeform (non-grid) spatial datasets for origins and destinations) and setting a threshold value produces a CSV file of results with the following columns:
-* origin: Id of the origin point
-* destinations: Id of the destination pointset
-* percentile: travel time percentile
-* dual: the number of minutes required to reach a threshold of n opportunities. A value of -1 indicates the specified threshold is not reached within the maximum cutoff specified when the regional analysis was created.
-* m [0...119]: the marginal number of opportunities reached in a given minute of travel time (not cumulative). For example, values in the column 10 will be the number of opportunities reached between 10 and 11 minutes.
+* `origin`: Id of the origin point
+* `destinations`: Id of the destination pointset
+* `percentile`: travel time percentile
+* `dual`: the number of minutes required to reach a threshold of n opportunities. A value of -1 indicates the specified threshold is not reached within the maximum cutoff specified when the regional analysis was created.
+* `m` [0...119]: the marginal number of opportunities reached in a given minute of travel time (not cumulative). For example, values in the column 10 will be the number of opportunities reached between 10 and 11 minutes.
 
 ### Example results
 
@@ -88,20 +88,20 @@ South Boston|Chelsea High School|95|-1
 
 Activating "Paths" (after selecting freeform (non-grid) spatial datasets for origins and destinations) produces a CSV file with the following columns:
 
-* origin: Id of the origin point
-* destination: Id of the destination point
-* routes: pipe separated list of GTFS route Ids (or names, depending on [CSV options](#csv-options)), one per transit leg
-* boardStops: pipe separated list of GTFS stop Ids (or names, depending on [CSV options](#csv-options)), one per transit leg
-* alightStops : pipe separated list of GTFS stop Ids (or names, depending on [CSV options](#csv-options)), one per transit leg
-* feedIds: pipe separated list of internal Conveyal feedId values (populated only if the request includes a value for [`csvOptions.feedRepresentation`](#csv-options))
-* rideTimes: pipe separated list of in-vehicle travel times (minutes), one per transit leg.
-* accessTime: walking time from origin to boarding stop of first transit leg (minutes)
-* egressTime: walking time from alighting stop of last transit leg to destination (minutes)
-* transferTime: time spent walking between transit stops for transfers (minutes)
-* waitTimes: pipe separated list of waiting time (minutes) to board each transit leg, for the specific itinerary following this path that has the lowest waiting time
-* totalTime: total time (minutes), for the specific itinerary following this path that has the minimum total time. Because all other components of travel time are fixed for a given path, the itinerary with the lowest waiting time should also be the one with the lowest total time.
-* nIterations: number of iterations at which this path is optimal. For scenarios with only exact timetables, the total number of iterations for a given OD pair is the number of minutes in the [departure window](/analysis/configuration#date-and-departure-window). For scenarios that include frequency-based routes, the total number of iterations depends on the requested [number of simulated schedules](/analysis/configuration#simulated-schedules) as well as the departure window. Note the nIterations for each OD pair should sum to the number of total iterations, unless specific departure times result in total travel times that exceed the maximum cutoff.
-* group: column reserved for special analysis types
+* `origin`: Id of the origin point
+* `destination`: Id of the destination point
+* `routes`: pipe separated list of GTFS route Ids (or names, depending on [CSV options](#csv-options)), one per transit leg
+* `boardStops`: pipe separated list of GTFS stop Ids (or names, depending on [CSV options](#csv-options)), one per transit leg
+* `alightStops` : pipe separated list of GTFS stop Ids (or names, depending on [CSV options](#csv-options)), one per transit leg
+* `feedIds`: pipe separated list of internal Conveyal feedId values (populated only if the request includes a value for [`csvOptions.feedRepresentation`](#csv-options))
+* `rideTimes`: pipe separated list of in-vehicle travel times (minutes), one per transit leg.
+* `accessTime`: walking time from origin to boarding stop of first transit leg (minutes)
+* `egressTime`: walking time from alighting stop of last transit leg to destination (minutes)
+* `transferTime`: time spent walking between transit stops for transfers (minutes)
+* `waitTimes`: pipe separated list of waiting time (minutes) to board each transit leg, for the specific itinerary following this path that has the lowest waiting time
+* `totalTime`: total time (minutes), for the specific itinerary following this path that has the minimum total time. Because all other components of travel time are fixed for a given path, the itinerary with the lowest waiting time should also be the one with the lowest total time.
+* `nIterations`: number of iterations at which this path is optimal. For scenarios with only exact timetables, the total number of iterations for a given OD pair is the number of minutes in the [departure window](/analysis/configuration#date-and-departure-window). For scenarios that include frequency-based routes, the total number of iterations depends on the requested [number of simulated schedules](/analysis/configuration#simulated-schedules) as well as the departure window. Note the `nIterations` for each OD pair should sum to the number of total iterations, unless specific departure times result in total travel times that exceed the maximum cutoff.
+* `group`: column reserved for special analysis types
 
 Path results require routing engine v7.2 or higher.
 
