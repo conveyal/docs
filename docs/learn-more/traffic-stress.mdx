@@ -35,4 +35,6 @@ The initial version of the LTS methodology does not cover signalized intersectio
 
 ### Custom LTS
 
-To override the default method described above, you can pre-process OSM before uploading it to Conveyal. Add the tag "lts=" to ways, with numeric values 1-4.
+To override the default method described above, you can pre-process OSM before uploading it to Conveyal. Add the tag `lts=` to ways, with numeric values 1-4.
+
+Alternatively, you can upload a shapefile with an `lts` attribute as a data source, then reference it in a [custom modification](/edit-scenario/modifications#custom-lts).
