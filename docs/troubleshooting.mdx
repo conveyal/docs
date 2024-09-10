@@ -67,3 +67,5 @@ this problem that can be uploaded to Conveyal.
 * `Feature geometry is too small`: Check your dataset for small sliver features, such as where your layers have been cropped to other boundaries. Conveyal does not allow features with area less than 1 x 10^(-12) square degrees (as divide-by-zero problems could be approached). If you remove the features that have an area smaller than that limit, your upload/conversion operation should succeed.
 
 * `TopologyException: found non-noded intersection between...`: Your file likely has geometry errors. You may be able to resolve such errors with a validity check in GIS, or by creating a 0-width buffer around the features.
+
+* `Feature does not contain a single linestring`: Your file likely has multipart geometries. Try using a multipart to singlepart conversion in GIS.
