@@ -129,6 +129,13 @@ Conveyal's routing engine:
 - Maps an extended set of transport modes, including some [derived from TPEG](https://groups.google.com/d/msg/gtfs-changes/keT5rTPS7Y0/71uMz2l6ke0J), to the original set of GTFS `route_type` values. For example, `route_type` values 706 (Post Bus Service) and 11 (Trolleybus) are mapped to Bus; 405 (Monorail) and 12 (Monorail) are mapped to Tram. For details, see [related code in R5](https://github.com/conveyal/r5/blob/83abf2744088b12e5907d1d06bd3ed7a02117406/src/main/java/com/conveyal/r5/transit/TransitLayer.java#L677-L733).
 - Treats all GTFS trips represented in frequencies.txt as unscheduled frequencies (`exact_times = 0`). If any of your feeds has a frequencies.txt file with values of 1 in the `exact_times` column and you'd like to learn more, please contact your support team.
 
+## Advanced bundle configuration
+
+These advanced configuration JSON options are hidden by default and should be modified only after consulting your support team. Once a network bundle is built, these options cannot be changed.
+- `"buildGridsForModes":` Additional on-street modes (other than walk) for which to pre-build large data tables (defaults to `["WALK"]`). Setting this to `["BICYCLE", "CAR"]` will eliminate repeated re-building of these tables when subsequent routing servers start up but require extra time when the network is first built. To keep this extra time reasonable, especially for car tables, minimize the number of transit stops included in the bundle's GTFS feeds. Attempting to build car tables for large regions with more than 24k stops will likely exceed various computation limits in the Conveyal platform, triggering errors.
+- `"modifications":` [Modifications](/edit-scenario) to include permanently in this network bundle (defaults to `[]`). This option is useful if you have modifications or data (such as custom levels of traffic stress or elevations for slope-sensitive routing) that you always want included as part of the baseline network.
+- `"traversalPermissionLabeler":` Which rules to use when setting mode-specific permissions on OSM ways. `"sidewalk"` activates an experimental labeler that restricts walking on most driving ways (useful for networks with complete sidewalks).
+
 ## Finalizing network bundle creation
 
 After you have specified a name for the network bundle, OSM data to re-use or upload, and GTFS feeds to re-use or, click the create button to confirm. You will need to wait a few minutes for Conveyal to process these data.
@@ -147,3 +154,5 @@ You are now ready to move on to [editing scenarios](/edit-scenario).
 When viewing a built network bundle, the Network Viewer map allows you to view details of its street and transit layers. For example, if you want to view cycling level of traffic stress (LTS) attributes of the baseline network, switch the toggle for "Street Layer" on and click "View Street Layer." Once a server loads the network bundle, you can set street links to be styled based on LTS or other attributes.
 
 <Image alt='Network viewer' src='/img/changelog/20220408/network-viewer.png' />
+
+Any custom options set in the network can be viewed in the read-only "Bundle configuration" section in the left sidebar. If you need to change any of these options, you can create a new network bundle that re-uses the same OSM and GTFS, pasting the modified options into the advanced configuration section for the new network.
