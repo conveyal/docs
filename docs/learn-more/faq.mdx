@@ -51,7 +51,7 @@ All authorized users within an organization have access to that organization's r
 
 Three steps take place when starting a new single-origin analysis.
 
-First, the main Analysis server must request and initialize a compute cluster from Amazon Web Services. For scalability, we start a "worker" server for each [transport network](/glossary#transport-network) being analyzed. This means that even if you are already successfully fetching analysis results for a project, a new server will be needed if you switch to a project associated with a different GTFS bundle or region, or if you change the routing engine version.
+First, the main Analysis server must request and initialize a compute cluster from Amazon Web Services. For scalability, we start a "worker" server for each [transport network](/glossary#transport-network) being analyzed. This means that even if you are already successfully fetching analysis results for a project, a new server will be needed if you switch to a project associated with a different network bundle or region, or if you change the routing engine version.
 
 Second, the worker server needs to set up a transport network. It first checks whether the required transport network is already built and available for download from Amazon S3. If it is, the server downloads it and proceeds to step 3. If a pre-built network cannot be downloaded, the server downloads the required input files (OSM extract and GTFS bundle). It then builds the transport network by combining the road and transit layers, which can be a lengthy process (on the order of 10 minutes for large regions, and an hour for very large regions with dense networks). To avoid having to repeat this step, the server will upload the built network to S3 for future use.
 
@@ -75,9 +75,25 @@ By default, servers automatically shut down after one hour of inactivity. If you
 
 ### How long should each regional analysis take?
 
-The time required to complete a regional analysis is a function of the size of the region, number of origins, and size and complexity of the transit network. Generally, computation is slower for routes specified as add-trip modifications than for routes specified in the baseline GTFS bundle. If frequency-based routes are present in the scenario's add-trip modifications or the base GTFS, compute time will also depend on the number of simulated schedules (Monte Carlo draws).
+The time required to complete a regional analysis is a function of the size of the region, number of origins, and modes used. 
 
-Additional servers start automatically once a results for few origins in a regional analysis have completed successfully. The number of additional servers is a function of the number of origins, with a default cap set to approximately 250. If you need a higher cap to complete a large batch of analyses quickly, contact your support team.
+For analyses including transit, the length of the departure time window and size and complexity of the transit network are important factors. Computation is usually slower for routes specified as add-trip modifications than for routes specified in the baseline GTFS bundle. If frequency-based routes are present in the scenario's add-trip modifications or the base GTFS, compute time will also depend on the number of simulated schedules (Monte Carlo draws).
+
+Additional servers start automatically once a results for few origins in a regional analysis have completed successfully. The number of additional servers is a function of the number of origins and the modes selected, with a default cap set to approximately 250. If you need a higher cap to complete a large batch of analyses quickly, contact your support team.
+
+### How can I speed up regional analysis?
+
+In light of the factors discussed above, consider these options especially for large batches of regional analyses:
+
+1. Reduce the size of the region
+1. Pre-build tables for biking and driving. This approach generally works best when using separate network bundles for transit and non-transit analysis; include only a small placeholder GTFS feed (with a minimal number of stops) in the non-transit analysis. Then add this to the Advanced bundle config when creating a bundle (more [here](/prepare-inputs#advanced-bundle-configuration)):
+
+	`"buildGridsForModes": ["BICYCLE", "CAR"]`
+1. If transit is included in the analysis, reduce the length of the departure time window and the number of Monte Carlo draws
+1. Set custom bounds on the analysis to reduce the number of origins
+1. Crop destinations used in a regional analysis by adding this to the analysis request JSON (more [here](/analysis/configuration#custom-flags)):
+
+	`"flags": ["CROP_DESTINATIONS"]`
 
 ### How do I model corridor upgrades where a new trunk is added and existing services are converted to feeder routes?
 
