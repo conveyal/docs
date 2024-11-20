@@ -83,9 +83,10 @@ Additional servers start automatically once a results for few origins in a regio
 
 ### How can I speed up regional analysis?
 
-Consider the following options:
+In light of the factors discussed above, consider these options especially for large batches of regional analyses:
+
 1. Reduce the size of the region
-1. Pre-build tables for biking and driving. This approach generally works besst when using separate network bundles for transit and non-transit analysis; include only a small placeholder GTFS feed (with a minimal number of stops) in the non-transit analysis. Then add this to the Advanced bundle config when creating a bundle (more [here](/prepare-inputs#advanced-bundle-configuration)):
+1. Pre-build tables for biking and driving. This approach generally works best when using separate network bundles for transit and non-transit analysis; include only a small placeholder GTFS feed (with a minimal number of stops) in the non-transit analysis. Then add this to the Advanced bundle config when creating a bundle (more [here](/prepare-inputs#advanced-bundle-configuration)):
 
 	`"buildGridsForModes": ["BICYCLE", "CAR"]`
 1. If transit is included in the analysis, reduce the length of the departure time window and the number of Monte Carlo draws
