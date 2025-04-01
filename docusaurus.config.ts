@@ -83,7 +83,8 @@ const config: Config = {
           blogSidebarTitle: 'Latest changes',
           blogSidebarCount: 1,
           postsPerPage: 3,
-          showReadingTime: false
+          showReadingTime: false,
+          onUntruncatedBlogPosts: 'ignore'
         },
         theme: {
           customCss: require.resolve('./custom.css'),
@@ -101,7 +102,10 @@ const config: Config = {
     defer: true, 
     'data-api': '/api/external/event',
     'data-domain': 'docs.conveyal.com'
-  }]
+  }],
+  future: {
+    experimental_faster: true
+  }
 }
 
 export default config

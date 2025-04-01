@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function Image ({alt, src}) {
   return (
     <div className='ZoomableImage'>
