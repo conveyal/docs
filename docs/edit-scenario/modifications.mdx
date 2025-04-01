@@ -120,7 +120,7 @@ First, create a new modification and select _Convert to frequency_. Give the mod
   alt='A convert to frequency modification with a replacement timetable open'
 />
 
-Start by selecting a [GTFS feed](/glossary#GTFS--GTFS-feed) and then the route from that feed that you want to adjust. You should see all trip patterns for the selected route displayed on the map.
+Start by selecting a [GTFS feed](/glossary#gtfs--gtfs-feed) and then the route from that feed that you want to adjust. You should see all trip patterns for the selected route displayed on the map.
 
 You can choose to remove all existing trips on the route (the default) and start from scratch with new timetables. Or you may choose to retain trips outside the time windows in which you specify frequencies which is useful when you are changing the frequency for only part of the day (e.g. increased weekend frequency) and want to retain the existing scheduled service at other times. This is controlled using the checkbox labeled "_Retain existing scheduled trips at times without new frequencies specified_".
 
@@ -165,7 +165,7 @@ Another common modification is to remove trips. The most common use is to remove
 
 ### Reroute
 
-This modification type can be used to represent detours, extensions,and curtailments. When creating a _reroute_ modification, you first select a [GTFS feed](/glossary#GTFS--GTFS-feed), route, and [trip patterns](/glossary#trip-pattern). Once trip patterns are selected, you then select a stop at which the reroute alignment will start, or a stop at which the reroute alignment will end, or both, by clicking <Button variantColor='blue'><FaCrosshairs /> Select</Button> then clicking an existing stop on the baseline pattern.
+This modification type can be used to represent detours, extensions,and curtailments. When creating a _reroute_ modification, you first select a [GTFS feed](/glossary#gtfs--gtfs-feed), route, and [trip patterns](/glossary#trip-pattern). Once trip patterns are selected, you then select a stop at which the reroute alignment will start, or a stop at which the reroute alignment will end, or both, by clicking <Button variantColor='blue'><FaCrosshairs /> Select</Button> then clicking an existing stop on the baseline pattern.
 
 Note that every selected pattern must stop at the selected start-of-reroute stop and end-of-reroute stop. For example, consider these three patterns:
 1. A-B-C-D-E
