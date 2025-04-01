@@ -1,5 +1,3 @@
-import React from 'react'
-
 // Colors from https://chakra-ui.com/theme
 const bgColorMap = {
   blue: '#3182CE',
