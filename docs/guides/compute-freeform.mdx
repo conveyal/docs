@@ -49,14 +49,14 @@ Activating "Dual access" (after selecting freeform (non-grid) spatial datasets f
 * `origin`: Id of the origin point
 * `destinations`: Id of the destination pointset
 * `percentile`: travel time percentile
-* `dual`: the number of minutes required to reach a threshold of n opportunities. A value of 0 indicates the specified threshold is not reached within the maximum cutoff specified when the regional analysis was created.
+* `dual n`: the number of minutes required to reach a threshold of `n` opportunities. A value of 0 indicates `n` opportunities cannot be reached within the maximum cutoff specified when the regional analysis was created.
 * `m` [0...119]: the marginal number of opportunities reached in a given minute of travel time (not cumulative). For example, values in the column 10 will be the number of opportunities reached between 10 and 11 minutes.
 
 ### Example results
 
 The example below shows dual accessibility analysis results for access to health centers, where the dual access threshold has been set to 2. From a specific origin, given 5th percentile travel times, it takes 2 minutes to reach a total of 2 health centers. Given 25th percentile travel times, it takes 3 minutes to reach a total of 2 health centers. The dual accessibility is derived from the data in the remaining columns: the marginal number of health centers facilities reached with each one-minute increase in travel time. Given 5th percentile travel times in this example, the first health center is reached between 1 and 2 minutes, the second health center is reached between 2 and 3 minutes, and four additional health centers are reached between 118 and 119 minutes of travel time.
 
-origin|destinations|percentile|dual|0|1|2|3|...|118|119
+origin|destinations|percentile|dual 2|0|1|2|3|...|118|119
 ------|------------|----------|----|-|-|-|-|---|---|---
 1|Health Centers|5|2|0|1|1|0|...|4|0
 1|Health Centers|25|3|0|0|1|1|...|0|4
