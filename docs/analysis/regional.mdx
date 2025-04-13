@@ -17,27 +17,32 @@ The [single point analysis](/analysis) interface also allows creating a *regiona
 
 To start a regional analysis, first [fetch results for a single origin](/analysis) with the appropriate project, scenario, travel modes, time of day, and other parameters set.
 
-Once results for a single origin are displayed, the <Button variantColor='green'>Regional analysis <FaPlus /></Button> will be enabled. This button is disabled until isochrones are computed and displayed. This is a verification step, avoiding regional analyses that might stall or become unresponsive due to certain invalid combinations of settings.
+Once results for a single origin are displayed, <Button variantColor='green'>Regional analysis <FaPlus /></Button> will be enabled. This button is disabled until isochrones are computed and displayed. This is a verification step, avoiding regional analyses that might stall or become unresponsive due to certain invalid combinations of settings.
 
-### Result types
-
-Different result types are available in regional analysis, including cumulative-opportunity access to opportunities, origin-destination travel times, origin-destination path details, and dual access. Available result types depend on the selected origin type (freeform vs. grid), and they can be activated below the origin selector or with specific fields in the custom request settings JSON in the analysis panel. Accessibility output is enabled by default. Options for other types, such as travel time matrices, are described [here](/guides/compute-freeform).
+After clicking <Button variantColor='green'>Regional analysis <FaPlus /></Button>, give the analysis a name and set additional configuration options as described below.
 
 ### Select origins
 
-After clicking the <Button variantColor='green'>Regional analysis <FaPlus /></Button>, you will see additional configuration options.
+Under **Origin points**, you can select Default Rectangular Grid or any previously created [freeform pointset](/guides/compute-freeform).
 
-Give the analysis a name, and select which Origin points to use. 
+If you select Default Rectangular Grid, results will be raster maps showing your selected metrics for each point in that grid. You will also be able to select the desired spatial resolution under **Origin zoom**.
 
-If you select a rectangular grid as the origin pointset, results will be raster maps showing the number of destinations reachable from each point in that grid.
+If you select a [previously craeted freeform (non-grid) pointset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points), results will be [downloadable CSV files](/guides/compute-freeform).
 
 :::note
-By default, access for the entire region is analyzed, but it is also possible to analyze a smaller area. You can set smaller bounds of the analysis by clicking "Bounds of analysis -- <Button variantColor='yellow'>Set custom <FaPencilAlt /></Button>" in the analysis panel, then dragging the pins on the map. Or you can select a previous regional analysis and reuse its bounds. 
+By default, access for the entire region is analyzed, but it is also possible to analyze a smaller area. You can set smaller bounds of the analysis by clicking "Bounds of analysis: <Button variantColor='yellow'>Set custom <FaPencilAlt /></Button>" in the analysis panel, then dragging the pins on the map. Or you can select a previous regional analysis and reuse its bounds. 
 
 In regional analyses, all destinations in the region, even those outside custom bounds, will be included in access calculations.
 :::
 
-If you select a freeform (non-grid) origin pointset, results can be downloadable CSV files with [access, travel time, and path results](/guides/compute-freeform). These options require a previously created [freeform (non-grid) spatial dataset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points).
+### Result types
+
+You can use a regional analysis to compute different types of results. Options under **Record results** include:
+
+* Accessibility: cumulative opportunity or decay-weighted access-to-opportunities metrics for each origin (default option)
+* Times: [travel time matrix](/guides/compute-freeform#travel-time-matrix) for each origin-destination pair
+* Paths: details of [public transport itineraries](/guides/compute-freeform#path-details) for each origin-destination pair
+* Dual access: time needed to reach a threshold number of destinations. For more details, see [this paper](https://doi.org/10.1111/gean.12220) or the [TransitCenter Equity Dashboard](https://dashboard.transitcenter.org). If this option is selected, you will also see a field to enter the desired thresholds. For example, 3 would yield time needed to reach third-nearest grocery store with grocery stores selected as a destination layer, and 10000 would yield the time needed to reach 10k jobs with jobs selected as a destination layer.
 
 <Image 
   src='/img/regional-create.png'
@@ -50,7 +55,7 @@ Select at least one Destination opportunity layer:
 * When using grid spatial datasets as destinations, you may specify several grids. They may be of different sizes and shapes (but must all be at the same zoom level). In each grid, the number of cells is limited to a maximum of 5 million, and the number of opportunities is limited to a maximum of 2 billion.
 * When using freeform spatial datasets as destinations in a regional analysis, you can specify only a single layer for now. The maximum number of freeform destination points is 4 million (and the maximum number of freeform origin-destination pairs is 16 million). Grid and freeform destinations cannot yet be mixed.
 
-Ensure the list of travel time cutoffs and percentiles will cover the results you want. For example, if you want a travel time matrix to include trips up to 120 minutes, ensure that 120 is included as a cutoff; any travel times exceeding the maximum cutoff will be clipped and recorded as -1.
+Ensure the list of travel time cutoffs and percentiles will cover the results you want. For example, if you want a travel time matrix to include trips up to 120 minutes, ensure that 120 is included as a cutoff; any travel times exceeding the maximum cutoff will be clipped and recorded as -1 (in travel time CSVs) or 0 (in dual access results).
 
 Finally, click <Button variantColor='green'><FaPlus /> Create</Button> to start the analysis.
 
@@ -79,14 +84,16 @@ Upon selecting a completed regional analysis, you will see a screen like the fol
   alt='Viewing a regional analysis'
 />
 
-When accessibility results have been computed for origins on a rectangular grid, the map will show the number of opportunities accessible from each point in the region. Any destination opportunity layers, travel time percentiles, and cutoffs specified when you created the regional analysis can be interactively selected here.
+When accessibility results have been computed grid origins, the map will show the number of opportunities accessible from each origin. Any destination opportunity layers, travel time percentiles, and time thresholds specified when you created the regional analysis can be interactively selected.
+
+If dual access results were computed for grid origins, the map will show the time needed to reach the selected threshold number of opportunities from each origin. Any destination opportunity layers, travel time percentiles, and opportunity thresholds specified when you created the regional analysis can be interactively selected. For now, dual access results are not interpolated on the map, so the resolution of the grid is easily seen.
 
 ## Downloading regional results
 For more advanced display and processing of regional accessibility results, you can download the results and open them in GIS software. This allows you to to create maps with custom color bins or your own basemap layer, or even [compute custom indicators](/guides/process-raster-results). The download button for a selected regional analysis allows you to save results in the [GeoTIFF](https://en.wikipedia.org/wiki/GeoTIFF) raster format, which is supported by most common geospatial software. Working with the downloaded raster data also allows you to see the raw [grid cells](/analysis/methodology#spatial-resolution) used for analysis, rather than the smoother interpolated results shown in your browser.
 
 If you are using QGIS to process downloaded raster layers, you will likely want to [style](https://docs.qgis.org/3.22/en/docs/training_manual/rasters/changing_symbology.html#ls-changing-raster-symbology) the them with a "singleband pseudocolor" scheme. If you prefer to work with the results as a regular grid of vector points, you may find the "Raster values to points" tool in the QGIS processing toolbox helpful.
 
-For regional analyses run with freeform origins, accessibility or [travel time/path results](/guides/compute-freeform) may be available for download as CSV files; these results are not shown on the map.
+For regional analyses run with freeform origins, results are available for download as CSV files and are not shown on the map.
 
 ## Comparing regional analyses
 
