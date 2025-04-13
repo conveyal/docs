@@ -84,7 +84,9 @@ Upon selecting a completed regional analysis, you will see a screen like the fol
   alt='Viewing a regional analysis'
 />
 
-When accessibility results have been computed for origins on a rectangular grid, the map will show the number of opportunities accessible from each point in the region. Any destination opportunity layers, travel time percentiles, and cutoffs specified when you created the regional analysis can be interactively selected here.
+When accessibility results have been computed grid origins, the map will show the number of opportunities accessible from each origin. Any destination opportunity layers, travel time percentiles, and time thresholds specified when you created the regional analysis can be interactively selected.
+
+If dual access results were computed for grid origins, the map will show the time needed to reach the selected threshold number of opportunities from each origin. Any destination opportunity layers, travel time percentiles, and opportunity thresholds specified when you created the regional analysis can be interactively selected. For now, dual access results are not interpolated on the map, so the resolution of the grid is easily seen.
 
 ## Downloading regional results
 For more advanced display and processing of regional accessibility results, you can download the results and open them in GIS software. This allows you to to create maps with custom color bins or your own basemap layer, or even [compute custom indicators](/guides/process-raster-results). The download button for a selected regional analysis allows you to save results in the [GeoTIFF](https://en.wikipedia.org/wiki/GeoTIFF) raster format, which is supported by most common geospatial software. Working with the downloaded raster data also allows you to see the raw [grid cells](/analysis/methodology#spatial-resolution) used for analysis, rather than the smoother interpolated results shown in your browser.
