@@ -1,7 +1,7 @@
 import type {Config} from '@docusaurus/types'
-import type * as Preset from '@docusaurus/preset-classic'
+import type {ThemeConfig, Options} from '@docusaurus/preset-classic'
 
-const themeConfig: Preset.ThemeConfig = {
+const themeConfig: ThemeConfig = {
   image: 'img/android-chrome-512x512.png', // meta image for social media
   colorMode: {
     respectPrefersColorScheme: true
@@ -44,7 +44,7 @@ const themeConfig: Preset.ThemeConfig = {
   footer: {
     copyright: `Copyright © ${new Date().getFullYear()} Conveyal, LLC`
   }
-} satisfies Preset.ThemeConfig
+} satisfies ThemeConfig
 
 if (process.env.ALGOLIA_API_KEY) {
   themeConfig.algolia = {
@@ -72,7 +72,7 @@ const config: Config = {
         docs: {
           breadcrumbs: false,
           routeBasePath: '/',
-          sidebarPath: require.resolve('./sidebars.js'),
+          sidebarPath: require.resolve('./sidebars.ts'),
           editUrl: 'https://github.com/conveyal/docs/edit/master'
         },
         blog: {
@@ -93,7 +93,7 @@ const config: Config = {
           changefreq: 'weekly',
           priority: 0.5
         }
-      }
+      } satisfies Options
     ]
   ],
   scripts: [{

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   docs: [{
     type: 'doc',
     id: 'home'
@@ -41,7 +41,6 @@ module.exports = {
   {
     type: 'doc',
     id: 'troubleshooting'
-  }, {
   }, 
   {
     type: 'category',
