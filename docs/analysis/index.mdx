@@ -24,7 +24,7 @@ The main analysis page is for generating [isochrones](/glossary#isochrone) (trav
 To start an analysis, you'll need to select a [project](/glossary#project) and [scenario](/glossary#scenario). Once these are selected you can fetch results for the origin marker shown on the map either by moving the marker to a new location or clicking <Button variantColor='blue'>Fetch results <FaSync /></Button>
 
 This will initialize a compute cluster which may take a minute to start up. 
-If this is your first time performing an analysis with a given [network bundle](/glossary#network-bundle) it may take some time to build the network, however this only needs to be done once for each bundle. For more information, see the [FAQ page](/learn-more/faq#why-the-wait).
+If this is your first time performing an analysis with a given [network bundle](/glossary#network-bundle) it may take some time to build the network, however this only needs to be done once for each bundle. For more information, see the [FAQ page](/learn-more/faq#how-long-should-it-take-to-start-a-single-origin-analysis).
 
 Once the compute cluster is initialized you should see an isochrone displayed in blue around your point on the map. If you have selected an destination opportunity layer, you will also see a [chart of accessibility](#accessibility-chart) at selected time and percentile thresholds. You may also select a comparison project and scenario, which will be shown in red.
 Many other configuration parameters are described in the [Options and Configuration](/analysis/configuration).
@@ -53,7 +53,11 @@ To change the origin of the analysis, drag the marker to a new location.
   src='/travel-time-slider.m4v' 
 />
 
-The display of modifications on the map is controlled in editing mode (See: [Toggling display of modifications](/edit-scenario/usage#toggle-mod-display)). To change what modifications are shown, you must set the visibility there and then navigate back to the analysis page. 
+## Accessibility chart
+
+When an opportunity layer is selected, the histogram above the map shows how many destinations are reachable at the current travel time cutoff and percentile. Adjust the sliders to explore different thresholds and watch the chart update instantly. Hovering over the chart highlights the percentile and displays the exact count of reachable opportunities at that level.
+
+The display of modifications on the map is controlled in editing mode (See: [Toggling display of modifications](/edit-scenario/usage#toggling-display-of-modifications)). To change what modifications are shown, you must set the visibility there and then navigate back to the analysis page. 
 
 ### Travel time and itinerary details
 
