@@ -41,8 +41,7 @@ module.exports = {
   {
     type: 'doc',
     id: 'troubleshooting'
-  }, {
-  }, 
+  },
   {
     type: 'category',
     label: 'Guides',

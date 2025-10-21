@@ -27,7 +27,7 @@ Under **Origin points**, you can select Default Rectangular Grid or any previous
 
 If you select Default Rectangular Grid, results will be raster maps showing your selected metrics for each point in that grid. You will also be able to select the desired spatial resolution under **Origin zoom**.
 
-If you select a [previously craeted freeform (non-grid) pointset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points), results will be [downloadable CSV files](/guides/compute-freeform).
+If you select a [previously created freeform (non-grid) pointset](/prepare-inputs/upload-spatial-data#freeform-non-grid-points), results will be [downloadable CSV files](/guides/compute-freeform).
 
 :::note
 By default, access for the entire region is analyzed, but it is also possible to analyze a smaller area. You can set smaller bounds of the analysis by clicking "Bounds of analysis: <Button variantColor='yellow'>Set custom <FaPencilAlt /></Button>" in the analysis panel, then dragging the pins on the map. Or you can select a previous regional analysis and reuse its bounds. 
@@ -42,7 +42,7 @@ You can use a regional analysis to compute different types of results. Options u
 * Accessibility: cumulative opportunity or decay-weighted access-to-opportunities metrics for each origin (default option)
 * Times: [travel time matrix](/guides/compute-freeform#travel-time-matrix) for each origin-destination pair
 * Paths: details of [public transport itineraries](/guides/compute-freeform#path-details) for each origin-destination pair
-* Dual access: time needed to reach a threshold number of destinations. For more details, see [this paper](https://doi.org/10.1111/gean.12220) or the [TransitCenter Equity Dashboard](https://dashboard.transitcenter.org). If this option is selected, you will also see a field to enter the desired thresholds. For example, 3 would yield time needed to reach third-nearest grocery store with grocery stores selected as a destination layer, and 10000 would yield the time needed to reach 10k jobs with jobs selected as a destination layer.
+* Dual access: time needed to reach a threshold number of destinations. For more details, see [this paper](https://doi.org/10.1111/gean.12220) or the [TransitCenter Equity Dashboard](https://dashboard.transitcenter.org). If this option is selected, you will also see a field to enter the desired thresholds. For example, 3 would yield time needed to reach third-nearest grocery store with grocery stores selected as a destination layer, and 10000 would yield the time needed to reach 10k jobs with jobs selected as a destination layer. Dual access results are available for both grid-based and freeform origins.
 
 <Image 
   src='/img/regional-create.png'
@@ -55,13 +55,15 @@ Select at least one Destination opportunity layer:
 * When using grid spatial datasets as destinations, you may specify several grids. They may be of different sizes and shapes (but must all be at the same zoom level). In each grid, the number of cells is limited to a maximum of 5 million, and the number of opportunities is limited to a maximum of 2 billion.
 * When using freeform spatial datasets as destinations in a regional analysis, you can specify only a single layer for now. The maximum number of freeform destination points is 4 million (and the maximum number of freeform origin-destination pairs is 16 million). Grid and freeform destinations cannot yet be mixed.
 
+If you only need results for matched origin-destination pairs (rather than every combination), activate **Linked origin-destination pairs**. This limits CSV output to the paired points in your uploaded freeform datasets and can substantially reduce download sizes. For more detail on configuring paired results, see the [custom points guide](/guides/compute-freeform#linked-origin-destination-pairs).
+
 Ensure the list of travel time cutoffs and percentiles will cover the results you want. For example, if you want a travel time matrix to include trips up to 120 minutes, ensure that 120 is included as a cutoff; any travel times exceeding the maximum cutoff will be clipped and recorded as -1 (in travel time CSVs) or 0 (in dual access results).
 
 Finally, click <Button variantColor='green'><FaPlus /> Create</Button> to start the analysis.
 
 ### Computation time
 
-After creating a regional analysis, it will appear in the list of running regional analyses with a progress bar. Conveyal will automatically scale up computation, so it should not take more than a [few minutes](/learn-more/faq#how-long) for most walking plus transit regional analyses to complete. If you want to reduce computational time, consider setting custom geographic bounds as described above.
+After creating a regional analysis, it will appear in the list of running regional analyses with a progress bar. Conveyal will automatically scale up computation, so it should not take more than a [few minutes](/learn-more/faq#how-long-should-each-regional-analysis-take) for most walking plus transit regional analyses to complete. If you want to reduce computational time, consider setting custom geographic bounds as described above.
 
 <Image 
   src='/img/regional-progress.png'
