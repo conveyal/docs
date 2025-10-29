@@ -60,6 +60,8 @@ const config: Config = {
   url: 'https://docs.conveyal.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
+  onBrokenMarkdownLinks: 'throw',
+  onBrokenAnchors: 'throw',
   favicon: 'img/favicon.ico',
   organizationName: 'conveyal', 
   projectName: 'docs', 
