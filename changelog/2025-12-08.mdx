@@ -12,7 +12,8 @@ import Image from '../components/image'
 The latest version of Conveyal (including **v7.5** of the R5 routing engine):
 
 - Accelerates map display for completed regional analysis results ([#986](https://github.com/conveyal/r5/pull/986)) and enables [custom breaks for color bins](/analysis/regional#map-display-options)
+- Adds the ability to download a combined .zip file of all destination layer, threshold, and travel time percentile combinations for a regional analysis
 - Uses requested walking speed (rather than a hard-coded default) when linking origin and destination points to the street network 
-- Handles origins and destinations linked to the same network edge ([#980](https://github.com/conveyal/r5/pull/980)). This change may result in lower accessibility results compared to past versions of R5, especially near long network edges and when using low travel time cutoffs or decay functions.
-- Limits use of custom elevation data to walk and bike modes, not car ([#972](https://github.com/conveyal/r5/pull/972))
+- Improves handling of origins and destinations linked to the same network edge ([#980](https://github.com/conveyal/r5/pull/980)). This change may result in lower accessibility results compared to past versions of R5, especially near long network edges and when using low travel time cutoffs or decay functions.
+- Limits application of custom elevation data to walk and bike modes, not car ([#972](https://github.com/conveyal/r5/pull/972))
 - Enables [new options for sidewalk restrictions](/prepare-inputs#advanced-bundle-configuration), such as prohibiting bicycles or requiring step-free paths ([#976](https://github.com/conveyal/r5/pull/976)).
