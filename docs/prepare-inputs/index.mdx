@@ -137,9 +137,14 @@ These advanced configuration JSON options are hidden by default and should be mo
 - `"stepFree"`: Whether to exclude pedestrian traversal of ways with highway=stairs tags and nodes with kerb=raised tags. This option should generally be used with detailed sidewalk networks and a TraversalPermissionLabeler that forces use of sidewalks (restricts walking on most driving ways, see below).
 - `"maxIncline"`: Steepest allowable slope for traversal, currently implemented only for pedestrians and with `"traversalPermissionLabeler":"noSteepInclines"` (see below)
 - `"traversalPermissionLabeler":` Which rules to use when setting mode-specific permissions on OSM ways. Available experimental labelers include:
-  - `"sidewalk"`: restricts walking on most driving ways (useful for networks with complete sidewalks)
-  - `"noSidewalkCycling"`: prohibits cycling on sidewalks 
-  - `"noSteepInclines"`: restricts walking on most driving ways and on ways with a custom `incline` value (generally from a special data source such as [OpenSidewalks](https://sidewalks.washington.edu/) or [GATIS](https://dotbts.github.io/BPA/)) that exceeds the specified `maxIncline` value (above)
+  - `"sidewalk"` restricts walking on most driving ways (useful for networks with complete sidewalks)
+  - `"noSidewalkCycling"` prohibits cycling on sidewalks 
+  - `"noSteepInclines"` restricts walking on most driving ways and on ways with a custom `incline` value (generally from a special data source such as [OpenSidewalks](https://sidewalks.washington.edu/) or [GATIS](https://dotbts.github.io/BPA/)) that exceeds the specified `maxIncline` value (above)
+- `"transfers":` How to calculate stop-to-stop transfer times. Other specific transfers types like route-to-route and trip-to-trip are not compatible with our current routing approach, so will be ignored with a warning. When using values from GTFS transfers.txt files, we rely on `min_transfer_time` values and only import transfer type 2 ("minimum amount of time between arrival and departure to ensure a connection"). For any option except OSM_ONLY, these GTFS transfers override and replace any OSM street distance calculations. Options include:
+  - `"OSM_ONLY"` Find transfers only by searching through the OSM street network, with stops linked to the nearest street network edge, ignoring GTFS transfers (default behavior)
+  - `"GTFS_ONLY"` Load transfers only from GTFS transfers.txt, do not use the OSM street network (experimental) 
+  - `"STOP_TO_PATTERN"` Use OSM where GTFS does not provide a transfer from a given stop to a given trip pattern (experimental)
+  - `"STOP_PAIR"` Find transfers via streets for any pair of stops not connected by a GTFS transfer (experimental)
 
 ## Finalizing network bundle creation
 
