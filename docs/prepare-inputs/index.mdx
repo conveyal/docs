@@ -46,7 +46,7 @@ If there are no previously created network bundles, or if you want to use update
 
 #### Downloading
 
-Extracts from the global OSM database can be downloaded in [many different ways](https://wiki.openstreetmap.org/wiki/Downloading_data). For most regions, we recommend [Protomaps](https://app.protomaps.com/downloads/osm), a service that provides up-to-date OSM extracts in the required PBF format. If you need a region that is too large for Protomaps, [Geofabrik](http://download.geofabrik.de) provides easy downloads for entire countries and other selected regions. In either case, your extract should cover your entire service area or region, but not extend unnecessarily far beyond it as that may cause computation to stall.
+Extracts from the global OSM database can be downloaded in [many different ways](https://wiki.openstreetmap.org/wiki/Downloading_data). For most regions, we recommend [OSM by the Slice](https://slice.openstreetmap.us), a service that provides up-to-date OSM extracts in the required PBF format. If you need a region that is too large for this service, [Geofabrik](http://download.geofabrik.de) provides easy downloads for entire countries and other selected regions. In either case, your extract should cover your entire service area or region, but not extend unnecessarily far beyond it as that may cause computation to stall.
 
 #### Cropping
 
@@ -134,7 +134,17 @@ Conveyal's routing engine:
 These advanced configuration JSON options are hidden by default and should be modified only after consulting your support team. Once a network bundle is built, these options cannot be changed.
 - `"buildGridsForModes":` Additional on-street modes (other than walk) for which to pre-build large data tables (defaults to `["WALK"]`). Setting this to `["BICYCLE", "CAR"]` will eliminate repeated re-building of these tables when subsequent routing servers start up but require extra time when the network is first built. To keep this extra time reasonable, especially for car tables, minimize the number of transit stops included in the bundle's GTFS feeds. Attempting to build car tables for large regions with more than 24k stops will likely exceed various computation limits in the Conveyal platform, triggering errors.
 - `"modifications":` [Modifications](/edit-scenario) to include permanently in this network bundle (defaults to `[]`). This option is useful if you have modifications or data (such as custom levels of traffic stress or elevations for slope-sensitive routing) that you always want included as part of the baseline network.
-- `"traversalPermissionLabeler":` Which rules to use when setting mode-specific permissions on OSM ways. `"sidewalk"` activates an experimental labeler that restricts walking on most driving ways (useful for networks with complete sidewalks).
+- `"stepFree"`: Whether to exclude pedestrian traversal of ways with highway=stairs tags and nodes with kerb=raised tags. This option should generally be used with detailed sidewalk networks and a TraversalPermissionLabeler that forces use of sidewalks (restricts walking on most driving ways, see below).
+- `"maxIncline"`: Steepest allowable slope for traversal, currently implemented only for pedestrians and with `"traversalPermissionLabeler":"noSteepInclines"` (see below)
+- `"traversalPermissionLabeler":` Which rules to use when setting mode-specific permissions on OSM ways. Available experimental labelers include:
+  - `"sidewalk"` restricts walking on most driving ways (useful for networks with complete sidewalks)
+  - `"noSidewalkCycling"` prohibits cycling on sidewalks 
+  - `"noSteepInclines"` restricts walking on most driving ways and on ways with a custom `incline` value (generally from a special data source such as [OpenSidewalks](https://sidewalks.washington.edu/) or [GATIS](https://dotbts.github.io/BPA/)) that exceeds the specified `maxIncline` value (above)
+- `"transfers":` How to calculate stop-to-stop transfer times. Other specific transfers types like route-to-route and trip-to-trip are not compatible with our current routing approach, so will be ignored with a warning. When using values from GTFS transfers.txt files, we rely on `min_transfer_time` values and only import transfer type 2 ("minimum amount of time between arrival and departure to ensure a connection"). For any option except OSM_ONLY, these GTFS transfers override and replace any OSM street distance calculations. Options include:
+  - `"OSM_ONLY"` Find transfers only by searching through the OSM street network, with stops linked to the nearest street network edge, ignoring GTFS transfers (default behavior)
+  - `"GTFS_ONLY"` Load transfers only from GTFS transfers.txt, do not use the OSM street network (experimental) 
+  - `"STOP_TO_PATTERN"` Use OSM where GTFS does not provide a transfer from a given stop to a given trip pattern (experimental)
+  - `"STOP_PAIR"` Find transfers via streets for any pair of stops not connected by a GTFS transfer (experimental)
 
 ## Finalizing network bundle creation
 
