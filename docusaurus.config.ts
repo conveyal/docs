@@ -42,7 +42,7 @@ const themeConfig: Preset.ThemeConfig = {
     ]
   },
   footer: {
-    copyright: `Copyright © ${new Date().getFullYear()} Conveyal, LLC`
+    copyright: `Copyright © ${new Date().getFullYear()} Conveyal, LLC and EBP US, Inc.`
   }
 } satisfies Preset.ThemeConfig
 
