@@ -65,6 +65,7 @@ module.exports = {
       'learn-more/park-and-ride',
       'learn-more/decay-functions',
       'learn-more/generalized-cost',
+      'learn-more/demand-responsive',
       'analysis/methodology',
       'glossary'
     ]

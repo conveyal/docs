@@ -1,0 +1,15 @@
+---
+title: Demand Responsive Transit
+---
+
+As of v7.6, the Conveyal R5 routing engine handles selected types of [demand responsive services](https://gtfs.org/documentation/schedule/examples/flex/). Supported service types include pickup and dropoff at zones specified via `locations.geojson` or at stops specified via `location_groups.txt` and `location_group_stops.txt`. Deviated route services are not currently supported.
+
+To enable supported services that are present in the GTFS feeds of a baseline network bundle, add `"ON_DEMAND"` to the [custom `"flags"`](/analysis/configuration#custom-flags) of an analysis request.
+
+For origins/destinations within pickup/dropoff zones, vehicles can be boarded directly. For points outside such zones, walking/cycling between the points and street intersections within the zones is supported. Similarly, for service defined at specific stops, walking/cycling between those stops and origin/destination points is supported.
+
+On-demand services travel at car speeds, modified by a specified `safe_duration_factor` in the GTFS feed. Note that car speeds in Conveyal do not [account for congestion](/guides/account-for-congestion) by default. Pickup waiting time is defined by `safe_duration_offset` in the GTFS feed.
+
+For checking the temporal availability of services (defined in a GTFS feed by `start_pickup_drop_off_window` and `end_pickup_drop_off_window`), R5 assumes journeys start at the midpoint of the analysis departure time window.
+
+R5 currently supports direct trips using these on-demand services, as well as first-mile trips connecting to scheduled transit. Last-mile trips connecting from scheduled transit will be enabled in an upcoming release. In the meantime, last-mile trips are still supported with the previous implementation of [Pickup Delay modifications](/edit-scenario/modifications#pickup-delay).
