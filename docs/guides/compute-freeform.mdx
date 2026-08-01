@@ -86,7 +86,7 @@ South Boston|Chelsea High School|95|-1
 
 ## Path details
 
-Activating "Paths" (after selecting freeform (non-grid) spatial datasets for origins and destinations) produces a CSV file with the following columns:
+Activating "Paths" (after selecting freeform (non-grid) spatial datasets for origins and destinations) produces a CSV file with the columns listed below. Each row represents an path (access time, sequences of boarding/alighting stops and routes ridden with associated in-vehicle times, and egress time) that provided the minimum travel time between origin and destination for at least one iteration. If multiple itineraries provide the same travel time in the same iteration, only one is reported (typically favoring schedule-based routes).
 
 * `origin`: Id of the origin point
 * `destination`: Id of the destination point
@@ -95,12 +95,13 @@ Activating "Paths" (after selecting freeform (non-grid) spatial datasets for ori
 * `alightStops` : pipe separated list of GTFS stop Ids (or names, depending on [CSV options](#csv-options)), one per transit leg
 * `feedIds`: pipe separated list of internal Conveyal feedId values (populated only if the request includes a value for [`csvOptions.feedRepresentation`](#csv-options))
 * `rideTimes`: pipe separated list of in-vehicle travel times (minutes), one per transit leg.
-* `accessTime`: walking time from origin to boarding stop of first transit leg (minutes)
-* `egressTime`: walking time from alighting stop of last transit leg to destination (minutes)
+* `accessTime`: time from origin to boarding stop of first transit leg (minutes)
+* `egressTime`: time from alighting stop of last transit leg to destination (minutes)
 * `transferTime`: time spent walking between transit stops for transfers (minutes)
 * `waitTimes`: pipe separated list of waiting time (minutes) to board each transit leg, for the specific itinerary following this path that has the lowest waiting time
 * `totalTime`: total time (minutes), for the specific itinerary following this path that has the minimum total time. Because all other components of travel time are fixed for a given path, the itinerary with the lowest waiting time should also be the one with the lowest total time.
-* `nIterations`: number of iterations at which this path is optimal. For scenarios with only exact timetables, the total number of iterations for a given OD pair is the number of minutes in the [departure window](/analysis/configuration#date-and-departure-window). For scenarios that include frequency-based routes, the total number of iterations depends on the requested [number of simulated schedules](/analysis/configuration#simulated-schedules) as well as the departure window. Note the `nIterations` for each OD pair should sum to the number of total iterations, unless specific departure times result in total travel times that exceed the maximum cutoff.
+* `departureTime`: time at which a journey starts to use the first occurence of this path with minimum initial waiting time (blank for trips that do not include transit)
+* `nIterations`: number of iterations at which this path is fastest. For scenarios with only exact timetables, the total number of iterations for a given OD pair is the number of minutes in the [departure window](/analysis/configuration#date-and-departure-window). For scenarios that include frequency-based routes, the total number of iterations depends on the requested [number of simulated schedules](/analysis/configuration#simulated-schedules) as well as the departure window. The `nIterations` for each OD pair should sum to the number of total iterations, unless specific departure times result in total travel times that exceed the maximum cutoff.
 * `group`: column reserved for special analysis types
 
 Path results require routing engine v7.2 or higher.
@@ -121,19 +122,21 @@ FeedId values are reported for the boarding stop of each transit leg. In all bas
 ### Example results
 
 ```csv
-origin,destination,routes,boardStops,alightStops,feedIds,rideTimes,accessTime,egressTime,transferTime,waitTimes,totalTime,nIterations,group
-1,2,70|553,1452|86944,86944|88339,,16.0|8.0,3.1,13.6,0,1.9|10.0,52.6,3,
-1,2,70,1452,8846,,30,3.1,2.6,0,1.9,37.6,57,
-1,3,70|61,1452|86944,88333|7783,,16.0|17.0,3.1,17,0.6,1.9|8.4,64,14,
-1,3,70|61,1452|86944,86944|7783,,16.0|17.0,3.1,17,9.6,1.9|8.4,72.9,46,
-1,4,70|CR-Fitchburg,1452|Waltham,88333|Brandeis/Roberts,,16.0|3.0,3.1,7,1.4,1.9|6.6,39,14,
-1,4,70|553,1452|86944,86944|88346,,16.0|14.0,3.1,2,0,1.9|7.0,44,16,
-1,4,70|553,1452|86944,86944|88346,,16.0|19.0,3.1,2,0,1.9|10.0,52,3,
-1,4,70|CR-Fitchburg,1452|Waltham,86944|Brandeis/Roberts,,16.0|3.0,3.1,7,10.4,1.9|6.6,48,27,
-1,5,71|Red|76,2049|70068|141,20761|70061|8605,,22.0|8.0|21.0,6.6,5.9,4.5,1.4|1.6|12.9,83.9,11,
-1,5,71|Red|76,2049|70068|141,20761|70061|8605,,23.0|9.0|21.0,6.6,5.9,9.5,1.4|3.6|12.9,92.9,11,
-1,5,71|Red|76,2049|70068|141,20761|70061|8605,,22.0|9.0|21.0,6.6,5.9,24.5,1.4|1.6|12.9,104.9,12,
-1,5,71|Red|76,2049|70068|141,20761|70061|8605,,22.0|9.0|24.0,6.6,5.9,13.5,1.4|2.6|1.9,86.9,26,
+origin,destination,routes,boardStops,alightStops,feedIds,rideTimes,accessTime,egressTime,transferTime,waitTimes,totalTime,departureTime,nIterations,group
+1,2,Red|18,70065|345,70089|347,,30.00|1.00,14.57,0.68,2.7,1.43|3.30,53.68,06:26,10
+1,2,88|Red,2669|70063,5104|70089,,4.00|35.00,1.48,7.77,0.38,1.52|3.62,53.77,06:48,12
+1,2,Red,70065,70089,,33,14.57,7.77,0,1.43,56.77,06:36,21
+1,2,Red,70065,70089,,29,14.57,7.77,0,1.43,52.77,06:07,17
+1,3,88|Green-E|Blue,2679|70210|70040,14150|70202|70046,,15.00|9.00|6.00,2.05,5.15,1.67,1.95|5.52|2.82,49.15,06:56,7
+1,3,88|Red|Blue,2669|70063|70042,5104|70077|70046,,4.00|18.00|5.00,1.48,5.15,6.08,1.52|1.62|1.30,44.15,06:16,18
+1,3,Red|Blue,70065|70040,70075|70046,,14.00|6.00,14.57,5.15,5.8,1.43|1.20,48.15,06:07,5
+1,3,Red|Blue,70065|70042,70077|70046,,18.00|5.00,14.57,5.15,5.7,1.43|1.30,51.15,06:58,3
+1,3,89|Red|Blue,2671|70063|70040,5104|70075|70046,,3.00|16.00|6.00,5,5.15,6.18,2.00|2.62|1.20,47.15,06:22,6
+1,3,89|Red|Blue,2671|70063|70042,5104|70077|70046,,4.00|20.00|5.00,5,5.15,6.08,2.00|1.62|1.30,50.15,06:41,4
+1,3,90|Red|Blue,2669|70063|70042,5104|70077|70046,,6.00|20.00|5.00,1.48,5.15,6.08,1.52|2.62|1.30,49.15,06:51,3
+1,3,87|Green-E|Blue,2588|70210|70040,14150|70202|70046,,11.00|9.00|6.00,8.65,5.15,1.67,1.35|3.52|2.82,49.15,06:02,3
+1,3,88|Red|Blue,2669|70063|70042,5104|70077|70046,,4.00|20.00|5.00,1.48,5.15,6.08,1.52|3.62|1.30,48.15,06:48,7
+1,3,Red|Blue,70065|70042,70077|70046,,16.00|5.00,14.57,5.15,5.7,1.43|4.30,52.15,06:26,4
 etc
 ```
 ## Linked origin-destination pairs

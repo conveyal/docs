@@ -86,7 +86,8 @@ Additional settings are available in the custom analysis request JSON. Use the <
 ### Custom flags
 
 In the analysis request JSON view, you can trigger custom or experimental features by adding the `flags` property. Valid entries in the corresponding array include:
-- `CROP_DESTINATIONS`: Sets the destination extents to the user-specified custom bounds (rather than the combined extents of the destination opportunity datasets). Using this flag may reduce accessibility results but can be appropriate when using small travel time cutoffs and small custom bounds in large regions.
+- `"CROP_DESTINATIONS"`: Sets the destination extents to the user-specified custom bounds (rather than the combined extents of the destination opportunity datasets). Using this flag may reduce accessibility results but can be appropriate when using small travel time cutoffs and small custom bounds in large regions.
+- `"ON_DEMAND"`: Enables use of certain [demand-responsive services](/learn-more/demand-responsive) if they are included in the GTFS feeds of the baseline network
 
 ## Errors and warnings
 

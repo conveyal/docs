@@ -1,0 +1,19 @@
+---
+title: July, 2026
+---
+
+import Image from '../components/image'
+
+<Image
+  src='/img/regional-with-transit-layer.png'
+  alt='Displaying regional analysis results with the baseline network'
+/>
+
+The latest user interface and R5 release (**v7.6**) from the Conveyal team include:
+- New ways of representing and importing [on-demand services](/learn-more/demand-responsive)
+- Improved transit alignment editing. When editing dwell times and speeds, associated stops/segments are highlighted more clearly on the map. And segment-specific speed or travel time values are now recorded more accurately; previous versions of Conveyal truncated any segment-specific travel times, which may have led transit travel times to be lower than intended.
+- Options to display the baseline network on maps of regional analysis results
+- More resilient regional analysis progress, with regular checks for unexpected shutdown of cloud workers
+- GeoJSON download of additional modification types
+- Additional detail in [transit path CSV outputs](/guides/compute-freeform#path-details)
+- Updated LODES job and workforce data for regions in the United States
